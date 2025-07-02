@@ -66,7 +66,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Background with your actual image */
+        /* Fixed background with correct GitHub raw URL */
         body::before {
             content: '';
             position: fixed;
@@ -562,14 +562,14 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
+            opacity: 1;
+            visibility: visible;
             transition: all 0.3s ease;
         }
 
-        .loading.active {
-            opacity: 1;
-            visibility: visible;
+        .loading.hidden {
+            opacity: 0;
+            visibility: hidden;
         }
 
         .loading-spinner {
@@ -627,9 +627,9 @@
         <header class="header">
             <!-- Top Tab Navigation -->
             <div class="top-tabs">
-                <button class="tab-button active" onclick="switchToTab('games')">🎮 GAMES</button>
-                <button class="tab-button" onclick="switchToTab('social')">📱 SOCIAL MEDIA</button>
-                <button class="tab-button" onclick="switchToTab('profile')">👤 PROFILE</button>
+                <button class="tab-button active" data-tab="games">🎮 GAMES</button>
+                <button class="tab-button" data-tab="social">📱 SOCIAL MEDIA</button>
+                <button class="tab-button" data-tab="profile">👤 PROFILE</button>
             </div>
         </header>
 
@@ -650,52 +650,52 @@
                 <h3 class="download-title">📱 Download 8Bit Mobile App</h3>
                 <p class="download-subtitle">Redeem your points and unlock exclusive rewards in our mobile app!</p>
                 <div class="download-buttons">
-                    <a href="#" class="app-store-button" onclick="downloadApp('playstore')">
+                    <button class="app-store-button" data-store="playstore">
                         <span>📱</span>
                         Google Play Store
-                    </a>
-                    <a href="#" class="app-store-button" onclick="downloadApp('appstore')">
+                    </button>
+                    <button class="app-store-button" data-store="appstore">
                         <span>🍎</span>
                         Apple App Store
-                    </a>
+                    </button>
                 </div>
             </div>
 
             <!-- Social Media Links -->
             <div class="social-grid">
-                <div class="social-card" onclick="openSocialLink('twitter')">
+                <div class="social-card" data-social="twitter">
                     <div class="social-icon">🐦</div>
                     <h3 class="social-title">Twitter</h3>
                     <p class="social-description">Follow us for the latest updates, game releases, and community events.</p>
-                    <a href="#" class="social-button">Follow @8Bit_arcade1</a>
+                    <div class="social-button">Follow @8Bit_arcade1</div>
                 </div>
 
-                <div class="social-card" onclick="openSocialLink('discord')">
+                <div class="social-card" data-social="discord">
                     <div class="social-icon">💬</div>
                     <h3 class="social-title">Discord</h3>
                     <p class="social-description">Join our gaming community and connect with players worldwide.</p>
-                    <a href="#" class="social-button">Join Discord</a>
+                    <div class="social-button">Join Discord</div>
                 </div>
 
-                <div class="social-card" onclick="openSocialLink('facebook')">
+                <div class="social-card" data-social="facebook">
                     <div class="social-icon">📘</div>
                     <h3 class="social-title">Facebook</h3>
                     <p class="social-description">Like our page for news, game tips, and exclusive content.</p>
-                    <a href="#" class="social-button">Like Page</a>
+                    <div class="social-button">Like Page</div>
                 </div>
 
-                <div class="social-card" onclick="openSocialLink('instagram')">
+                <div class="social-card" data-social="instagram">
                     <div class="social-icon">📸</div>
                     <h3 class="social-title">Instagram</h3>
                     <p class="social-description">Follow for behind-the-scenes content and visual updates.</p>
-                    <a href="#" class="social-button">Follow @8Bit</a>
+                    <div class="social-button">Follow @8Bit</div>
                 </div>
 
-                <div class="social-card" onclick="openSocialLink('telegram')">
+                <div class="social-card" data-social="telegram">
                     <div class="social-icon">✈️</div>
                     <h3 class="social-title">Telegram Community</h3>
                     <p class="social-description">Join our official Telegram community for exclusive announcements.</p>
-                    <a href="#" class="social-button">Join Community</a>
+                    <div class="social-button">Join Community</div>
                 </div>
             </div>
         </section>
@@ -732,8 +732,8 @@
                         <div class="referral-code-text" id="referralCode">8BIT-XXXX</div>
                     </div>
                     <div style="text-align: center;">
-                        <button class="copy-button" onclick="copyReferralCode()">📋 Copy Code</button>
-                        <button class="share-button" onclick="shareReferralLink()">🔗 Share Link</button>
+                        <button class="copy-button" id="copyButton">📋 Copy Code</button>
+                        <button class="share-button" id="shareButton">🔗 Share Link</button>
                     </div>
                 </div>
             </div>
@@ -827,10 +827,54 @@
             // Update displays
             updateUserDisplay();
             
+            // Set up event listeners
+            setupEventListeners();
+            
             // Hide loading screen
             setTimeout(() => {
-                document.getElementById('loading').classList.remove('active');
+                const loading = document.getElementById('loading');
+                if (loading) {
+                    loading.classList.add('hidden');
+                }
             }, 1500);
+        }
+
+        function setupEventListeners() {
+            // Tab switching
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchToTab(tabName);
+                });
+            });
+
+            // Social media links
+            document.querySelectorAll('.social-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-social');
+                    openSocialLink(platform);
+                });
+            });
+
+            // App store buttons
+            document.querySelectorAll('.app-store-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const store = this.getAttribute('data-store');
+                    downloadApp(store);
+                });
+            });
+
+            // Copy and share buttons
+            const copyButton = document.getElementById('copyButton');
+            const shareButton = document.getElementById('shareButton');
+            
+            if (copyButton) {
+                copyButton.addEventListener('click', copyReferralCode);
+            }
+            
+            if (shareButton) {
+                shareButton.addEventListener('click', shareReferralLink);
+            }
         }
 
         function loadUserData() {
@@ -854,5 +898,266 @@
         }
 
         function updateUserDisplay() {
-            document.getElementById('totalPoints').textContent = userData.totalPoints.toLocaleString();
-            document.getElementByI
+            const elements = {
+                totalPoints: document.getElementById('totalPoints'),
+                gamesPlayed: document.getElementById('gamesPlayed'),
+                referrals: document.getElementById('referrals'),
+                bonusPoints: document.getElementById('bonusPoints'),
+                referralCode: document.getElementById('referralCode')
+            };
+
+            if (elements.totalPoints) elements.totalPoints.textContent = userData.totalPoints.toLocaleString();
+            if (elements.gamesPlayed) elements.gamesPlayed.textContent = userData.gamesPlayed;
+            if (elements.referrals) elements.referrals.textContent = userData.referrals;
+            if (elements.bonusPoints) elements.bonusPoints.textContent = userData.bonusPoints.toLocaleString();
+            if (elements.referralCode) elements.referralCode.textContent = userData.referralCode;
+        }
+
+        function renderGames() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            if (!gamesGrid) {
+                console.error('Games grid element not found');
+                return;
+            }
+
+            gamesGrid.innerHTML = '';
+
+            games.forEach(game => {
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card';
+                
+                const categoriesHTML = game.categories.map(cat => 
+                    `<span class="game-category-tag">${cat}</span>`
+                ).join('');
+                
+                gameCard.innerHTML = `
+                    <div class="game-image" style="background-image: url('${game.image}');">
+                        <div class="game-image-icon">${game.icon}</div>
+                    </div>
+                    <div class="game-content">
+                        <div class="game-header">
+                            <h3 class="game-title">${game.title}</h3>
+                            <div class="game-categories">${categoriesHTML}</div>
+                        </div>
+                        <div class="game-footer">
+                            <div class="game-points">+${game.points} pts</div>
+                            <button class="play-button" data-game-id="${game.id}" data-game-url="${game.url}" data-game-title="${game.title}" data-game-points="${game.points}">
+                                Play
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click event to play button
+                const playButton = gameCard.querySelector('.play-button');
+                playButton.addEventListener('click', function() {
+                    const gameId = this.getAttribute('data-game-id');
+                    const gameUrl = this.getAttribute('data-game-url');
+                    const gameTitle = this.getAttribute('data-game-title');
+                    const gamePoints = parseInt(this.getAttribute('data-game-points'));
+                    playGame(gameId, gameUrl, gameTitle, gamePoints);
+                });
+                
+                gamesGrid.appendChild(gameCard);
+            });
+        }
+
+        function playGame(gameId, gameUrl, gameTitle, points) {
+            // Award points for playing
+            userData.points += points;
+            userData.totalPoints += points;
+            userData.gamesPlayed++;
+            
+            saveUserData();
+            updateUserDisplay();
+            
+            // Send analytics to Telegram
+            if (tg) {
+                tg.sendData(JSON.stringify({
+                    action: 'game_started',
+                    gameId: gameId,
+                    gameTitle: gameTitle,
+                    pointsEarned: points,
+                    user: user?.id || 'anonymous',
+                    timestamp: Date.now()
+                }));
+            }
+
+            // Navigate to game
+            setTimeout(() => {
+                if (tg) {
+                    tg.openLink(gameUrl);
+                } else {
+                    window.open(gameUrl, '_blank');
+                }
+            }, 500);
+        }
+
+        function switchToTab(tabName) {
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Find and activate the clicked button
+            const activeButton = document.querySelector(`[data-tab="${tabName}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+            
+            // Show the corresponding section
+            const sections = {
+                'games': 'gamesSection',
+                'social': 'socialSection',
+                'profile': 'profileSection'
+            };
+            
+            const sectionId = sections[tabName];
+            if (sectionId) {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.classList.add('active');
+                }
+            }
+            
+            // Send tab switch event
+            if (tg) {
+                tg.sendData(JSON.stringify({
+                    action: 'tab_switch',
+                    tab: tabName,
+                    user: user?.id || 'anonymous',
+                    timestamp: Date.now()
+                }));
+            }
+        }
+
+        function openSocialLink(platform) {
+            const socialLinks = {
+                twitter: 'https://twitter.com/8Bit_arcade1',
+                discord: 'https://discord.gg/8bit',
+                facebook: 'https://facebook.com/8bit',
+                instagram: 'https://instagram.com/8bit',
+                telegram: 'https://t.me/The8bitcryptocommunity'
+            };
+            
+            const url = socialLinks[platform];
+            if (url) {
+                if (tg) {
+                    tg.openLink(url);
+                } else {
+                    window.open(url, '_blank');
+                }
+            }
+        }
+
+        function downloadApp(store) {
+            const storeLinks = {
+                playstore: 'https://play.google.com/store/apps/details?id=com.8bit.app',
+                appstore: 'https://apps.apple.com/app/8bit/id123456789'
+            };
+            
+            const url = storeLinks[store];
+            if (url) {
+                if (tg) {
+                    tg.openLink(url);
+                } else {
+                    window.open(url, '_blank');
+                }
+            }
+            
+            // Send download event
+            if (tg) {
+                tg.sendData(JSON.stringify({
+                    action: 'app_download_clicked',
+                    store: store,
+                    user: user?.id || 'anonymous',
+                    timestamp: Date.now()
+                }));
+            }
+        }
+
+        function copyReferralCode() {
+            const referralCode = userData.referralCode;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(referralCode).then(() => {
+                    alert('Referral code copied to clipboard!');
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(referralCode);
+                });
+            } else {
+                fallbackCopyTextToClipboard(referralCode);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert('Referral code copied to clipboard!');
+            } catch (err) {
+                alert('Failed to copy referral code. Please copy manually: ' + text);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function shareReferralLink() {
+            const referralText = `Join me on 8Bit Game Hub! Use my referral code: ${userData.referralCode}`;
+            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(referralText)}`;
+            
+            if (tg) {
+                tg.openTelegramLink(shareUrl);
+            } else {
+                window.open(shareUrl, '_blank');
+            }
+        }
+
+        // Error handling for debugging
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
+        });
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing hub...');
+            initHub();
+        });
+        
+        // Also initialize if document is already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initHub);
+        } else {
+            initHub();
+        }
+
+        // Handle visibility change to pause/resume
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                saveUserData();
+            } else {
+                loadUserData();
+                updateUserDisplay();
+            }
+        });
+
+        // Test function to verify games are loaded
+        function testGamesLoad() {
+            console.log('Testing games load...');
+            console.log('Games array:', games);
+            console.log('Games grid element:', document.getElementById('gamesGrid'));
+            renderGames();
+        }
+
+        // Call test function after a delay
+        setTimeout(testGamesLoad, 2000);
+    </script>
+</body>
+</html>
