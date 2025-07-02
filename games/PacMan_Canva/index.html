@@ -94,6 +94,28 @@
 	</div>
 </div>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+    // Initialize Telegram Web App
+    let tg = window.Telegram?.WebApp;
+    if (tg) {
+        tg.ready();
+        tg.expand();
+    }
+    
+    // Send score back to hub (when player finishes)
+    function sendScore(score) {
+        if (window.parent !== window) {
+            window.parent.postMessage({
+                type: 'game_score',
+                score: score
+            }, '*');
+        }
+    }
+    
+    // Call sendScore(yourScore) when game ends
+</script>
+	
 <!-- INSTRUCTIONS -->
 <div class="content" id="instructions-content">
 	<div class="button" id="back">&lt; back</div>
