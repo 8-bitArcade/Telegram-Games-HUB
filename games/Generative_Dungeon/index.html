@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Dungeon - Dashboard</title>
+     <style>
+        /* Grundlegende Stile für das Dashboard */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        #menu {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .dungeon-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .dungeon-button:hover {
+            background-color: #45a049;
+        }
+        #dungeonIframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none; /* Anfangs versteckt */
+        }
+    </style>
+</head>
+<body>
+    <!-- Menü mit drei Dungeon-Buttons -->
+    <div id="menu">
+        <h1>Select a Dungeon</h1>
+		<button class="dungeon-button" data-tokenid="100">Dungeon 100</button>
+        <button class="dungeon-button" data-tokenid="313">Dungeon 313</button>
+        <button class="dungeon-button" data-tokenid="1604">Dungeon 1604</button>
+    </div>
+
+    <!-- iFrame zum Laden des Spiels -->
+    <iframe id="dungeonIframe" src="" width="500" height="500" scrolling="yes" allowfullscreen=""></iframe>
+
+    <!-- Skripte zum Patchen der Funktionen und zur Kommunikation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var iframe = document.getElementById('dungeonIframe');
+            var menu = document.getElementById('menu');
+            var dungeonButtons = document.querySelectorAll('.dungeon-button');
+
+            // Variablen zur Speicherung von Spielstartzeit und PlayTime
+            var gameStartTime = null;
+            var playTime = 0;
+            var selectedDungeonId = null; // Variable zur Speicherung der ausgewählten Dungeon-ID
+
+            // Funktion zur Berechnung der PlayTime
+            function calculatePlayTime() {
+                if (gameStartTime) {
+                    var now = Date.now();
+                    return Math.floor((now - gameStartTime) / 1000); // in Sekunden
+                }
+                return 0;
+            }
+
+            // Funktion zum Patchen der UI.prototype.die und UI.prototype.win Funktionen
+            function patchGameFunctions(iframe) {
+                try {
+                    var UI = iframe.contentWindow.UI;
+                    var world = iframe.contentWindow.world;
+                    var TILES = iframe.contentWindow.TILES;
+
+                    if (!UI || !world || !TILES) {
+                        console.error('UI, world oder TILES sind im iframe nicht definiert.');
+                        return;
+                    }
+
+                    if (UI.prototype.die._isPatched || UI.prototype.win._isPatched) {
+                        console.warn('Die und Win Funktionen sind bereits gepatcht.');
+                        return;
+                    }
+
+                    var originalDie = UI.prototype.die;
+                    var originalWin = UI.prototype.win;
+
+                    UI.prototype.die = function() {
+                        originalDie.apply(this, arguments);
+
+                        var stats = {
+                            turns: Math.round(this.actor.stats.turns),
+                            kills: Math.round(this.actor.stats.kills),
+                            skillLevel: Math.round(this.actor.stats.skillLevel),
+                            depth: Math.round(world.dungeon.id),
+                            coins: Math.round(this.actor.stats.coins),
+                            gems: Math.round(this.actor.stats.gems),
+                            scrolls: Math.round(this.actor.stats.scrolls),
+                            spells: Math.round(this.actor.stats.spells),
+                            keys: Math.round(this.actor.stats.keys),
+                            manaPotions: Math.round(this.actor.stats.manaPotions),
+                            healthPotions: Math.round(this.actor.stats.healthPotions),
+                            perks: Math.round(this.actor.stats.perks)
+                        };
+
+                        console.log('Player has died. Stats:', stats);
+
+                        // Berechne PlayTime
+                        playTime = calculatePlayTime();
+
+                        // Erzeuge einen Timestamp
+                        var timestamp = new Date().toISOString();
+
+                        // Senden der Statistiken an den Server
+                        sendStatsToServer(userId, 'generativeDungeon', stats, playTime, timestamp, selectedDungeonId);
+                    };
+                    UI.prototype.die._isPatched = true;
+
+                    UI.prototype.win = function() {
+                        originalWin.apply(this, arguments);
+
+                        var stats = {
+                            turns: Math.round(this.actor.stats.turns),
+                            kills: Math.round(this.actor.stats.kills),
+                            skillLevel: Math.round(this.actor.stats.skillLevel),
+                            depth: Math.round(world.dungeon.id),
+                            coins: Math.round(this.actor.stats.coins),
+                            gems: Math.round(this.actor.stats.gems),
+                            scrolls: Math.round(this.actor.stats.scrolls),
+                            spells: Math.round(this.actor.stats.spells),
+                            keys: Math.round(this.actor.stats.keys),
+                            manaPotions: Math.round(this.actor.stats.manaPotions),
+                            healthPotions: Math.round(this.actor.stats.healthPotions),
+                            perks: Math.round(this.actor.stats.perks)
+                        };
+
+                        console.log('Player has won the game. Stats:', stats);
+
+                        // Berechne PlayTime
+                        playTime = calculatePlayTime();
+
+                        // Erzeuge einen Timestamp
+                        var timestamp = new Date().toISOString();
+
+                        // Senden der Statistiken an den Server
+                        sendStatsToServer(userId, 'generativeDungeon', stats, playTime, timestamp, selectedDungeonId);
+                    };
+                    UI.prototype.win._isPatched = true;
+
+                    console.log('Die und Win Funktionen wurden erfolgreich gepatcht.');
+                } catch (error) {
+                    console.error('Fehler beim Patchen der Funktionen:', error);
+                }
+            }
+
+            // Event Listener für Nachrichten vom iFrame
+            window.addEventListener('message', function(event) {
+                const allowedOrigin = window.location.origin; // oder eine spezifische URL
+                if (event.origin !== allowedOrigin) {
+                    console.warn('Nachricht von unerlaubtem Ursprung:', event.origin);
+                    return;
+                }
+
+                // Überprüfen, ob eine userId gesendet wurde
+                if (event.data && event.data.userId) {
+                    userId = event.data.userId;
+                    console.log('Erhaltene userId:', userId);
+                }
+            });
+
+            // Funktion zum Senden der Statistiken an den Server
+            function sendStatsToServer(userId, game, stats, playTime, timestamp, dungeonId) {
+                if (!userId) {
+                    console.error('userId ist nicht gesetzt. Kann die Statistiken nicht senden.');
+                    return;
+                }
+
+                fetch('/game-stats', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: userId,
+                        game: game,
+                        stats: stats,
+                        playTime: playTime,
+                        timestamp: timestamp,
+                        dungeonId: parseInt(dungeonId, 10) // Stellen Sie sicher, dass dungeonId eine Zahl ist
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Spielstatistiken erfolgreich an den Server gesendet.');
+                    } else {
+                        console.error('Fehler beim Senden der Spielstatistiken:', data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Fehler beim Senden der Spielstatistiken:', error);
+                });
+            }
+
+            // Variable zum Speichern der userId
+            var userId = null;
+
+            // Funktion zum Extrahieren von URL-Parametern
+            function getUrlParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            // Funktion zur Auswahl einer Dungeon-ID
+            function getSelectedDungeonId(button) {
+                return button.getAttribute('data-tokenid');
+            }
+
+            // Event Listener für Dungeon-Button-Klicks
+            dungeonButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    selectedDungeonId = getSelectedDungeonId(this);
+                    var token = getUrlParameter('token');
+					var lang = getUrlParameter('lang');
+					
+                    if (true) {
+                        // Setze den Spielstartzeitpunkt
+                        gameStartTime = Date.now();
+
+                        // Setzen Sie den korrekten src des verschachtelten iFrames mit dem Token und der ausgewählten tokenId
+                        iframe.src = `Game.html?v=1.02&token=${encodeURIComponent(token)}&tokenId=${encodeURIComponent(selectedDungeonId)}&lang=${encodeURIComponent(lang)}#game`;
+						iframe.style.display = 'block';
+                        menu.style.display = 'none';
+
+                        // Sobald das iFrame geladen ist, patchen wir die Funktionen
+                        iframe.addEventListener('load', function() {
+                            console.log('iFrame ist geladen. Patchen der Funktionen...');
+                            patchGameFunctions(iframe);
+                        });
+                    } else {
+                        console.error('Kein Token gefunden in der URL');
+                        iframe.src = 'about:blank'; // Optional: Weiterleiten oder Fehler anzeigen
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
