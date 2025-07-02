@@ -66,7 +66,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Background - YOU NEED TO REPLACE 'path/to/your/background.jpg' WITH YOUR ACTUAL IMAGE URL */
+        /* Background with your actual image */
         body::before {
             content: '';
             position: fixed;
@@ -76,7 +76,7 @@
             height: 100%;
             background: 
                 linear-gradient(rgba(0, 8, 20, 0.7), rgba(0, 8, 20, 0.8)),
-                url(https://github.com/8-bitArcade/Telegram-Games-HUB/blob/main/assets/8bit-background.png); /* <-- PUT YOUR BACKGROUND IMAGE HERE */
+                url('https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/8bit-background.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -124,44 +124,12 @@
             z-index: 100;
         }
 
-        .header-top {
-            display: none; /* Removed points display - available in profile tab */
-        }
-
-        /* Logo section removed - logo will be in background */
-
-        .user-points {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            background: rgba(0, 164, 255, 0.1);
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(0, 164, 255, 0.3);
-        }
-
-        .points-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-        }
-
-        .points-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .header-subtitle {
-            display: none; /* Removed TELEGRAM GAMES HUB text */
-        }
-
         /* Top Tab Navigation */
         .top-tabs {
             display: flex;
             background: rgba(0, 164, 255, 0.1);
             border-radius: var(--border-radius);
             padding: var(--spacing-xs);
-            margin-bottom: var(--spacing-lg);
         }
 
         .tab-button {
@@ -201,157 +169,15 @@
             display: block;
         }
 
-        /* Social Media Section */
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .social-card {
-            background: var(--gradient-card);
-            border: 1px solid rgba(0, 164, 255, 0.2);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-xl);
-            text-align: center;
-            position: relative;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .social-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 164, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .social-card:hover::before {
-            left: 100%;
-        }
-
-        .social-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px var(--accent-glow);
-            border-color: var(--primary-color);
-        }
-
-        .social-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto var(--spacing-md);
-            background: var(--gradient-primary);
-            border-radius: var(--border-radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 8px 25px rgba(0, 164, 255, 0.4);
-        }
-
-        .social-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-            position: relative;
-            z-index: 2;
-        }
-
-        .social-description {
-            color: var(--text-muted);
-            margin-bottom: var(--spacing-lg);
-            line-height: 1.5;
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .social-button {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: var(--border-radius);
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .social-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(0, 164, 255, 0.4);
-        }
-
-        .download-section {
-            background: var(--gradient-card);
-            border: 2px solid var(--primary-color);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-xl);
-            text-align: center;
-            margin-bottom: var(--spacing-lg);
-            backdrop-filter: blur(10px);
-        }
-
-        .download-title {
+        .section-title {
             font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .download-subtitle {
-            color: var(--text-muted);
-            margin-bottom: var(--spacing-xl);
-            font-size: 1rem;
-        }
-
-        .download-buttons {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .app-store-button {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            box-shadow: 0 5px 20px rgba(0, 164, 255, 0.3);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
         }
 
-        .app-store-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 164, 255, 0.5);
-        }
-
+        /* Games Grid */
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -499,15 +325,132 @@
             box-shadow: 0 4px 15px rgba(0, 164, 255, 0.4);
         }
 
-        /* Bottom Navigation - REMOVED */
-        /* Bottom navigation removed as requested */
+        /* Social Media Section */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-lg);
+        .social-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(0, 164, 255, 0.2);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
             text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px var(--accent-glow);
+            border-color: var(--primary-color);
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--spacing-md);
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 164, 255, 0.4);
+        }
+
+        .social-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .social-description {
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .social-button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .social-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 164, 255, 0.4);
+        }
+
+        .download-section {
+            background: var(--gradient-card);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            backdrop-filter: blur(10px);
+        }
+
+        .download-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .download-subtitle {
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-xl);
+            font-size: 1rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .app-store-button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            box-shadow: 0 5px 20px rgba(0, 164, 255, 0.3);
+        }
+
+        .app-store-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 164, 255, 0.5);
         }
 
         /* Profile Section */
@@ -606,41 +549,6 @@
             font-weight: 700;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .games-grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-md);
-            }
-            
-            .header {
-                padding: var(--spacing-md);
-            }
-            
-            .logo-text {
-                font-size: 1.5rem;
-            }
-            
-            .profile-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo-icon {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .logo-text {
-                font-size: 1.3rem;
-            }
-            
-            .games-section {
-                padding: var(--spacing-md);
-            }
-        }
-
         /* Loading Screen */
         .loading {
             position: fixed;
@@ -684,6 +592,28 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            
+            .header {
+                padding: var(--spacing-md);
+            }
+            
+            .profile-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-section {
+                padding: var(--spacing-md);
+            }
+        }
     </style>
 </head>
 <body>
@@ -695,8 +625,6 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <!-- Points removed - available in profile tab -->
-            
             <!-- Top Tab Navigation -->
             <div class="top-tabs">
                 <button class="tab-button active" onclick="switchToTab('games')">🎮 GAMES</button>
@@ -815,63 +743,37 @@
         <footer class="footer">
             <div class="footer-text">© 2025 <span class="footer-brand">8Bit</span>. All rights reserved.</div>
         </footer>
+    </div>
 
     <script>
-        // Game Hub Configuration
+        // Game configuration with your actual games
         const games = [
             {
-                id: 'snake',
-                title: 'Snake Classic',
-                icon: '🐍',
-                points: 50,
-                url: './games/snake/index.html',
-                categories: ['PUZZLE', 'ARCADE'],
-                image: './assets/games/snake-preview.jpg' // Replace with actual game image
+                id: 'generative_dungeon',
+                title: 'Generative Dungeon',
+                icon: '🏰',
+                points: 100,
+                url: './games/Generative_Dungeon/index.html',
+                categories: ['RPG', 'ADVENTURE'],
+                image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/Generative_Dungeon.png'
             },
             {
-                id: 'tetris',
-                title: 'Block Puzzle',
-                icon: '🧩',
+                id: 'pacman_canva',
+                title: 'PacMan Canva',
+                icon: '👻',
                 points: 75,
-                url: './games/tetris/index.html',
-                categories: ['PUZZLE', 'STRATEGY'],
-                image: './assets/games/tetris-preview.jpg' // Replace with actual game image
+                url: './games/PacMan_Canva/index.html',
+                categories: ['ARCADE', 'CLASSIC'],
+                image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/PacMan_Canva.png'
             },
             {
-                id: 'PacMan',
-                title: 'Pac Man-Canva',
-                icon: '🏓',
-                points: 40,
-                url: 'https://github.com/8-bitArcade/Telegram-Games-HUB/tree/main/games/PacMan_Canva',
-                categories: ['ARCADE', 'SPORTS'],
-                image: 'https://github.com/8-bitArcade/Telegram-Games-HUB/blob/main/assets/games/PacMan_Canva.png' // Replace with actual game image
-            },
-            {
-                id: 'breakout',
-                title: 'Brick Breaker',
-                icon: '🧱',
-                points: 60,
-                url: './games/breakout/index.html',
-                categories: ['ARCADE', 'ACTION'],
-                image: '' // Replace with actual game image
-            },
-            {
-                id: 'Pidgeon Ascent',
-                title: 'Pidgeon Ascent',
+                id: 'pigeon_ascent',
+                title: 'Pigeon Ascent',
                 icon: '🐦',
                 points: 80,
-                url: 'https://github.com/8-bitArcade/Telegram-Games-HUB/tree/main/games/PidgeonAsent',
+                url: './games/PidgeonAsent/index.html',
                 categories: ['ARCADE', 'ENDLESS'],
-                image: './assets/games/Pidgeoon_Ascent.png'
-            },
-            {
-                id: 'space',
-                title: 'Space Shooter',
-                icon: '🚀',
-                points: 90,
-                url: './games/space/index.html',
-                categories: ['SHOOTER', 'ACTION'],
-                image: './assets/games/space-preview.jpg' // Replace with actual game image
+                image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/Pidgeoon_Ascent.png'
             }
         ];
 
@@ -952,61 +854,5 @@
         }
 
         function updateUserDisplay() {
-            document.getElementById('userPoints').textContent = userData.points.toLocaleString();
             document.getElementById('totalPoints').textContent = userData.totalPoints.toLocaleString();
-            document.getElementById('gamesPlayed').textContent = userData.gamesPlayed;
-            document.getElementById('referrals').textContent = userData.referrals;
-            document.getElementById('bonusPoints').textContent = userData.bonusPoints.toLocaleString();
-            document.getElementById('referralCode').textContent = userData.referralCode;
-        }
-
-        function renderGames() {
-            const gamesGrid = document.getElementById('gamesGrid');
-            gamesGrid.innerHTML = '';
-
-            games.forEach(game => {
-                const gameCard = document.createElement('div');
-                gameCard.className = 'game-card';
-                
-                const categoriesHTML = game.categories.map(cat => 
-                    `<span class="game-category-tag">${cat}</span>`
-                ).join('');
-                
-                gameCard.innerHTML = `
-                    <div class="game-image" style="background-image: url('${game.image}');">
-                        <div class="game-image-icon">${game.icon}</div>
-                    </div>
-                    <div class="game-content">
-                        <div class="game-header">
-                            <h3 class="game-title">${game.title}</h3>
-                            <div class="game-categories">${categoriesHTML}</div>
-                        </div>
-                        <div class="game-footer">
-                            <div class="game-points">+${game.points} pts</div>
-                            <button class="play-button" onclick="playGame('${game.id}', '${game.url}', '${game.title}', ${game.points})">
-                                Play
-                            </button>
-                        </div>
-                    </div>
-                `;
-                gamesGrid.appendChild(gameCard);
-            });
-        }
-
-        function playGame(gameId, gameUrl, gameTitle, points) {
-            // Award points for playing
-            userData.points += points;
-            userData.totalPoints += points;
-            userData.gamesPlayed++;
-            
-            saveUserData();
-            updateUserDisplay();
-            
-            // Send analytics to Telegram
-            if (tg) {
-                tg.sendData(JSON.stringify({
-                    action: 'game_started',
-                    gameId: gameId,
-                    gameTitle: gameTitle,
-                    pointsEarned: points,
-                    user: user
+            document.getElementByI
