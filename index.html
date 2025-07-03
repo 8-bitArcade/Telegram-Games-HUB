@@ -815,7 +815,7 @@
             font-weight: 700;
         }
 
-        /* Loading Screen */
+        /* ROBUST LOADING SCREEN - FIXED */
         .loading {
             position: fixed;
             top: 0;
@@ -827,15 +827,17 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 9999;
             opacity: 1;
             visibility: visible;
-            transition: all 0.3s ease;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            pointer-events: auto;
         }
 
         .loading.hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
         }
 
         .loading-spinner {
@@ -1154,6 +1156,113 @@
     </div>
 
     <script>
+        // ROBUST LOADING SCREEN MANAGEMENT
+        function hideLoadingScreen() {
+            const loading = document.getElementById('loading');
+            if (!loading) {
+                console.log('❌ Loading screen element not found');
+                return;
+            }
+
+            let hiddenSuccessfully = false;
+
+            // METHOD 1: CSS Transition Hide
+            const method1 = () => {
+                console.log('🔧 Method 1: Adding .hidden class with CSS transition');
+                loading.classList.add('hidden');
+                
+                // Check if method 1 worked after transition time
+                setTimeout(() => {
+                    if (loading.style.display !== 'none' && !hiddenSuccessfully) {
+                        console.log('⚠️ Method 1 may not have worked, checking opacity...');
+                        const computedStyle = window.getComputedStyle(loading);
+                        if (parseFloat(computedStyle.opacity) > 0.1) {
+                            console.log('❌ Method 1 failed - opacity still high');
+                            method2();
+                        } else {
+                            console.log('✅ Method 1 successful - opacity is low');
+                            hiddenSuccessfully = true;
+                        }
+                    }
+                }, 600); // Check after transition completes
+            };
+
+            // METHOD 2: Direct Style Override (Backup)
+            const method2 = () => {
+                if (hiddenSuccessfully) return;
+                console.log('🔧 Method 2: Direct style override');
+                
+                loading.style.opacity = '0';
+                loading.style.visibility = 'hidden';
+                loading.style.pointerEvents = 'none';
+                loading.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
+                
+                // Verify method 2 worked
+                setTimeout(() => {
+                    const computedStyle = window.getComputedStyle(loading);
+                    if (parseFloat(computedStyle.opacity) > 0.1) {
+                        console.log('❌ Method 2 failed - trying method 3');
+                        method3();
+                    } else {
+                        console.log('✅ Method 2 successful');
+                        hiddenSuccessfully = true;
+                    }
+                }, 350);
+            };
+
+            // METHOD 3: DOM Removal (Final Backup)
+            const method3 = () => {
+                if (hiddenSuccessfully) return;
+                console.log('🔧 Method 3: Removing from DOM entirely');
+                
+                if (loading && loading.parentNode) {
+                    loading.parentNode.removeChild(loading);
+                    console.log('✅ Method 3 successful - loading screen removed from DOM');
+                    hiddenSuccessfully = true;
+                } else {
+                    console.log('❌ Method 3 failed - element or parent not found');
+                }
+            };
+
+            // Execute Method 1 immediately
+            method1();
+
+            // METHOD 2 as backup after 100ms if method 1 seems to fail
+            setTimeout(() => {
+                if (!hiddenSuccessfully) {
+                    method2();
+                }
+            }, 100);
+
+            // METHOD 3 as final backup after 1 second
+            setTimeout(() => {
+                if (!hiddenSuccessfully) {
+                    method3();
+                }
+            }, 1000);
+
+            // EMERGENCY FALLBACK: Force hide after 2 seconds no matter what
+            setTimeout(() => {
+                const stillVisible = document.getElementById('loading');
+                if (stillVisible) {
+                    console.log('🚨 EMERGENCY: Force hiding loading screen after 2 seconds');
+                    stillVisible.style.display = 'none !important';
+                    stillVisible.remove();
+                }
+            }, 2000);
+        }
+
+        // IMMEDIATE LOADING SCREEN HIDE ON DOM READY
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('📄 DOMContentLoaded - hiding loading screen immediately');
+                hideLoadingScreen();
+            });
+        } else {
+            console.log('📄 Document already loaded - hiding loading screen immediately');
+            hideLoadingScreen();
+        }
+
         // ENHANCED AUDIO SYSTEM WITH BACKGROUND MUSIC
         let neonAudio = null;
         let backgroundMusic = null;
@@ -1558,17 +1667,18 @@
                 
                 console.log('Hub initialized successfully');
                 
+                // Hide loading screen after initialization
+                setTimeout(() => {
+                    hideLoadingScreen();
+                }, 100);
+                
             } catch (error) {
                 console.error('Error initializing hub:', error);
+                // Even if there's an error, hide the loading screen
+                setTimeout(() => {
+                    hideLoadingScreen();
+                }, 500);
             }
-            
-            // Hide loading screen
-            setTimeout(() => {
-                const loading = document.getElementById('loading');
-                if (loading) {
-                    loading.classList.add('hidden');
-                }
-            }, 1500);
         }
 
         // Start neon flicker audio immediately on page load
@@ -1973,18 +2083,45 @@
             console.error('JavaScript Error:', e.error);
         });
 
-        // Initialize when DOM is ready
+        // MULTIPLE INITIALIZATION TRIGGERS FOR MAXIMUM RELIABILITY
+        
+        // Trigger 1: DOMContentLoaded
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing hub...');
+            console.log('🎯 Trigger 1: DOMContentLoaded fired - initializing hub');
             initHub();
         });
         
-        // Also initialize if document is already loaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initHub);
-        } else {
-            initHub();
+        // Trigger 2: Window load (as backup)
+        window.addEventListener('load', function() {
+            console.log('🎯 Trigger 2: Window load fired - ensuring hub is initialized');
+            // Only initialize if not already done
+            if (!document.querySelector('.games-grid').innerHTML) {
+                console.log('🎯 Hub not yet initialized, running initialization');
+                initHub();
+            } else {
+                console.log('🎯 Hub already initialized, just hiding loading screen');
+                hideLoadingScreen();
+            }
+        });
+        
+        // Trigger 3: Immediate check if DOM already ready
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            console.log('🎯 Trigger 3: Document already ready - initializing immediately');
+            setTimeout(() => {
+                initHub();
+            }, 50);
         }
+        
+        // Trigger 4: Fallback timer (emergency initialization after 2 seconds)
+        setTimeout(() => {
+            const gamesGrid = document.getElementById('gamesGrid');
+            if (!gamesGrid || !gamesGrid.innerHTML.trim()) {
+                console.log('🚨 Trigger 4: Emergency initialization after 2 seconds');
+                initHub();
+            }
+            // Always try to hide loading screen as emergency fallback
+            hideLoadingScreen();
+        }, 2000);
 
         // Handle visibility change to pause/resume
         document.addEventListener('visibilitychange', () => {
