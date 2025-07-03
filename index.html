@@ -380,15 +380,15 @@
         }
 
         .game-content {
-            padding: var(--spacing-md) var(--spacing-lg); /* INCREASED horizontal padding for better button spacing */
-            height: 120px;
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg); /* INCREASED bottom padding for round button */
+            height: 140px; /* INCREASED height to accommodate round button */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .game-header {
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs); /* REDUCED margin to save space */
         }
 
         .game-title {
@@ -396,14 +396,14 @@
             font-weight: 700;
             margin-bottom: var(--spacing-xs);
             color: var(--text-primary);
-            line-height: 1.2;
+            line-height: 1.1; /* TIGHTER line height to save space */
         }
 
         .game-categories {
             display: flex;
             gap: var(--spacing-xs);
             flex-wrap: wrap;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs); /* REDUCED margin to save space */
         }
 
         .game-category-tag {
@@ -421,7 +421,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 var(--spacing-sm); /* ADD padding to footer for more button space */
+            padding: 0; /* REMOVED extra padding since we have more bottom padding now */
+            margin-top: auto; /* PUSH footer to bottom */
         }
 
         .game-points {
@@ -795,7 +796,7 @@
             }
             
             .game-card {
-                height: 260px;
+                height: 280px; /* INCREASED height for mobile */
                 width: 100%;
                 max-width: none;
             }
@@ -805,8 +806,8 @@
             }
             
             .game-content {
-                padding: var(--spacing-sm) var(--spacing-md); /* Adjust for mobile */
-                height: 140px;
+                padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md); /* Adjust for mobile with extra bottom padding */
+                height: 160px; /* INCREASED height for mobile round buttons */
             }
             
             .section-title {
@@ -843,7 +844,7 @@
             }
             
             .game-card {
-                height: 280px;
+                height: 300px; /* INCREASED height for single column mobile */
                 width: 100%;
                 max-width: none;
                 margin: 0 auto;
@@ -854,8 +855,8 @@
             }
             
             .game-content {
-                padding: var(--spacing-md);
-                height: 120px;
+                padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg); /* Extra bottom padding for mobile */
+                height: 140px; /* INCREASED height for mobile round buttons */
             }
             
             .section-title {
@@ -893,6 +894,10 @@
                 width: 55px;
                 height: 55px;
                 font-size: 0.65rem;
+            }
+            
+            .game-card {
+                height: 290px; /* Slightly less height for very small screens */
             }
         }
     </style>
