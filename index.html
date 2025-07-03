@@ -402,24 +402,85 @@
             font-weight: 600;
         }
 
-        .play-button {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+.play-button {
+    /* BIGGER SIZE */
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 12px 24px; /* INCREASED from 6px 12px */
+    border-radius: 12px; /* INCREASED border radius */
+    font-size: 1rem; /* INCREASED from 0.8rem */
+    font-weight: 700; /* BOLDER text */
+    cursor: pointer;
+    transition: all 0.1s ease; /* FASTER transition for responsiveness */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 80px; /* Minimum button width */
+    
+    /* EMBOSSED EFFECT */
+    position: relative;
+    box-shadow: 
+        0 6px 0 #0080cc, /* Bottom shadow for depth */
+        0 8px 15px rgba(0, 164, 255, 0.3), /* Outer glow */
+        inset 0 1px 0 rgba(255, 255, 255, 0.3), /* Top highlight */
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2); /* Bottom inner shadow */
+    
+    /* 3D APPEARANCE */
+    background: linear-gradient(
+        135deg,
+        #00A4FF 0%,
+        #0084cc 50%,
+        #0000FF 100%
+    );
+    
+    /* TEXT SHADOW FOR DEPTH */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
 
-        .play-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 164, 255, 0.4);
-        }
+/* HOVER STATE */
+.play-button:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 
+        0 8px 0 #0080cc, /* Increased depth */
+        0 12px 20px rgba(0, 164, 255, 0.4), /* Bigger glow */
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* ACTIVE/PRESSED STATE - THE SATISFYING CLICK */
+.play-button:active {
+    transform: translateY(4px); /* BUTTON DEPRESSES */
+    box-shadow: 
+        0 2px 0 #0080cc, /* Reduced depth when pressed */
+        0 4px 8px rgba(0, 164, 255, 0.2), /* Smaller glow */
+        inset 0 1px 3px rgba(0, 0, 0, 0.3), /* Inner pressed shadow */
+        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    
+    /* SLIGHTLY DARKER WHEN PRESSED */
+    background: linear-gradient(
+        135deg,
+        #0080cc 0%,
+        #006bb3 50%,
+        #0000e6 100%
+    );
+}
+
+    /* LOADING STATE ANIMATION */
+    .play-button.loading {
+        pointer-events: none; /* Prevent multiple clicks */
+        background: linear-gradient(
+            135deg,
+            #666 0%,
+            #555 50%,
+            #444 100%
+        );
+        animation: buttonPulse 1s ease-in-out infinite alternate;
+    }
+    
+    @keyframes buttonPulse {
+        0% { opacity: 0.7; }
+        100% { opacity: 1; }
+    }
 
         /* Social Media Section */
         .social-grid {
@@ -724,6 +785,12 @@
     .profile-stats {
         grid-template-columns: repeat(2, 1fr);
     }
+    
+    .play-button {
+        padding: 10px 20px; /* Slightly smaller on tablet */
+        font-size: 0.9rem;
+        min-width: 70px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -758,6 +825,13 @@
     .content-section {
         padding: var(--spacing-md);
     }
+    
+    .play-button {
+        padding: 12px 20px; /* Keep good size on phone */
+        font-size: 0.9rem;
+        min-width: 75px;
+        border-radius: 10px;
+    }
 }
 
 /* Extra small phones - Keep single column but optimize */
@@ -779,6 +853,13 @@
     
     .game-content {
         height: 140px; /* More content space */
+    }
+
+    .play-button {
+        padding: 10px 16px; /* Compact for small screens */
+        font-size: 0.8rem;
+        min-width: 65px;
+        border-radius: 8px;
     }
 }
     
@@ -810,6 +891,7 @@
         <!-- Games will be populated by JavaScript -->
     </div>
 </section>
+        
 
         <!-- Social Media Section -->
         <section class="content-section" id="socialSection">
