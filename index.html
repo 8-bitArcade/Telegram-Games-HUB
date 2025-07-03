@@ -344,7 +344,7 @@
             cursor: pointer;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            height: 280px;
+            height: 300px; /* INCREASED height for desktop to accommodate round button */
             width: 100%;
             max-width: none;
         }
@@ -467,8 +467,8 @@
         }
 
         .game-content {
-            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg); /* INCREASED bottom padding for round button */
-            height: 140px; /* INCREASED height to accommodate round button */
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xl); /* INCREASED bottom padding for desktop round button */
+            height: 160px; /* INCREASED height to accommodate round button on desktop */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -859,13 +859,13 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* AUDIO MUTE BUTTON */
+        /* AUDIO MUTE BUTTON - REPOSITIONED */
         .audio-mute-button {
             position: fixed;
-            top: 20px;
+            top: 80px; /* Moved down to be under the tabs */
             right: 20px;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: rgba(0, 164, 255, 0.2);
             border: 2px solid var(--primary-color);
@@ -874,10 +874,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            z-index: 200;
+            z-index: 150; /* Lower than header but higher than content */
             box-shadow: 0 4px 15px rgba(0, 164, 255, 0.3);
         }
 
@@ -1177,8 +1177,41 @@
                 backgroundMusic.preload = 'auto';
                 backgroundMusic.loop = true;
                 
-                // Start playing background music (muted initially)
-                backgroundMusic.play().catch(e => console.log('Background music autoplay blocked:', e));
+                // Enhanced mobile audio initialization
+                const initBackgroundMusic = () => {
+                    if (backgroundMusic.paused) {
+                        // For mobile devices, we need user interaction to start audio
+                        backgroundMusic.play().then(() => {
+                            console.log('Background music started successfully');
+                            backgroundMusic.volume = 0; // Reset to silent for scroll effect
+                        }).catch(e => {
+                            console.log('Background music autoplay blocked, will start on user interaction:', e);
+                        });
+                    }
+                };
+                
+                // Try immediate play (works on desktop)
+                initBackgroundMusic();
+                
+                // Set up user interaction handlers for mobile
+                const enableBackgroundMusicOnInteraction = () => {
+                    if (backgroundMusic.paused) {
+                        backgroundMusic.play().then(() => {
+                            console.log('Background music started via user interaction');
+                            updateScrollFade(); // Apply current scroll position volume
+                        }).catch(e => console.log('Background music play failed:', e));
+                    }
+                    
+                    // Remove listeners after first successful interaction
+                    document.removeEventListener('touchstart', enableBackgroundMusicOnInteraction);
+                    document.removeEventListener('click', enableBackgroundMusicOnInteraction);
+                    document.removeEventListener('scroll', enableBackgroundMusicOnInteraction);
+                };
+                
+                // Multiple interaction points for mobile compatibility
+                document.addEventListener('touchstart', enableBackgroundMusicOnInteraction, { once: true });
+                document.addEventListener('click', enableBackgroundMusicOnInteraction, { once: true });
+                document.addEventListener('scroll', enableBackgroundMusicOnInteraction, { once: true });
             }
             
             // Initialize mute button
