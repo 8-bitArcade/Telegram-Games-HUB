@@ -103,6 +103,145 @@
             }
         }
 
+        /* AUDIO CONSENT SCREEN - NEW */
+        .audio-consent-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .audio-consent-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .consent-card {
+            background: var(--gradient-card);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 164, 255, 0.3);
+            animation: consentPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes consentPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .consent-logo {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-lg);
+            animation: logoRotate 3s ease-in-out infinite;
+        }
+
+        @keyframes logoRotate {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .consent-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .consent-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.6;
+        }
+
+        .consent-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .consent-button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .consent-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .consent-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .consent-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 164, 255, 0.5);
+        }
+
+        .consent-button.secondary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .consent-button.secondary:hover {
+            background: rgba(0, 164, 255, 0.1);
+        }
+
+        .audio-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .audio-indicator-icon {
+            font-size: 1.2rem;
+        }
+
         .container {
             max-width: 100%;
             padding: 0;
@@ -207,8 +346,6 @@
                 0 0 20px var(--primary-color),
                 0 0 30px var(--primary-color),
                 inset 0 0 10px rgba(0, 255, 255, 0.1);
-            
-            /* REMOVED AUTO ANIMATION - NOW CONTROLLED BY JAVASCRIPT */
             
             /* FONT STYLING */
             font-family: 'Orbitron', 'Open Sans', monospace;
@@ -344,7 +481,7 @@
             cursor: pointer;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            height: 320px; /* FURTHER INCREASED height for desktop to accommodate round button with more space */
+            height: 320px;
             width: 100%;
             max-width: none;
         }
@@ -370,7 +507,7 @@
             border-color: var(--primary-color);
         }
 
-        /* GAME LOADING OVERLAY - NEW */
+        /* GAME LOADING OVERLAY */
         .game-loading-overlay {
             position: absolute;
             top: 0;
@@ -408,29 +545,14 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 0 0 10px rgba(0, 164, 255, 0.5);
-            animation: gameLoadingPulse 1.5s ease-in-out infinite alternate;
-            
-            /* PIXELATED FONT */
             font-family: 'Courier New', 'Monaco', 'Menlo', 'Consolas', monospace;
             image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-            
-            /* ADDITIONAL PIXELATED STYLING */
-            font-feature-settings: "liga" 0;
-            text-rendering: geometricPrecision;
             -webkit-font-smoothing: none;
-            -moz-osx-font-smoothing: unset;
         }
 
         @keyframes gameLoadingSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        @keyframes gameLoadingPulse {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; }
         }
 
         .game-image {
@@ -443,7 +565,7 @@
             justify-content: center;
             font-size: 3rem;
             color: white;
-            position: relative; /* ENSURE relative positioning for overlay */
+            position: relative;
             overflow: hidden;
             background-size: cover;
             background-position: center;
@@ -460,22 +582,16 @@
             background: rgba(0, 0, 0, 0.2);
         }
 
-        .game-image-icon {
-            position: relative;
-            z-index: 2;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
-        }
-
         .game-content {
-            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xxl); /* MUCH MORE bottom padding for desktop round button */
-            height: 180px; /* FURTHER INCREASED height for desktop round button */
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xxl);
+            height: 180px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .game-header {
-            margin-bottom: var(--spacing-xs); /* REDUCED margin to save space */
+            margin-bottom: var(--spacing-xs);
         }
 
         .game-title {
@@ -483,14 +599,14 @@
             font-weight: 700;
             margin-bottom: var(--spacing-xs);
             color: var(--text-primary);
-            line-height: 1.1; /* TIGHTER line height to save space */
+            line-height: 1.1;
         }
 
         .game-categories {
             display: flex;
             gap: var(--spacing-xs);
             flex-wrap: wrap;
-            margin-bottom: var(--spacing-xs); /* REDUCED margin to save space */
+            margin-bottom: var(--spacing-xs);
         }
 
         .game-category-tag {
@@ -508,8 +624,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0; /* REMOVED extra padding since we have more bottom padding now */
-            margin-top: auto; /* PUSH footer to bottom */
+            padding: 0;
+            margin-top: auto;
         }
 
         .game-points {
@@ -521,12 +637,11 @@
             font-weight: 600;
         }
 
-        /* ROUND START BUTTON - MAIN CHANGES HERE */
+        /* ROUND START BUTTON */
         .play-button {
-            /* ROUND SHAPE */
             width: 70px;
             height: 70px;
-            border-radius: 50%; /* Perfect circle */
+            border-radius: 50%;
             background: var(--gradient-primary);
             color: white;
             border: none;
@@ -536,33 +651,24 @@
             transition: all 0.1s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            
-            /* CENTER THE TEXT */
             display: flex;
             align-items: center;
             justify-content: center;
-            
-            /* EMBOSSED EFFECT */
             position: relative;
             box-shadow: 
                 0 6px 0 #0080cc,
                 0 8px 15px rgba(0, 164, 255, 0.3),
                 inset 0 2px 0 rgba(255, 255, 255, 0.3),
                 inset 0 -2px 0 rgba(0, 0, 0, 0.2);
-            
-            /* 3D APPEARANCE */
             background: linear-gradient(
                 135deg,
                 #00A4FF 0%,
                 #0084cc 50%,
                 #0000FF 100%
             );
-            
-            /* TEXT SHADOW FOR DEPTH */
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
-        /* HOVER STATE */
         .play-button:hover {
             transform: translateY(-3px);
             box-shadow: 
@@ -572,7 +678,6 @@
                 inset 0 -2px 0 rgba(0, 0, 0, 0.2);
         }
 
-        /* ACTIVE/PRESSED STATE */
         .play-button:active {
             transform: translateY(4px);
             box-shadow: 
@@ -580,7 +685,6 @@
                 0 4px 8px rgba(0, 164, 255, 0.2),
                 inset 0 1px 3px rgba(0, 0, 0, 0.3),
                 inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-            
             background: linear-gradient(
                 135deg,
                 #0080cc 0%,
@@ -588,8 +692,6 @@
                 #0000e6 100%
             );
         }
-
-        /* REMOVED LOADING STATE - NO LONGER NEEDED */
 
         /* Social Media Section */
         .social-grid {
@@ -630,6 +732,35 @@
             font-size: 1.8rem;
             color: white;
             box-shadow: 0 8px 25px rgba(0, 164, 255, 0.4);
+            background-size: 30px 30px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* REAL SOCIAL MEDIA LOGOS */
+        .social-icon.x-logo {
+            background: #000000;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMTc4LjU3IDEyNy43NjNMMjkwLjUgNDBIMjYzLjY4MUwxNjYuNzg5IDExMi40TDY4Ljk1IDQwSDBMMTE3IDEzNS4zNDVMMCAxNTlIMjYuNjkxTDEyOC44MzYgMTg3LjU3N0wyMzMuMDUgMjU5SDMwMkwxNzguNTQzIDEyNy43NjNIMTc4LjU3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
+        }
+
+        .social-icon.discord-logo {
+            background: #5865F2;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5LjI3IDUuMzNDMTcuOTQgNC43MSAxNi41IDQuMjYgMTUgNC4wM0MxNC44NyA0LjI4IDE0LjcgNC42NyAxNC41OCA0Ljk2QzEzLjAwMSA0Ljc0IDExLjUxIDQuNzQgOS45OTcgNC45NkM5Ljg3NyA0LjY3IDkuNzE3IDQuMjggOS41ODcgNC4wM0M4LjA4NyA0LjI2IDYuNjQ3IDQuNzEgNS4zMTcgNS4zM0MzLjAwNyA5LjA0IDIuMzcgMTIuNjcgMi43IDIxQzQuMjggMjEuOTggNS45MyAyMi41NyA3LjY4IDIyLjM1QzguMTEgMjEuOCA4LjQ4IDIxLjIgOC43OCAyMC41N0M4LjI4IDIwLjM2IDcuODEgMjAuMDkgNy4zOCAxOS43N0M3LjQ5IDE5LjY5IDcuNiAxOS42IDcuNzAgMTkuNTNDMTEuNCAyMS4yNSAxNS42IDIxLjI1IDE5LjMgMTkuNTNDMTkuNCAxOS42IDE5LjUxIDE5LjY5IDE5LjYyIDE5Ljc3QzE5LjE5IDIwLjA5IDE4LjcyIDIwLjM2IDE4LjIyIDIwLjU3QzE4LjUyIDIxLjIgMTguODkgMjEuOCAxOS4zMiAyMi4zNUMyMS4wNyAyMi41NyAyMi43MiAyMS45OCAyNC4zIDIxQzI0LjcgMTcuNCAyMy41IDE0Ljg4IDE5LjI3IDUuMzNaTTguMzYgMTcuNEM3LjcxIDE3LjQgNy4yNCAxNi43NiA3LjI0IDE1Ljk5QzcuMjQgMTUuMjIgNy43IDE0LjU4IDguMzYgMTQuNThDOS4wMiAxNC41OCA5LjQ5IDE1LjIyIDkuNDggMTUuOTlDOS40OCAxNi43NiA5LjAyIDE3LjQgOC4zNiAxNy40WlsxNS42MyAxNy40QzE0Ljk4IDE3LjQgMTQuNTEgMTYuNzYgMTQuNTEgMTUuOTlDMTQuNTEgMTUuMjIgMTQuOTcgMTQuNTggMTUuNjMgMTQuNThDMTYuMjkgMTQuNTggMTYuNzYgMTUuMjIgMTYuNzUgMTUuOTlDMTYuNzUgMTYuNzYgMTYuMjkgMTcuNCAxNS42MyAxNy40WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
+        }
+
+        .social-icon.facebook-logo {
+            background: #1877F2;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI0IDEyQzI0IDUuMzcyNTggMTguNjI3NCAwIDEyIDBTMCA1LjM3MjU4IDAgMTJDMCAxNy45ODk1IDQuMzg4MTEgMjIuOTU0MSAxMCAyMy44MjkzVjE1LjQ2ODhINy4wMTU2M1YxMkgxMFY5LjM1NjI1QzEwIDYuMzQ4NzUgMTEuOTE1NiA0LjY4NzUgMTQuNjU2MyA0LjY4NzVDMTUuOTcwMyA0LjY4NzUgMTcuMzQzOCA0LjkyMTg4IDE3LjM0MzggNC45MjE4OFY3Ljg3NUM0LjU5MDYgNy44NzUgMTQuMTQwNiA4LjgwMDc4IDE0LjE0MDYgOS43NDkyMlYxMkgxNy4yMDMxTDE2LjY3MDEgMTUuNDY4OEgxNC4xNDA2VjIzLjgyOTNDMTkuNjExOSAyMi45NTQxIDI0IDE3Ljk4OTUgMjQgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K');
+        }
+
+        .social-icon.instagram-logo {
+            background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDIuMTYzQzE1LjIwNCAyLjE2MyAxNS41ODQgMi4xNzUgMTYuODUgMi4yMzNDMTguMTAyIDIuMjkgMTguNzk3IDIuNDczIDE5LjMxIDIuNzExQzE5LjY4NSAyLjg4MiAyMC4wOTYgMy4xOTkgMjAuNDgyIDMuNTE4QzIwLjgwMSAzLjkwNCAyMS4xMTggNC4zMTUgMjEuMjg5IDQuNjlDMjEuNTI3IDUuMjAzIDIxLjcxIDUuODk4IDIxLjc2NyA3LjE1QzIxLjgyNSA4LjQxNiAyMS44MzcgOC43OTYgMjEuODM3IDEyUzIxLjgyNSAxNS41ODQgMjEuNzY3IDE2Ljg1QzIxLjcxIDE4LjEwMiAyMS41MjcgMTguNzk3IDIxLjI4OSAxOS4zMUMyMS4xMTggMTkuNjg1IDIwLjgwMSAyMC4wOTYgMjAuNDgyIDIwLjQ4MkMyMC4wOTYgMjAuODAxIDE5LjY4NSAyMS4xMTggMTkuMzEgMjEuMjg5QzE4Ljc5NyAyMS41MjcgMTguMTAyIDIxLjcxIDE2Ljg1IDIxLjc2N0MxNS41ODQgMjEuODI1IDE1LjIwNCAyMS44MzcgMTIgMjEuODM3UzguNDE2IDIxLjgyNSA3LjE1IDIxLjc2N0M1Ljg5OCAyMS43MSA1LjIwMyAyMS41MjcgNC42OSAyMS4yODlDNC4zMTUgMjEuMTE4IDMuOTA0IDIwLjgwMSAzLjUxOCAyMC40ODJDMy4xOTkgMjAuMDk2IDIuODgyIDE5LjY4NSAyLjcxMSAxOS4zMUMyLjQ3MyAxOC43OTcgMi4yOSAxOC4xMDIgMi4yMzMgMTYuODVDMi4xNzUgMTUuNTg0IDIuMTYzIDE1LjIwNCAyLjE2MyAxMlMyLjE3NSA4LjQxNiAyLjIzMyA3LjE1QzIuMjkgNS44OTggMi40NzMgNS4yMDMgMi43MTEgNC42OUMyLjg4MiA0LjMxNSAzLjE5OSAzLjkwNCAzLjUxOCAzLjUxOEMzLjkwNCAzLjE5OSA0LjMxNSAyLjg4MiA0LjY5IDIuNzExQzUuMjAzIDIuNDczIDUuODk4IDIuMjkgNy4xNSAyLjIzM0M4LjQxNiAyLjE3NSA4Ljc5NiAyLjE2MyAxMiAyLjE2M1pNMTIgMEM4LjY3NCAwIDguMzMzIDAuMDE0IDcuMDUzIDAuMDcyQzUuNzc1IDAuMTMgNC45MDUgMC4zMzMgNC4xNCAwLjYzQzMuMzUxIDAuOTM2IDIuNjgxIDEuMzQ3IDIuMDE0IDIuMDE0QzEuMzQ3IDIuNjgxIDAuOTM2IDMuMzUxIDAuNjMgNC4xNEMwLjMzMyA0LjkwNSAwLjEzIDUuNzc1IDAuMDcyIDcuMDUzQzAuMDE0IDguMzMzIDAgOC42NzQgMCAxMlMwLjAxNCAxNS42NjcgMC4wNzIgMTYuOTQ3QzAuMTMgMTguMjI1IDAuMzMzIDE5LjA5NSAwLjYzIDE5Ljg2QzAuOTM2IDIwLjY0OSAxLjM0NyAyMS4zMTkgMi4wMTQgMjEuOTg2QzIuNjgxIDIyLjY1MyAzLjM1MSAyMy4wNjQgNC4xNCAyMy4zN0M0LjkwNSAyMy42NjcgNS43NzUgMjMuODcgNy4wNTMgMjMuOTI4QzguMzMzIDIzLjk4NiA4LjY3NCAyNCA1MiAyNFMxNS42NjcgMjMuOTg2IDE2Ljk0NyAyMy45MjhDMTguMjI1IDIzLjg3IDE5LjA5NSAyMy42NjcgMTkuODYgMjMuMzdDMjAuNjQ5IDIzLjA2NCAyMS4zMTkgMjIuNjUzIDIxLjk4NiAyMS45ODZDMjIuNjUzIDIxLjMxOSAyMy4wNjQgMjAuNjQ5IDIzLjM3IDE5Ljg2QzIzLjY2NyAxOS4wOTUgMjMuODcgMTguMjI1IDIzLjkyOCAxNi45NDdDMjMuOTg2IDE1LjY2NyAyNCAxNS4zMjYgMjQgMTJTMjMuOTg2IDguMzMzIDIzLjkyOCA3LjA1M0MyMy44NyA1Ljc3NSAyMy42NjcgNC45MDUgMjMuMzcgNC4xNEMyMy4wNjQgMy4zNTEgMjIuNjUzIDIuNjgxIDIxLjk4NiAyLjAxNEMyMS4zMTkgMS4zNDcgMjAuNjQ5IDAuOTM2IDE5Ljg2IDAuNjNDMTkuMDk1IDAuMzMzIDE4LjIyNSAwLjEzIDE2Ljk0NyAwLjA3MkMxNS42NjcgMC4wMTQgMTUuMzI2IDAgMTIgMFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMiA1Ljg0QTYuMTYgNi4xNiAwIDAgMCA1Ljg0IDEyIDYuMTYgNi4xNiAwIDAgMCAxMiAxOC4xNkE2LjE2IDYuMTYgMCAwIDAgMTguMTYgMTIgNi4xNiA2LjE2IDAgMCAwIDEyIDUuODRaTTEyIDE2LjAwMUE0LjAwMSA0LjAwMSAwIDEgMSAxNi4wMDEgMTIgNCAwIDAgMSAxMiAxNi4wMDFaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTkuODQgNS41OTRBMS44NDQgMS44NDQgMCAxIDAgMTguMDAyIDMuNzQ5QTEuODQ2IDEuODQ2IDAgMCAwIDE5Ljg0IDUuNTk0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
+        }
+
+        .social-icon.telegram-logo {
+            background: #0088CC;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIzLjU2MDggMi4yOEMyMy4yNDA4IDEuOTYgMjIuODQwOCAxLjc2IDIyLjQwMDggMS43NkMyMi4wODA4IDEuNzYgMjEuNzIwOCAxLjg0IDIxLjQ0MDggMi4wNEwyLjA0MDggMTAuNTJDMS41MjA4IDEwLjggMS4yNDA4IDExLjMyIDEuMjAwOCAxMS44OEMxLjE2MDggMTIuNDQgMS40MDA4IDEyLjk2IDEuODgwOCAxMy4yOEw3LjA0MDggMTYuNDhMOC45NjA4IDIxLjJDOS4xNjA4IDIxLjY4IDkuNTIwOCAyMi4wNCA5Ljk2MDggMjIuMjRDMTAuMjAwOCAyMi4zNiAxMC40NDA4IDIyLjQgMTAuNzIwOCAyMi40QzExLjA0MDggMjIuNCAxMS4zNjA4IDIyLjMyIDExLjY0MDggMjIuMTZDMTIuMDQwOCAyMS45NiAxMi4zNjA4IDIxLjY0IDEyLjU2MDggMjEuMjhMMTQuMjgwOCAxOC4wOEwyMC44ODA4IDE1LjJDMjEuMzYwOCAxNC45NiAyMS43MjA4IDE0LjUyIDIxLjg0MDggMTMuOTZDMjEuOTYwOCAxMy40IDIxLjgwMDggMTIuODQgMjEuNDQwOCAxMi40TDIwLjYwMDggMTEuNTJMMjMuNjAwOCA0LjY0QzIzLjg4MDggMy45NiAyMy43NjA4IDMuMjQgMjMuMzIwOCAyLjY4QzIzLjEyMDggMi40NCAyMi44ODA4IDIuMzYgMjIuNjAwOCAyLjI4WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
         }
 
         .social-title {
@@ -815,54 +946,10 @@
             font-weight: 700;
         }
 
-        /* Loading Screen */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--background-dark);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 1;
-            visibility: visible;
-            transition: all 0.3s ease;
-        }
-
-        .loading.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(0, 164, 255, 0.3);
-            border-top: 3px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .loading-text {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* AUDIO MUTE BUTTON - REPOSITIONED */
+        /* AUDIO MUTE BUTTON */
         .audio-mute-button {
             position: fixed;
-            top: 80px; /* Moved down to be under the tabs */
+            top: 80px;
             right: 20px;
             width: 45px;
             height: 45px;
@@ -871,13 +958,13 @@
             border: 2px solid var(--primary-color);
             color: var(--primary-color);
             cursor: pointer;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             font-size: 1.1rem;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            z-index: 150; /* Lower than header but higher than content */
+            z-index: 150;
             box-shadow: 0 4px 15px rgba(0, 164, 255, 0.3);
         }
 
@@ -898,6 +985,7 @@
             background: rgba(255, 107, 53, 0.3);
             box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
         }
+
         @media (max-width: 768px) {
             .games-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -906,9 +994,7 @@
             }
             
             .game-card {
-                height: 280px; /* INCREASED height for mobile */
-                width: 100%;
-                max-width: none;
+                height: 280px;
             }
             
             .game-image {
@@ -916,8 +1002,8 @@
             }
             
             .game-content {
-                padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md); /* Adjust for mobile with extra bottom padding */
-                height: 160px; /* INCREASED height for mobile round buttons */
+                padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+                height: 160px;
             }
             
             .section-title {
@@ -954,10 +1040,7 @@
             }
             
             .game-card {
-                height: 300px; /* INCREASED height for single column mobile */
-                width: 100%;
-                max-width: none;
-                margin: 0 auto;
+                height: 300px;
             }
             
             .game-image {
@@ -965,8 +1048,8 @@
             }
             
             .game-content {
-                padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg); /* Extra bottom padding for mobile */
-                height: 140px; /* INCREASED height for mobile round buttons */
+                padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+                height: 140px;
             }
             
             .section-title {
@@ -1007,7 +1090,7 @@
             }
             
             .game-card {
-                height: 290px; /* Slightly less height for very small screens */
+                height: 290px;
             }
         }
     </style>
@@ -1018,15 +1101,33 @@
     <!-- Background music soundtrack -->
     <audio id="background-music" src="assets/2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3" preload="auto" loop></audio>
 
+    <!-- AUDIO CONSENT SCREEN -->
+    <div class="audio-consent-screen" id="audioConsentScreen">
+        <div class="consent-card">
+            <div class="consent-logo">🎮</div>
+            <h1 class="consent-title">8Bit Game Hub</h1>
+            <p class="consent-subtitle">
+                Experience the ultimate retro gaming atmosphere with immersive sound effects and background music!
+            </p>
+            <div class="consent-buttons">
+                <button class="consent-button" id="enableAudioBtn">
+                    🔊 Enable Audio & Enter
+                </button>
+                <button class="consent-button secondary" id="muteAudioBtn">
+                    🔇 Enter Without Audio
+                </button>
+            </div>
+            <div class="audio-indicator">
+                <span class="audio-indicator-icon">🎵</span>
+                <span>You can toggle audio anytime with the button in the top-right</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Audio Mute Button -->
     <button class="audio-mute-button" id="audioMuteButton" title="Toggle Audio">
         🔊
     </button>
-
-    <div class="loading" id="loading">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading 8Bit Hub...</div>
-    </div>
 
     <div class="container">
         <!-- Header -->
@@ -1072,35 +1173,35 @@
             <!-- Social Media Links -->
             <div class="social-grid">
                 <div class="social-card" data-social="twitter">
-                    <div class="social-icon">🐦</div>
-                    <h3 class="social-title">Twitter</h3>
+                    <div class="social-icon x-logo"></div>
+                    <h3 class="social-title">X (Twitter)</h3>
                     <p class="social-description">Follow us for the latest updates, game releases, and community events.</p>
                     <div class="social-button">Follow @8Bit_arcade1</div>
                 </div>
 
                 <div class="social-card" data-social="discord">
-                    <div class="social-icon">💬</div>
+                    <div class="social-icon discord-logo"></div>
                     <h3 class="social-title">Discord</h3>
                     <p class="social-description">Join our gaming community and connect with players worldwide.</p>
                     <div class="social-button">Join Discord</div>
                 </div>
 
                 <div class="social-card" data-social="facebook">
-                    <div class="social-icon">📘</div>
+                    <div class="social-icon facebook-logo"></div>
                     <h3 class="social-title">Facebook</h3>
                     <p class="social-description">Like our page for news, game tips, and exclusive content.</p>
                     <div class="social-button">Like Page</div>
                 </div>
 
                 <div class="social-card" data-social="instagram">
-                    <div class="social-icon">📸</div>
+                    <div class="social-icon instagram-logo"></div>
                     <h3 class="social-title">Instagram</h3>
                     <p class="social-description">Follow for behind-the-scenes content and visual updates.</p>
                     <div class="social-button">Follow @8Bit</div>
                 </div>
 
                 <div class="social-card" data-social="telegram">
-                    <div class="social-icon">✈️</div>
+                    <div class="social-icon telegram-logo"></div>
                     <h3 class="social-title">Telegram Community</h3>
                     <p class="social-description">Join our official Telegram community for exclusive announcements.</p>
                     <div class="social-button">Join Community</div>
@@ -1108,97 +1209,57 @@
             </div>
         </section>
 
-             <!-- Profile Section -->
-            <section class="content-section" id="profileSection">
-              <h2 class="section-title">👤 Your Profile</h2>
-              <div class="profile-card">
+        <!-- Profile Section -->
+        <section class="content-section" id="profileSection">
+            <h2 class="section-title">👤 Your Profile</h2>
+            <div class="profile-card">
                 <div class="profile-stats">
-                  <div class="stat-item">
-                    <div class="stat-value" id="betaCredits">0</div>
-                    <div class="stat-label">Beta Credits</div>
-                  </div>
-                  <div class="stat-item">
-                    <div class="stat-value" id="gamesPlayed">0</div>
-                    <div class="stat-label">Games Played</div>
-                  </div>
-                  <div class="stat-item">
-                    <div class="stat-value" id="referrals">0</div>
-                    <div class="stat-label">Referrals Completed</div>
-                  </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="betaCredits">0</div>
+                        <div class="stat-label">Beta Credits</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="gamesPlayed">0</div>
+                        <div class="stat-label">Games Played</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="referrals">0</div>
+                        <div class="stat-label">Referrals Completed</div>
+                    </div>
                 </div>
-            
+                
                 <!-- How You Earn -->
                 <div style="text-align:center; margin: var(--spacing-lg) 0;">
-                  <p style="color: var(--text-muted); font-size:0.95rem;">
-                    <strong>How You Earn:</strong><br>
-                    🟦 <span style="color:#00A4FF;">Beta Credits</span>: +10 per Telegram game<br>
-                    ✈️ Social Sharing: +30 Beta Credits (max 2/day)<br>
-                    🤝 Referral Bonus: +50 Beta Credits when your friend logs in 5 days
-                  </p>
-                  <p style="color: var(--warning-color); font-size:0.9rem; margin-top: var(--spacing-sm);">
-                    🎁 Redemption details will be revealed soon—stay tuned!
-                  </p>
+                    <p style="color: var(--text-muted); font-size:0.95rem;">
+                        <strong>How You Earn:</strong><br>
+                        🟦 <span style="color:#00A4FF;">Beta Credits</span>: +10 per Telegram game<br>
+                        ✈️ Social Sharing: +30 Beta Credits (max 2/day)<br>
+                        🤝 Referral Bonus: +50 Beta Credits when your friend logs in 5 days
+                    </p>
+                    <p style="color: var(--warning-color); font-size:0.9rem; margin-top: var(--spacing-sm);">
+                        🎁 Redemption details will be revealed soon—stay tuned!
+                    </p>
                 </div>
-            
+                
                 <!-- Referral Section -->
                 <div class="referral-section">
-                  <h3 style="color: var(--text-secondary); margin-bottom: var(--spacing-md); text-align:center;">
-                    🤝 Invite Friends & Earn
-                  </h3>
-                  <p style="color: var(--text-muted); text-align:center; margin-bottom: var(--spacing-lg);">
-                    Invite your friends to play on Telegram.<br>
-                    Earn 50 Beta Credits when they log in for 5 days.
-                  </p>
-                  <div class="referral-code">
-                    <div class="referral-code-text" id="referralCode">8BIT-XXXX</div>
-                  </div>
-                  <div style="text-align:center;">
-                    <button class="copy-button" id="copyButton">📋 Copy Code</button>
-                    <button class="share-button" id="shareButton">🔗 Share Link</button>
-                  </div>
+                    <h3 style="color: var(--text-secondary); margin-bottom: var(--spacing-md); text-align:center;">
+                        🤝 Invite Friends & Earn
+                    </h3>
+                    <p style="color: var(--text-muted); text-align:center; margin-bottom: var(--spacing-lg);">
+                        Invite your friends to play on Telegram.<br>
+                        Earn 50 Beta Credits when they log in for 5 days.
+                    </p>
+                    <div class="referral-code">
+                        <div class="referral-code-text" id="referralCode">8BIT-XXXX</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <button class="copy-button" id="copyButton">📋 Copy Code</button>
+                        <button class="share-button" id="shareButton">🔗 Share Link</button>
+                    </div>
                 </div>
-              </div>
-            </section>
-
-            
-                <!-- How You Earn -->
-                <div style="text-align:center; margin: var(--spacing-lg) 0;">
-                  <p style="color: var(--text-muted); font-size:0.95rem;">
-                    <strong>How You Earn:</strong><br>
-                    🟦 <span style="color:#00A4FF;">Beta Credits</span>: +10 per Telegram game<br>
-                    🟩 <span style="color:#22c55e;">Alpha Points</span>: +10 per daily login + 3 ads in Mobile App<br>
-                    ✈️ Social Sharing: +30 Alpha Points (max 2/day)<br>
-                    🤝 Referrals:<br>
-                    &nbsp;&nbsp;- Telegram Referral: +50 Beta Credits<br>
-                    &nbsp;&nbsp;- Mobile Referral: +50 Alpha Points
-                  </p>
-                  <p style="color: var(--warning-color); font-size:0.9rem; margin-top: var(--spacing-sm);">
-                    🎁 Redemption details will be revealed soon—stay tuned!
-                  </p>
-                </div>
-
-    <!-- Referral Section -->
-    <div class="referral-section">
-      <h3 style="color: var(--text-secondary); margin-bottom: var(--spacing-md); text-align:center;">
-        🤝 Invite Friends & Earn
-      </h3>
-      <p style="color: var(--text-muted); text-align:center; margin-bottom: var(--spacing-lg);">
-        Invite friends via Telegram or Mobile App.<br>
-        Earn 50 credits or points when they log in for 5 days.
-      </p>
-      <div class="referral-code">
-        <div class="referral-code-text" id="referralCode">8BIT-XXXX</div>
-      </div>
-      <div style="text-align:center;">
-        <button class="copy-button" id="copyButton">📋 Copy Code</button>
-        <button class="share-button" id="shareButton">🔗 Share Link</button>
-      </div>
-    </div>
-
-    <!-- Badges Section -->
-    <div style="margin-top: var(--spacing-xl);">
-      <h3 style="c
-
+            </div>
+        </section>
 
         <!-- Footer -->
         <footer class="footer">
@@ -1207,183 +1268,89 @@
     </div>
 
     <script>
-        // ENHANCED AUDIO SYSTEM WITH BACKGROUND MUSIC
+        // AUDIO SYSTEM VARIABLES
         let neonAudio = null;
         let backgroundMusic = null;
         let neonTitles = [];
-        let isAudioEnabled = true;
+        let isAudioEnabled = false;
         let isMuted = false;
         let currentScrollFade = 1;
+        let neonFlickerInterval = null;
 
-        function initNeonAudio() {
+        // Handle audio consent
+        document.getElementById('enableAudioBtn').addEventListener('click', function() {
+            isAudioEnabled = true;
+            isMuted = false;
+            startHub();
+        });
+
+        document.getElementById('muteAudioBtn').addEventListener('click', function() {
+            isAudioEnabled = false;
+            isMuted = true;
+            startHub();
+        });
+
+        function startHub() {
+            // Hide consent screen
+            document.getElementById('audioConsentScreen').classList.add('hidden');
+            
+            // Show mute button
+            document.getElementById('audioMuteButton').style.display = 'flex';
+            
+            // Initialize the hub
+            initHub();
+            
+            // Initialize audio if enabled
+            if (isAudioEnabled) {
+                initAudioSystem();
+            }
+        }
+
+        function initAudioSystem() {
             neonAudio = document.getElementById('neon-audio');
             backgroundMusic = document.getElementById('background-music');
             neonTitles = document.querySelectorAll('.section-title');
             
             if (neonAudio) {
-                neonAudio.volume = 0.4;
+                neonAudio.volume = 0.255;
                 neonAudio.preload = 'auto';
             }
             
             if (backgroundMusic) {
-                backgroundMusic.volume = 0.05; // START WITH FAINT BACKGROUND MUSIC (5%)
+                backgroundMusic.volume = 0.05;
                 backgroundMusic.preload = 'auto';
                 backgroundMusic.loop = true;
                 
-                let musicStarted = false;
-                let attempts = 0;
-                const maxAttempts = 10;
-                
-                const startBackgroundMusic = () => {
-                    if (musicStarted || attempts >= maxAttempts) return;
-                    
-                    attempts++;
-                    console.log(`Background music start attempt ${attempts}/${maxAttempts}`);
-                    
-                    if (backgroundMusic.paused) {
-                        backgroundMusic.play().then(() => {
-                            console.log('✅ Background music started successfully');
-                            musicStarted = true;
-                            backgroundMusic.volume = 0.05; // Faint background level
-                            updateScrollFade(); // Apply current scroll position volume
-                        }).catch(e => {
-                            console.log(`❌ Background music attempt ${attempts} failed:`, e);
-                            // Keep trying on Android
-                            if (attempts < maxAttempts) {
-                                setTimeout(startBackgroundMusic, 500); // Retry after 500ms
-                            }
-                        });
-                    }
-                };
-                
-                // Detect Android devices specifically
-                const isAndroid = /Android/i.test(navigator.userAgent);
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                const isMobile = isAndroid || isIOS;
-                
-                console.log(`Device detection: Android=${isAndroid}, iOS=${isIOS}, Mobile=${isMobile}`);
-                
-                // Try immediate play (desktop)
-                if (!isMobile) {
-                    startBackgroundMusic();
-                }
-                
-                // ENHANCED Android-specific handling
-                if (isAndroid) {
-                    console.log('🤖 Android device detected - implementing aggressive audio unlock');
-                    
-                    // Create a comprehensive interaction handler for Android
-                    const androidAudioUnlock = (event) => {
-                        console.log(`🤖 Android audio unlock triggered by: ${event.type}`);
-                        
-                        // Multiple unlock attempts
-                        const unlockAttempts = [
-                            () => {
-                                // Attempt 1: Direct play
-                                startBackgroundMusic();
-                            },
-                            () => {
-                                // Attempt 2: Create new audio context
-                                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                                if (AudioContext) {
-                                    const audioContext = new AudioContext();
-                                    if (audioContext.state === 'suspended') {
-                                        audioContext.resume().then(() => {
-                                            console.log('🤖 Android AudioContext resumed');
-                                            startBackgroundMusic();
-                                        });
-                                    }
-                                }
-                            },
-                            () => {
-                                // Attempt 3: Force audio element reload
-                                backgroundMusic.load();
-                                setTimeout(startBackgroundMusic, 100);
-                            }
-                        ];
-                        
-                        // Execute all unlock attempts
-                        unlockAttempts.forEach((attempt, index) => {
-                            setTimeout(attempt, index * 200);
-                        });
-                    };
-                    
-                    // Android-specific events
-                    const androidEvents = [
-                        'touchstart', 'touchend', 'touchmove', 'touchcancel',
-                        'click', 'mousedown', 'mouseup',
-                        'pointerdown', 'pointerup',
-                        'keydown', 'scroll', 'focus', 'load'
-                    ];
-                    
-                    androidEvents.forEach(eventType => {
-                        document.addEventListener(eventType, androidAudioUnlock, { 
-                            once: false,
-                            passive: true,
-                            capture: false
-                        });
-                        
-                        // Also add to window for broader coverage
-                        window.addEventListener(eventType, androidAudioUnlock, {
-                            once: false,
-                            passive: true,
-                            capture: false
-                        });
-                    });
-                    
-                    // Android fallback: try every 2 seconds for the first 20 seconds
-                    let fallbackAttempts = 0;
-                    const androidFallback = setInterval(() => {
-                        if (musicStarted || fallbackAttempts >= 10) {
-                            clearInterval(androidFallback);
-                            return;
-                        }
-                        
-                        fallbackAttempts++;
-                        console.log(`🤖 Android fallback attempt ${fallbackAttempts}/10`);
-                        startBackgroundMusic();
-                    }, 2000);
-                }
-                
-                // iOS-specific handling
-                if (isIOS) {
-                    console.log('🍎 iOS device detected - setting up iOS audio handling');
-                    
-                    const unlockAudioForIOS = () => {
-                        // Create and play silent audio to unlock iOS audio context
-                        const silentAudio = new Audio();
-                        silentAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAAABQEBAAEAAAEAAwA=';
-                        silentAudio.play().then(() => {
-                            console.log('🍎 iOS audio context unlocked');
-                            startBackgroundMusic();
-                        }).catch(e => console.log('🍎 iOS unlock failed:', e));
-                    };
-                    
-                    document.addEventListener('touchstart', unlockAudioForIOS, { once: true });
-                    document.addEventListener('click', unlockAudioForIOS, { once: true });
-                }
-                
-                // General mobile fallback
-                if (isMobile) {
-                    const generalMobileEvents = ['touchstart', 'click', 'scroll'];
-                    generalMobileEvents.forEach(eventType => {
-                        document.addEventListener(eventType, () => {
-                            if (!musicStarted) {
-                                console.log(`📱 Mobile audio attempt via ${eventType}`);
-                                startBackgroundMusic();
-                            }
-                        }, { passive: true });
-                    });
-                }
+                // Start background music immediately since user consented
+                backgroundMusic.play().then(() => {
+                    console.log('✅ Background music started successfully');
+                    updateScrollFade();
+                }).catch(e => {
+                    console.log('❌ Background music failed:', e);
+                });
             }
             
             // Initialize mute button
             initMuteButton();
+            
+            // Start neon flicker
+            startNeonFlickerAudio();
         }
 
         function initMuteButton() {
             const muteButton = document.getElementById('audioMuteButton');
             if (muteButton) {
+                // Update initial state
+                if (isMuted) {
+                    muteButton.textContent = '🔇';
+                    muteButton.classList.add('muted');
+                    muteButton.title = 'Unmute Audio';
+                } else {
+                    muteButton.textContent = '🔊';
+                    muteButton.classList.remove('muted');
+                    muteButton.title = 'Mute Audio';
+                }
+                
                 muteButton.addEventListener('click', toggleMute);
             }
         }
@@ -1401,16 +1368,22 @@
                 muteButton.title = 'Unmute Audio';
                 console.log('Audio muted');
             } else {
-                // Restore audio levels based on scroll position
-                updateScrollFade();
-                muteButton.textContent = '🔊';
-                muteButton.classList.remove('muted');
-                muteButton.title = 'Mute Audio';
-                console.log('Audio unmuted');
-                
-                // Ensure background music is playing if not already
-                if (backgroundMusic && backgroundMusic.paused) {
-                    backgroundMusic.play().catch(e => console.log('Failed to resume background music:', e));
+                // Initialize audio if not already done
+                if (!isAudioEnabled) {
+                    isAudioEnabled = true;
+                    initAudioSystem();
+                } else {
+                    // Restore audio levels based on scroll position
+                    updateScrollFade();
+                    muteButton.textContent = '🔊';
+                    muteButton.classList.remove('muted');
+                    muteButton.title = 'Mute Audio';
+                    console.log('Audio unmuted');
+                    
+                    // Ensure background music is playing if not already
+                    if (backgroundMusic && backgroundMusic.paused) {
+                        backgroundMusic.play().catch(e => console.log('Failed to resume background music:', e));
+                    }
                 }
             }
         }
@@ -1419,9 +1392,9 @@
             if (!isAudioEnabled || !neonAudio || isMuted) return;
             
             try {
-                // Play audio
+                // Play audio with reduced volume
                 neonAudio.currentTime = 0;
-                neonAudio.volume = 0.4 * currentScrollFade; // Apply scroll fade
+                neonAudio.volume = 0.255 * currentScrollFade;
                 neonAudio.play().catch(e => console.log('Neon audio play failed:', e));
                 
                 // Trigger visual flicker in sync with audio
@@ -1471,7 +1444,7 @@
             });
         }
 
-        // ENHANCED scroll-based fade effect with faint background music
+        // Scroll-based fade effect
         function updateScrollFade() {
             const scrollTop = window.scrollY;
             const windowHeight = window.innerHeight;
@@ -1480,20 +1453,20 @@
             currentScrollFade = Math.max(0, 1 - (scrollTop / 300));
             
             // Background music starts faint (5%) and increases to full volume (30%) by 500px
-            const baseVolume = 0.05; // Faint background level (5%)
-            const maxVolume = 0.3; // Maximum volume (30%)
-            const scrollProgress = Math.min(1, scrollTop / 500); // Progress from 0 to 1 over 500px
+            const baseVolume = 0.05;
+            const maxVolume = 0.3;
+            const scrollProgress = Math.min(1, scrollTop / 500);
             
-            // Calculate music volume: starts at 5%, reaches 30% at 500px scroll
+            // Calculate music volume
             const musicVolume = baseVolume + (scrollProgress * (maxVolume - baseVolume));
             
             if (!isMuted) {
                 // Update neon audio volume
                 if (neonAudio && isAudioEnabled) {
-                    neonAudio.volume = 0.4 * currentScrollFade;
+                    neonAudio.volume = 0.255 * currentScrollFade;
                 }
                 
-                // Update background music volume with faint base level
+                // Update background music volume
                 if (backgroundMusic && isAudioEnabled && !backgroundMusic.paused) {
                     backgroundMusic.volume = musicVolume;
                 }
@@ -1503,7 +1476,7 @@
             neonTitles.forEach(title => {
                 if (currentScrollFade < 0.5) {
                     title.classList.add('faded');
-                    title.style.opacity = currentScrollFade * 2; // More dramatic fade
+                    title.style.opacity = currentScrollFade * 2;
                 } else {
                     title.classList.remove('faded');
                     title.style.opacity = 1;
@@ -1511,14 +1484,34 @@
             });
         }
 
-        // Debounced scroll handler for better performance
+        // Debounced scroll handler
         let scrollTimeout;
         window.addEventListener('scroll', function() {
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(updateScrollFade, 10);
         });
 
-        // Game configuration with your actual games
+        function startNeonFlickerAudio() {
+            if (!isAudioEnabled) return;
+            
+            console.log('Audio system enabled - starting neon flicker');
+            
+            // Start flickering immediately and then every 3.5 seconds
+            playNeonFlicker();
+            
+            if (neonFlickerInterval) {
+                clearInterval(neonFlickerInterval);
+            }
+            
+            neonFlickerInterval = setInterval(() => {
+                // Only flicker if user is near the top and audio is enabled
+                if (window.scrollY < window.innerHeight && isAudioEnabled) {
+                    playNeonFlicker();
+                }
+            }, 3500);
+        }
+
+        // Game configuration
         const games = [
             {
                 id: 'generative_dungeon',
@@ -1548,20 +1541,15 @@
 
         // User Data
         let userData = {
-            points: 0,
-            totalPoints: 0,
+            betaCredits: 0,
             gamesPlayed: 0,
             referrals: 0,
-            bonusPoints: 0,
             referralCode: ''
         };
 
         // Telegram Web App Integration
         let tg = window.Telegram?.WebApp;
         let user = null;
-
-        // Neon flicker interval
-        let neonFlickerInterval;
 
         // Initialize the hub
         function initHub() {
@@ -1584,9 +1572,6 @@
                         tg.close();
                     });
                 }
-
-                // Initialize neon audio system
-                initNeonAudio();
                 
                 // Load user data
                 loadUserData();
@@ -1606,51 +1591,11 @@
                 // Set up event listeners
                 setupEventListeners();
                 
-                // Start neon flicker audio sync
-                startNeonFlickerAudio();
-                
                 console.log('Hub initialized successfully');
                 
             } catch (error) {
                 console.error('Error initializing hub:', error);
             }
-            
-            // Hide loading screen
-            setTimeout(() => {
-                const loading = document.getElementById('loading');
-                if (loading) {
-                    loading.classList.add('hidden');
-                }
-            }, 1500);
-        }
-
-        // Start neon flicker audio immediately on page load
-        function startNeonFlickerAudio() {
-            // Enable audio immediately
-            isAudioEnabled = true;
-            console.log('Audio system enabled - starting immediate neon flicker and faint background music');
-            
-            // Try to play neon flicker immediately
-            const attemptInitialPlay = () => {
-                playNeonFlicker();
-            };
-            
-            // Set up regular interval immediately
-            if (neonFlickerInterval) {
-                clearInterval(neonFlickerInterval);
-            }
-            
-            // Start flickering immediately and then every 3.5 seconds
-            attemptInitialPlay();
-            
-            neonFlickerInterval = setInterval(() => {
-                // Only flicker if user is near the top and audio is enabled
-                if (window.scrollY < window.innerHeight && isAudioEnabled) {
-                    playNeonFlicker();
-                }
-            }, 3500);
-            
-            console.log('Neon flicker system started - background music should be faintly playing');
         }
 
         function setupEventListeners() {
@@ -1699,7 +1644,8 @@
 
         function loadUserData() {
             try {
-                const saved = sessionStorage.getItem('8bit_user_data');
+                // Use localStorage for persistence
+                const saved = localStorage.getItem('8bit_user_data');
                 if (saved) {
                     userData = { ...userData, ...JSON.parse(saved) };
                 }
@@ -1710,7 +1656,7 @@
 
         function saveUserData() {
             try {
-                sessionStorage.setItem('8bit_user_data', JSON.stringify(userData));
+                localStorage.setItem('8bit_user_data', JSON.stringify(userData));
             } catch (e) {
                 console.log('Error saving user data:', e);
             }
@@ -1724,17 +1670,15 @@
         function updateUserDisplay() {
             try {
                 const elements = {
-                    totalPoints: document.getElementById('totalPoints'),
+                    betaCredits: document.getElementById('betaCredits'),
                     gamesPlayed: document.getElementById('gamesPlayed'),
                     referrals: document.getElementById('referrals'),
-                    bonusPoints: document.getElementById('bonusPoints'),
                     referralCode: document.getElementById('referralCode')
                 };
 
-                if (elements.totalPoints) elements.totalPoints.textContent = userData.totalPoints.toLocaleString();
+                if (elements.betaCredits) elements.betaCredits.textContent = userData.betaCredits.toLocaleString();
                 if (elements.gamesPlayed) elements.gamesPlayed.textContent = userData.gamesPlayed;
                 if (elements.referrals) elements.referrals.textContent = userData.referrals;
-                if (elements.bonusPoints) elements.bonusPoints.textContent = userData.bonusPoints.toLocaleString();
                 if (elements.referralCode) elements.referralCode.textContent = userData.referralCode;
             } catch (error) {
                 console.error('Error updating user display:', error);
@@ -1772,7 +1716,7 @@
                                 <div class="game-categories">${categoriesHTML}</div>
                             </div>
                             <div class="game-footer">
-                                <div class="game-points">+${game.points} pts</div>
+                                <div class="game-points">+${game.points} credits</div>
                                 <button class="play-button" data-game-id="${game.id}" data-game-url="${game.url}" data-game-title="${game.title}" data-game-points="${game.points}">
                                     START
                                 </button>
@@ -1789,7 +1733,7 @@
                             // Get the loading overlay for this specific game card
                             const loadingOverlay = gameCard.querySelector('.game-loading-overlay');
                             
-                            // REMOVED: No more button loading state - just disable the button
+                            // Disable the button
                             this.style.pointerEvents = 'none';
                             this.style.opacity = '0.6';
                             
@@ -1803,13 +1747,13 @@
                             const gameTitle = this.getAttribute('data-game-title');
                             const gamePoints = parseInt(this.getAttribute('data-game-points'));
                             
-                            // EXTENDED loading delay - 2.5 seconds
+                            // Extended loading delay - 2.5 seconds
                             setTimeout(() => {
                                 playGame(gameId, gameUrl, gameTitle, gamePoints);
                                 
                                 // Reset button and hide overlay after another 1 second
                                 setTimeout(() => {
-                                    // REMOVED: No more loading class removal - just re-enable button
+                                    // Re-enable button
                                     this.style.pointerEvents = 'auto';
                                     this.style.opacity = '1';
                                     
@@ -1818,7 +1762,7 @@
                                         loadingOverlay.classList.remove('active');
                                     }
                                 }, 1000);
-                            }, 2500); // INCREASED from 300ms to 2500ms for better loading experience
+                            }, 2500);
                         });
                     }
                     
@@ -1833,9 +1777,8 @@
 
         function playGame(gameId, gameUrl, gameTitle, points) {
             try {
-                // Award points for playing
-                userData.points += points;
-                userData.totalPoints += points;
+                // Award beta credits for playing
+                userData.betaCredits += points;
                 userData.gamesPlayed++;
                 
                 saveUserData();
@@ -1847,7 +1790,7 @@
                         action: 'game_started',
                         gameId: gameId,
                         gameTitle: gameTitle,
-                        pointsEarned: points,
+                        creditsEarned: points,
                         user: user?.id || 'anonymous',
                         timestamp: Date.now()
                     }));
@@ -2021,24 +1964,6 @@
             }
         }
 
-        // Error handling for debugging
-        window.addEventListener('error', function(e) {
-            console.error('JavaScript Error:', e.error);
-        });
-
-        // Initialize when DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing hub...');
-            initHub();
-        });
-        
-        // Also initialize if document is already loaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initHub);
-        } else {
-            initHub();
-        }
-
         // Handle visibility change to pause/resume
         document.addEventListener('visibilitychange', () => {
             try {
@@ -2053,23 +1978,26 @@
                     if (backgroundMusic && !backgroundMusic.paused) {
                         backgroundMusic.pause();
                     }
-                    isAudioEnabled = false;
                 } else {
                     loadUserData();
                     updateUserDisplay();
                     // Resume audio systems when tab is visible
-                    isAudioEnabled = true;
-                    if (!neonFlickerInterval) {
+                    if (isAudioEnabled && !neonFlickerInterval) {
                         startNeonFlickerAudio();
                     }
                     // Resume background music if not muted
-                    if (backgroundMusic && backgroundMusic.paused && !isMuted) {
+                    if (backgroundMusic && backgroundMusic.paused && !isMuted && isAudioEnabled) {
                         backgroundMusic.play().catch(e => console.log('Background music resume failed:', e));
                     }
                 }
             } catch (error) {
                 console.error('Error handling visibility change:', error);
             }
+        });
+
+        // Error handling for debugging
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
         });
 
         console.log('8Bit Game Hub script loaded successfully');
