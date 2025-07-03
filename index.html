@@ -608,23 +608,29 @@
         /* Responsive Design - IMPROVED */
 @media (max-width: 768px) {
     .games-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); /* Exactly 2 equal columns */
         gap: var(--spacing-sm);
         padding: 0 var(--spacing-sm);
     }
     
     .game-card {
-        height: 260px; /* Taller to fit content */
-        min-width: 0;
+        height: 260px;
+        width: 100%; /* Ensure full width */
+        max-width: none; /* Remove any restrictions */
     }
     
     .game-image {
-        height: 120px; /* Bigger image area */
+        height: 120px;
     }
     
     .game-content {
         padding: var(--spacing-sm);
-        height: 140px; /* More space for content */
+        height: 140px;
+    }
+    
+    .section-title {
+        font-size: 1.3rem; /* Slightly smaller on mobile */
+        padding: var(--spacing-sm) var(--spacing-md); /* Less padding on mobile */
     }
     
     .header {
@@ -638,60 +644,31 @@
 
 @media (max-width: 480px) {
     .games-grid {
-        grid-template-columns: 1fr; /* SINGLE COLUMN on phones */
+        grid-template-columns: 1fr; /* Single column */
         gap: var(--spacing-md);
         padding: 0 var(--spacing-md);
-        max-width: 100%;
     }
     
     .game-card {
-        height: 280px; /* Full height restored */
-        max-width: none; /* Remove width restriction */
-        margin: 0 auto; /* Center the cards */
+        height: 280px;
+        width: 100%; /* Full width single column */
+        max-width: none;
+        margin: 0 auto;
     }
     
     .game-image {
-        height: 160px; /* Full image height */
+        height: 160px;
     }
     
     .game-content {
-        padding: var(--spacing-md); /* Full padding */
-        height: 120px; /* Full content height */
+        padding: var(--spacing-md);
+        height: 120px;
     }
     
-    .game-title {
-        font-size: 1.1rem; /* Full size title */
-        line-height: 1.2;
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    .game-categories {
-        margin-bottom: var(--spacing-sm);
-        flex-wrap: wrap;
-    }
-    
-    .game-category-tag {
-        font-size: 0.65rem; /* Readable size */
-        padding: 2px 8px;
-        margin-right: 4px;
-        margin-bottom: 2px;
-    }
-    
-    .game-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }
-    
-    .play-button {
-        padding: 6px 12px; /* Full button size */
-        font-size: 0.8rem;
-    }
-    
-    .game-points {
-        font-size: 0.75rem; /* Readable points */
-        padding: 4px 8px;
+    .section-title {
+        font-size: 1.2rem; /* Even smaller on phones */
+        padding: var(--spacing-sm) var(--spacing-md);
+        margin-bottom: var(--spacing-md);
     }
     
     .content-section {
