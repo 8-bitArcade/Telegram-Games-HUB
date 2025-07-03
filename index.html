@@ -208,45 +208,69 @@
                 0 0 30px var(--primary-color),
                 inset 0 0 10px rgba(0, 255, 255, 0.1);
             
-            /* FLICKERING ANIMATION */
-            animation: neonFlicker 2s infinite alternate;
+            /* REMOVED AUTO ANIMATION - NOW CONTROLLED BY JAVASCRIPT */
             
             /* FONT STYLING */
             font-family: 'Orbitron', 'Open Sans', monospace;
             letter-spacing: 2px;
             text-transform: uppercase;
+            
+            /* TRANSITION FOR SMOOTH FLICKERING */
+            transition: all 0.1s ease;
         }
 
-        /* NEON FLICKERING KEYFRAMES */
-        @keyframes neonFlicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% {
-                text-shadow: 
-                    0 0 5px #00ffff,
-                    0 0 10px #00ffff,
-                    0 0 15px #00ffff,
-                    0 0 20px #00ff41,
-                    0 0 35px #00ff41,
-                    0 0 40px #00ff41;
-                box-shadow: 
-                    0 0 10px var(--primary-color),
-                    0 0 20px var(--primary-color),
-                    0 0 30px var(--primary-color),
-                    inset 0 0 10px rgba(0, 255, 255, 0.1);
-                border-color: var(--primary-color);
-            }
-            
-            20%, 24%, 55% {
-                text-shadow: 
-                    0 0 2px #00ffff,
-                    0 0 5px #00ffff,
-                    0 0 8px #00ffff,
-                    0 0 12px #00ff41;
-                box-shadow: 
-                    0 0 5px var(--primary-color),
-                    0 0 10px var(--primary-color),
-                    inset 0 0 5px rgba(0, 255, 255, 0.05);
-                border-color: rgba(0, 164, 255, 0.7);
-            }
+        /* NEON FLICKERING STATES - CONTROLLED BY JAVASCRIPT */
+        .section-title.neon-bright {
+            text-shadow: 
+                0 0 5px #00ffff,
+                0 0 10px #00ffff,
+                0 0 15px #00ffff,
+                0 0 20px #00ff41,
+                0 0 35px #00ff41,
+                0 0 40px #00ff41;
+            box-shadow: 
+                0 0 10px var(--primary-color),
+                0 0 20px var(--primary-color),
+                0 0 30px var(--primary-color),
+                inset 0 0 10px rgba(0, 255, 255, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .section-title.neon-dim {
+            text-shadow: 
+                0 0 2px #00ffff,
+                0 0 5px #00ffff,
+                0 0 8px #00ffff,
+                0 0 12px #00ff41;
+            box-shadow: 
+                0 0 5px var(--primary-color),
+                0 0 10px var(--primary-color),
+                inset 0 0 5px rgba(0, 255, 255, 0.05);
+            border-color: rgba(0, 164, 255, 0.7);
+        }
+
+        .section-title.neon-off {
+            text-shadow: 
+                0 0 1px #00ffff,
+                0 0 2px #00ffff;
+            box-shadow: 
+                0 0 2px var(--primary-color),
+                inset 0 0 2px rgba(0, 255, 255, 0.02);
+            border-color: rgba(0, 164, 255, 0.3);
+        }
+
+        /* FADE OUT EFFECT FOR SCROLLING */
+        .section-title.faded {
+            opacity: 0.3;
+            text-shadow: 
+                0 0 1px #00ffff,
+                0 0 2px #00ffff;
+            box-shadow: 
+                0 0 2px var(--primary-color),
+                inset 0 0 2px rgba(0, 255, 255, 0.02);
+            border-color: rgba(0, 164, 255, 0.2);
+            transform: scale(0.95);
+            filter: blur(1px);
         }
 
         /* GLITCH EFFECT OVERLAY */
@@ -1085,26 +1109,104 @@
     </div>
 
     <script>
-        // NEON FLICKER AUDIO INTEGRATION
-        function playNeonFlicker() {
-            const audio = document.getElementById('neon-audio');
-            if (audio) {
-                audio.currentTime = 0;
-                audio.volume = 0.3; // Set volume to 30%
-                audio.play().catch(e => console.log('Neon audio play failed:', e));
+        // ENHANCED NEON FLICKER AUDIO INTEGRATION
+        let neonAudio = null;
+        let neonTitles = [];
+        let isAudioEnabled = false;
+        let currentScrollFade = 1;
+
+        function initNeonAudio() {
+            neonAudio = document.getElementById('neon-audio');
+            neonTitles = document.querySelectorAll('.section-title');
+            
+            if (neonAudio) {
+                neonAudio.volume = 0.4; // Slightly higher base volume
+                neonAudio.preload = 'auto';
             }
         }
 
-        // Fade audio as user scrolls
-        window.addEventListener('scroll', function() {
-            const audio = document.getElementById('neon-audio');
-            if (audio) {
-                const scrollTop = window.scrollY;
-                const windowHeight = window.innerHeight;
-                // Fade starts at 0, ends at 2x window height
-                let volume = 1 - Math.min(scrollTop / (windowHeight * 2), 1);
-                audio.volume = Math.max(0, Math.min(0.3, volume * 0.3)); // Max volume 30%
+        function playNeonFlicker() {
+            if (!isAudioEnabled || !neonAudio) return;
+            
+            // Play audio
+            neonAudio.currentTime = 0;
+            neonAudio.volume = 0.4 * currentScrollFade; // Apply scroll fade
+            neonAudio.play().catch(e => console.log('Neon audio play failed:', e));
+            
+            // Trigger visual flicker in sync with audio
+            triggerNeonFlicker();
+        }
+
+        function triggerNeonFlicker() {
+            neonTitles.forEach(title => {
+                // Remove any existing classes
+                title.classList.remove('neon-bright', 'neon-dim', 'neon-off');
+                
+                // Quick flicker sequence that matches typical neon buzzing
+                title.classList.add('neon-bright');
+                
+                setTimeout(() => {
+                    title.classList.remove('neon-bright');
+                    title.classList.add('neon-dim');
+                }, 50);
+                
+                setTimeout(() => {
+                    title.classList.remove('neon-dim');
+                    title.classList.add('neon-off');
+                }, 100);
+                
+                setTimeout(() => {
+                    title.classList.remove('neon-off');
+                    title.classList.add('neon-bright');
+                }, 150);
+                
+                setTimeout(() => {
+                    title.classList.remove('neon-bright');
+                    title.classList.add('neon-dim');
+                }, 200);
+                
+                setTimeout(() => {
+                    title.classList.remove('neon-dim');
+                    title.classList.add('neon-bright');
+                }, 250);
+                
+                // Return to normal state
+                setTimeout(() => {
+                    title.classList.remove('neon-bright', 'neon-dim', 'neon-off');
+                }, 300);
+            });
+        }
+
+        // ENHANCED scroll-based fade effect
+        function updateScrollFade() {
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            // More dramatic fade - starts fading at 100px, completely faded by 300px
+            currentScrollFade = Math.max(0, 1 - (scrollTop / 300));
+            
+            // Update audio volume
+            if (neonAudio && isAudioEnabled) {
+                neonAudio.volume = 0.4 * currentScrollFade;
             }
+            
+            // Apply visual fade effect to neon titles
+            neonTitles.forEach(title => {
+                if (currentScrollFade < 0.5) {
+                    title.classList.add('faded');
+                    title.style.opacity = currentScrollFade * 2; // More dramatic fade
+                } else {
+                    title.classList.remove('faded');
+                    title.style.opacity = 1;
+                }
+            });
+        }
+
+        // Debounced scroll handler for better performance
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(updateScrollFade, 10);
         });
 
         // Game configuration with your actual games
@@ -1152,7 +1254,7 @@
         let tg = window.Telegram?.WebApp;
         let user = null;
 
-        // Neon flicker interval - syncs with CSS animation
+        // Neon flicker interval
         let neonFlickerInterval;
 
         // Initialize the hub
@@ -1177,6 +1279,9 @@
                     });
                 }
 
+                // Initialize neon audio system
+                initNeonAudio();
+                
                 // Load user data
                 loadUserData();
                 
@@ -1213,26 +1318,33 @@
             }, 1500);
         }
 
-        // Start neon flicker audio that syncs with CSS animation
+        // Start neon flicker audio that syncs with visual effects
         function startNeonFlickerAudio() {
-            // Play initial sound after user interaction
-            const playInitialSound = () => {
-                playNeonFlicker();
-                document.removeEventListener('click', playInitialSound);
-                document.removeEventListener('touchstart', playInitialSound);
+            // Wait for user interaction before enabling audio
+            const enableAudio = () => {
+                isAudioEnabled = true;
                 
-                // Set up interval to sync with neon animation (every 2 seconds to match CSS)
+                // Play initial flicker
+                setTimeout(() => {
+                    playNeonFlicker();
+                }, 500);
+                
+                // Set up regular interval (every 3-4 seconds for more realistic neon effect)
                 neonFlickerInterval = setInterval(() => {
-                    // Only play if user is near the top of the page
-                    if (window.scrollY < window.innerHeight) {
+                    // Only flicker if user is near the top and audio is enabled
+                    if (window.scrollY < window.innerHeight && isAudioEnabled) {
                         playNeonFlicker();
                     }
-                }, 2000); // Matches the CSS animation duration
+                }, Math.random() * 1000 + 3000); // Random interval between 3-4 seconds
+                
+                // Remove event listeners
+                document.removeEventListener('click', enableAudio);
+                document.removeEventListener('touchstart', enableAudio);
             };
 
-            // Wait for user interaction before playing audio
-            document.addEventListener('click', playInitialSound);
-            document.addEventListener('touchstart', playInitialSound);
+            // Wait for user interaction
+            document.addEventListener('click', enableAudio);
+            document.addEventListener('touchstart', enableAudio);
         }
 
         function setupEventListeners() {
@@ -1630,12 +1742,14 @@
                     // Pause neon flicker when tab is hidden
                     if (neonFlickerInterval) {
                         clearInterval(neonFlickerInterval);
+                        neonFlickerInterval = null;
                     }
+                    isAudioEnabled = false;
                 } else {
                     loadUserData();
                     updateUserDisplay();
-                    // Resume neon flicker when tab is visible
-                    if (!neonFlickerInterval) {
+                    // Resume neon flicker when tab is visible (but wait for user interaction)
+                    if (!neonFlickerInterval && isAudioEnabled) {
                         startNeonFlickerAudio();
                     }
                 }
