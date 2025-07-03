@@ -2,51 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>8Bit - Game Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 8-Bit Arcade Gaming Hub</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* 8Bit Brand Variables */
         :root {
-            /* Official 8Bit Colors */
-            --vivid-cerulean: #00A4FF;
-            --electric-blue: #0000FF;
-            --black: #000000;
-            --white: #FFFFFF;
-            
-            /* Extended UI palette */
-            --primary-color: var(--vivid-cerulean);
-            --secondary-color: var(--electric-blue);
-            --background-dark: #000814;
-            --background-card: #0f172a;
-            --background-lighter: #1e293b;
-            --text-primary: var(--white);
-            --text-secondary: var(--vivid-cerulean);
-            --text-muted: #94a3b8;
-            --accent-glow: rgba(0, 164, 255, 0.4);
-            --success-color: #22c55e;
-            --warning-color: #f59e0b;
-            --gradient-primary: linear-gradient(135deg, var(--vivid-cerulean), var(--electric-blue));
-            --gradient-card: linear-gradient(135deg, var(--background-card), rgba(0, 164, 255, 0.1));
-            
-            /* Typography */
-            --font-family: 'Open Sans', sans-serif;
-            
-            /* Spacing */
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-xxl: 3rem;
-            
-            /* Border radius */
-            --border-radius: 16px;
-            --border-radius-lg: 24px;
-            --border-radius-full: 50%;
+            --primary-color: #00A4FF;
+            --secondary-color: #FF6B35;
+            --accent-color: #FFD23F;
+            --background-dark: #0A0A0F;
+            --background-light: #1A1A2E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --neon-blue: #00E5FF;
+            --neon-pink: #FF10F0;
+            --neon-green: #39FF14;
+            --gradient-primary: linear-gradient(135deg, #00A4FF, #0066CC);
+            --gradient-secondary: linear-gradient(135deg, #FF6B35, #FF4500);
+            --gradient-accent: linear-gradient(135deg, #FFD23F, #FFA500);
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 32px rgba(0, 164, 255, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -56,17 +37,14 @@
         }
 
         body {
-            font-family: var(--font-family);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--background-dark);
             color: var(--text-primary);
-            min-height: 100vh;
+            line-height: 1.6;
             overflow-x: hidden;
             position: relative;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Fixed background with correct GitHub raw URL */
         body::before {
             content: '';
             position: fixed;
@@ -75,292 +53,180 @@
             width: 100%;
             height: 100%;
             background: 
-                linear-gradient(rgba(0, 8, 20, 0.2), rgba(0, 8, 20, 0.3)),
-                url('https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/8bit-background.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            animation: backgroundShift 25s ease-in-out infinite;
+                radial-gradient(circle at 20% 20%, rgba(0, 164, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 210, 63, 0.05) 0%, transparent 50%);
+            pointer-events: none;
             z-index: -1;
         }
 
-        @keyframes backgroundShift {
-            0%, 100% { 
-                transform: translateX(0) translateY(0) scale(1);
-                filter: hue-rotate(0deg);
-            }
-            25% { 
-                transform: translateX(-10px) translateY(5px) scale(1.02);
-                filter: hue-rotate(15deg);
-            }
-            50% { 
-                transform: translateX(5px) translateY(-10px) scale(1.01);
-                filter: hue-rotate(-10deg);
-            }
-            75% { 
-                transform: translateX(8px) translateY(8px) scale(1.02);
-                filter: hue-rotate(20deg);
-            }
-        }
-
-        .container {
-            max-width: 100%;
-            padding: 0;
-            min-height: 100vh;
+        /* AUDIO CONTROLS */
+        .audio-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
             display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 1;
+            gap: 10px;
         }
 
-        /* Header Section */
-        .header {
-            padding: var(--spacing-lg);
-            background: var(--gradient-card);
-            border-bottom: 1px solid rgba(0, 164, 255, 0.2);
-            backdrop-filter: blur(20px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        /* Top Tab Navigation */
-        .top-tabs {
-            display: flex;
-            background: rgba(0, 164, 255, 0.1);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-xs);
-        }
-
-        .tab-button {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: var(--spacing-md);
-            border-radius: calc(var(--border-radius) - 2px);
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .tab-button.active {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: 0 2px 10px rgba(0, 164, 255, 0.3);
-        }
-
-        .tab-button:hover:not(.active) {
-            background: rgba(0, 164, 255, 0.15);
-            color: var(--text-primary);
-        }
-
-        /* Content Sections */
-        .content-section {
-            display: none;
-            padding: var(--spacing-lg);
-            flex: 1;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        /* ENHANCED NEON SECTION TITLE */
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-lg);
-            text-align: center;
-            
-            /* CENTER THE TITLE PROPERLY */
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-            
-            /* NEON FLICKERING EFFECT */
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(20px);
+        .audio-toggle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 164, 255, 0.2);
             border: 2px solid var(--primary-color);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-md) var(--spacing-lg);
-            position: relative;
-            overflow: hidden;
-            
-            /* NEON TEXT STYLING */
-            color: #00ffff;
-            text-shadow: 
-                0 0 5px #00ffff,
-                0 0 10px #00ffff,
-                0 0 15px #00ffff,
-                0 0 20px #00ff41,
-                0 0 35px #00ff41,
-                0 0 40px #00ff41;
-            
-            /* NEON BORDER GLOW */
-            box-shadow: 
-                0 0 10px var(--primary-color),
-                0 0 20px var(--primary-color),
-                0 0 30px var(--primary-color),
-                inset 0 0 10px rgba(0, 255, 255, 0.1);
-            
-            /* FLICKERING ANIMATION */
-            animation: neonFlicker 2s infinite alternate;
-            
-            /* FONT STYLING */
-            font-family: 'Orbitron', 'Open Sans', monospace;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* NEON FLICKERING KEYFRAMES */
-        @keyframes neonFlicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% {
-                text-shadow: 
-                    0 0 5px #00ffff,
-                    0 0 10px #00ffff,
-                    0 0 15px #00ffff,
-                    0 0 20px #00ff41,
-                    0 0 35px #00ff41,
-                    0 0 40px #00ff41;
-                box-shadow: 
-                    0 0 10px var(--primary-color),
-                    0 0 20px var(--primary-color),
-                    0 0 30px var(--primary-color),
-                    inset 0 0 10px rgba(0, 255, 255, 0.1);
-                border-color: var(--primary-color);
-            }
-            
-            20%, 24%, 55% {
-                text-shadow: 
-                    0 0 2px #00ffff,
-                    0 0 5px #00ffff,
-                    0 0 8px #00ffff,
-                    0 0 12px #00ff41;
-                box-shadow: 
-                    0 0 5px var(--primary-color),
-                    0 0 10px var(--primary-color),
-                    inset 0 0 5px rgba(0, 255, 255, 0.05);
-                border-color: rgba(0, 164, 255, 0.7);
-            }
-        }
-
-        /* GLITCH EFFECT OVERLAY */
-        .section-title::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(0, 255, 255, 0.03) 50%,
-                transparent 100%
-            );
-            animation: scanline 3s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes scanline {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* GAMING CONTROLLER STYLING */
-        .gaming-controller {
-            display: inline-block;
-            font-size: 1.2em;
-            margin-right: 8px;
-            animation: controllerPulse 1.5s ease-in-out infinite alternate;
-            filter: 
-                drop-shadow(0 0 5px #00ffff)
-                drop-shadow(0 0 10px #00ff41)
-                drop-shadow(0 0 15px #00ff41);
-        }
-
-        @keyframes controllerPulse {
-            0% {
-                transform: scale(1);
-                filter: 
-                    drop-shadow(0 0 5px #00ffff)
-                    drop-shadow(0 0 10px #00ff41)
-                    drop-shadow(0 0 15px #00ff41);
-            }
-            100% {
-                transform: scale(1.1);
-                filter: 
-                    drop-shadow(0 0 8px #00ffff)
-                    drop-shadow(0 0 15px #00ff41)
-                    drop-shadow(0 0 20px #00ff41);
-            }
-        }
-
-        /* Games Grid */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-xxl);
-        }
-
-        .game-card {
-            background: var(--gradient-card);
-            border: 1px solid rgba(0, 164, 255, 0.2);
-            border-radius: var(--border-radius-lg);
-            padding: 0;
-            text-align: left;
-            position: relative;
-            transition: all 0.3s ease;
+            color: var(--primary-color);
             cursor: pointer;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
             backdrop-filter: blur(10px);
-            height: 280px;
-            width: 100%;
-            max-width: none;
+            transition: all 0.3s ease;
         }
 
-        .game-card::before {
+        .audio-toggle:hover {
+            background: rgba(0, 164, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .audio-toggle.muted {
+            opacity: 0.5;
+        }
+
+        .header {
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            background: linear-gradient(135deg, rgba(0, 164, 255, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 164, 255, 0.1), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 3s ease-in-out infinite;
         }
 
-        .game-card:hover::before {
-            left: 100%;
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            animation: neonFlicker 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonFlicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 20px var(--neon-blue); }
+            50% { opacity: 0.8; text-shadow: 0 0 30px var(--neon-pink); }
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .user-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(26, 26, 46, 0.9);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 164, 255, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            min-width: 200px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .user-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .games-container {
+            padding: var(--spacing-xl) var(--spacing-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .game-card {
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            position: relative;
         }
 
         .game-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 35px var(--accent-glow);
+            box-shadow: var(--box-shadow);
             border-color: var(--primary-color);
         }
 
         .game-image {
-            width: 100%;
-            height: 160px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
+            height: 200px;
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
         }
 
         .game-image::before {
@@ -370,17 +236,26 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, rgba(0, 164, 255, 0.2), rgba(255, 107, 53, 0.2));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .game-card:hover .game-image::before {
+            opacity: 1;
         }
 
         .game-image-icon {
-            position: relative;
-            z-index: 2;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.8;
         }
 
         .game-content {
-            padding: var(--spacing-md);
+            padding: var(--spacing-md) var(--spacing-lg); /* INCREASED horizontal padding */
             height: 120px;
             display: flex;
             flex-direction: column;
@@ -392,18 +267,16 @@
         }
 
         .game-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: var(--spacing-xs);
             color: var(--text-primary);
-            line-height: 1.2;
         }
 
         .game-categories {
             display: flex;
             gap: var(--spacing-xs);
             flex-wrap: wrap;
-            margin-bottom: var(--spacing-sm);
         }
 
         .game-category-tag {
@@ -411,50 +284,51 @@
             color: var(--primary-color);
             padding: 2px 8px;
             border-radius: 12px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 0.7rem;
+            font-weight: 500;
         }
 
         .game-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 var(--spacing-sm); /* ADD padding to footer for more button space */
         }
 
         .game-points {
-            background: rgba(34, 197, 94, 0.2);
-            color: var(--success-color);
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 0.75rem;
+            font-size: 1rem;
             font-weight: 600;
+            color: var(--accent-color);
         }
 
-        /* ENHANCED START BUTTON */
+        /* ROUND START BUTTON */
         .play-button {
-            /* BIGGER SIZE */
+            /* ROUND SHAPE */
+            width: 70px;
+            height: 70px;
+            border-radius: 50%; /* Perfect circle */
             background: var(--gradient-primary);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.1s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            min-width: 80px;
+            letter-spacing: 0.5px;
+            
+            /* CENTER THE TEXT */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             
             /* EMBOSSED EFFECT */
             position: relative;
             box-shadow: 
                 0 6px 0 #0080cc,
                 0 8px 15px rgba(0, 164, 255, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+                inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.2);
             
             /* 3D APPEARANCE */
             background: linear-gradient(
@@ -470,12 +344,12 @@
 
         /* HOVER STATE */
         .play-button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             box-shadow: 
-                0 8px 0 #0080cc,
+                0 9px 0 #0080cc,
                 0 12px 20px rgba(0, 164, 255, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+                inset 0 2px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.2);
         }
 
         /* ACTIVE/PRESSED STATE */
@@ -508,62 +382,64 @@
         }
 
         @keyframes buttonPulse {
-            0% { opacity: 0.7; }
+            0% { opacity: 0.8; }
             100% { opacity: 1; }
         }
 
-        /* Social Media Section */
+        .social-section {
+            background: rgba(26, 26, 46, 0.6);
+            padding: var(--spacing-xl) var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .social-card {
-            background: var(--gradient-card);
-            border: 1px solid rgba(0, 164, 255, 0.2);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-xl);
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-lg);
             text-align: center;
-            position: relative;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            overflow: hidden;
+            transition: var(--transition);
             backdrop-filter: blur(10px);
         }
 
         .social-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px var(--accent-glow);
+            transform: translateY(-4px);
             border-color: var(--primary-color);
+            box-shadow: var(--box-shadow);
         }
 
         .social-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto var(--spacing-md);
-            background: var(--gradient-primary);
-            border-radius: var(--border-radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            box-shadow: 0 8px 25px rgba(0, 164, 255, 0.4);
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-md);
+            display: block;
         }
 
-        .social-title {
+        .social-card h3 {
             font-size: 1.2rem;
-            font-weight: 700;
             margin-bottom: var(--spacing-sm);
             color: var(--text-primary);
         }
 
-        .social-description {
-            color: var(--text-muted);
-            margin-bottom: var(--spacing-lg);
-            line-height: 1.5;
+        .social-card p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
             font-size: 0.9rem;
         }
 
@@ -571,648 +447,452 @@
             background: var(--gradient-primary);
             color: white;
             border: none;
-            padding: var(--spacing-sm) var(--spacing-lg);
+            padding: var(--spacing-sm) var(--spacing-md);
             border-radius: var(--border-radius);
-            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            transition: var(--transition);
             text-decoration: none;
             display: inline-block;
         }
 
         .social-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(0, 164, 255, 0.4);
-        }
-
-        .download-section {
-            background: var(--gradient-card);
-            border: 2px solid var(--primary-color);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-xl);
-            text-align: center;
-            margin-bottom: var(--spacing-lg);
-            backdrop-filter: blur(10px);
-        }
-
-        .download-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .download-subtitle {
-            color: var(--text-muted);
-            margin-bottom: var(--spacing-xl);
-            font-size: 1rem;
-        }
-
-        .download-buttons {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .app-store-button {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            box-shadow: 0 5px 20px rgba(0, 164, 255, 0.3);
-        }
-
-        .app-store-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 164, 255, 0.5);
-        }
-
-        /* Profile Section */
-        .profile-card {
-            background: var(--gradient-card);
-            border: 1px solid rgba(0, 164, 255, 0.2);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-lg);
-            backdrop-filter: blur(10px);
-        }
-
-        .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: var(--spacing-md);
-            background: rgba(0, 164, 255, 0.1);
-            border-radius: var(--border-radius);
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .referral-section {
-            margin-top: var(--spacing-lg);
-        }
-
-        .referral-code {
-            background: var(--background-card);
-            border: 1px solid rgba(0, 164, 255, 0.3);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-md);
-            text-align: center;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .referral-code-text {
-            font-family: monospace;
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            font-weight: 700;
-        }
-
-        .copy-button, .share-button {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            cursor: pointer;
-            margin: var(--spacing-xs);
-            transition: all 0.2s ease;
-        }
-
-        .copy-button:hover, .share-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 164, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 164, 255, 0.3);
         }
 
-        /* Footer */
         .footer {
             text-align: center;
-            padding: var(--spacing-xl);
-            margin-top: var(--spacing-lg);
-            border-top: 1px solid rgba(0, 164, 255, 0.2);
-            color: var(--text-muted);
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            padding: var(--spacing-xl) var(--spacing-lg);
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .footer-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .footer-brand {
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        /* Loading Screen */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--background-dark);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 1;
-            visibility: visible;
-            transition: all 0.3s ease;
-        }
-
-        .loading.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(0, 164, 255, 0.3);
-            border-top: 3px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .loading-text {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive Design - FIXED */
+        /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
+            .user-info {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin: var(--spacing-md);
+                width: auto;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
             .games-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-sm);
-                padding: 0 var(--spacing-sm);
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
             }
-            
-            .game-card {
-                height: 260px;
-                width: 100%;
-                max-width: none;
+
+            .social-grid {
+                grid-template-columns: 1fr;
             }
-            
-            .game-image {
-                height: 120px;
+
+            .audio-controls {
+                top: 10px;
+                right: 10px;
             }
-            
-            .game-content {
-                padding: var(--spacing-sm);
-                height: 140px;
-            }
-            
-            .section-title {
-                font-size: 1.3rem;
-                padding: var(--spacing-sm) var(--spacing-md);
-                width: 95%;
-                margin: 0 auto var(--spacing-lg) auto;
-            }
-            
-            .gaming-controller {
-                font-size: 1.1em;
-            }
-            
-            .play-button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-                min-width: 70px;
-            }
-            
-            .header {
-                padding: var(--spacing-md);
-            }
-            
-            .profile-stats {
-                grid-template-columns: repeat(2, 1fr);
+
+            .audio-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
             }
         }
 
         @media (max-width: 480px) {
-            .games-grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-md);
-                padding: 0 var(--spacing-md);
-            }
-            
-            .game-card {
-                height: 280px;
-                width: 100%;
-                max-width: none;
-                margin: 0 auto;
-            }
-            
-            .game-image {
-                height: 160px;
+            .play-button {
+                width: 60px;
+                height: 60px;
+                font-size: 0.7rem;
             }
             
             .game-content {
-                padding: var(--spacing-md);
-                height: 120px;
-            }
-            
-            .section-title {
-                font-size: 1.1rem;
                 padding: var(--spacing-sm) var(--spacing-md);
-                width: 90%;
-                margin: 0 auto var(--spacing-md) auto;
-                letter-spacing: 1px;
             }
-            
-            .gaming-controller {
-                font-size: 1em;
-                margin-right: 6px;
+
+            .header {
+                padding: var(--spacing-lg) var(--spacing-md);
             }
-            
-            .play-button {
-                padding: 12px 20px;
-                font-size: 0.9rem;
-                min-width: 75px;
-                border-radius: 10px;
+
+            .header h1 {
+                font-size: 1.8rem;
             }
-            
-            .content-section {
-                padding: var(--spacing-md);
+
+            .games-container {
+                padding: var(--spacing-lg) var(--spacing-md);
             }
         }
 
         @media (max-width: 360px) {
-            .section-title {
-                font-size: 1rem;
-                padding: var(--spacing-xs) var(--spacing-sm);
-                width: 95%;
-            }
-            
             .play-button {
-                padding: 10px 16px;
-                font-size: 0.8rem;
-                min-width: 65px;
-                border-radius: 8px;
+                width: 55px;
+                height: 55px;
+                font-size: 0.65rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="loading" id="loading">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading 8Bit Hub...</div>
+    <div class="user-info" id="userInfo">
+        <div class="user-avatar" id="userAvatar">🎮</div>
+        <div class="user-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="userPoints">0</div>
+                <div class="stat-label">Points</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="userLevel">1</div>
+                <div class="stat-label">Level</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="gamesPlayed">0</div>
+                <div class="stat-label">Games</div>
+            </div>
+        </div>
+        <div style="font-size: 0.9rem; color: var(--text-secondary);">
+            Welcome, <span id="userName">Player</span>!
+        </div>
     </div>
 
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <!-- Top Tab Navigation -->
-            <div class="top-tabs">
-                <button class="tab-button active" data-tab="games">🎮 GAMES</button>
-                <button class="tab-button" data-tab="social">📱 SOCIAL MEDIA</button>
-                <button class="tab-button" data-tab="profile">👤 PROFILE</button>
-            </div>
-        </header>
+    <header class="header">
+        <h1>🎮 8-Bit Arcade</h1>
+        <p>Discover amazing games, earn points, and unlock exclusive rewards!</p>
+    </header>
 
-        <!-- Games Section -->
-        <section class="content-section active" id="gamesSection">
-            <h2 class="section-title">
-                <span class="gaming-controller">🎮</span> Choose Your Game
-            </h2>
-            <div class="games-grid" id="gamesGrid">
-                <!-- Games will be populated by JavaScript -->
-            </div>
-        </section>
+    <main class="games-container">
+        <div class="games-grid" id="gamesGrid">
+            <!-- Games will be populated by JavaScript -->
+        </div>
+    </main>
 
-        <!-- Social Media Section -->
-        <section class="content-section" id="socialSection">
-            <h2 class="section-title">📱 Follow Us & Download</h2>
+    <section class="social-section">
+        <h2 class="social-title">📱 Follow Us & Download</h2>
+        <div class="social-grid">
+            <div class="social-card">
+                <span class="social-icon">📱</span>
+                <h3>Download 8Bit Mobile App</h3>
+                <p>Redeem your points and unlock exclusive rewards in our mobile app!</p>
+                <a href="#" class="social-button">Download Now</a>
+            </div>
             
-            <!-- Download Section -->
-            <div class="download-section">
-                <h3 class="download-title">📱 Download 8Bit Mobile App</h3>
-                <p class="download-subtitle">Redeem your points and unlock exclusive rewards in our mobile app!</p>
-                <div class="download-buttons">
-                    <button class="app-store-button" data-store="playstore">
-                        <span>📱</span>
-                        Google Play Store
-                    </button>
-                    <button class="app-store-button" data-store="appstore">
-                        <span>🍎</span>
-                        Apple App Store
-                    </button>
-                </div>
+            <div class="social-card">
+                <span class="social-icon">🐦</span>
+                <h3>Twitter</h3>
+                <p>Follow us for the latest updates, game releases, and community events.</p>
+                <a href="https://twitter.com/8Bit_arcade1" class="social-button">Follow @8Bit_arcade1</a>
             </div>
-
-            <!-- Social Media Links -->
-            <div class="social-grid">
-                <div class="social-card" data-social="twitter">
-                    <div class="social-icon">🐦</div>
-                    <h3 class="social-title">Twitter</h3>
-                    <p class="social-description">Follow us for the latest updates, game releases, and community events.</p>
-                    <div class="social-button">Follow @8Bit_arcade1</div>
-                </div>
-
-                <div class="social-card" data-social="discord">
-                    <div class="social-icon">💬</div>
-                    <h3 class="social-title">Discord</h3>
-                    <p class="social-description">Join our gaming community and connect with players worldwide.</p>
-                    <div class="social-button">Join Discord</div>
-                </div>
-
-                <div class="social-card" data-social="facebook">
-                    <div class="social-icon">📘</div>
-                    <h3 class="social-title">Facebook</h3>
-                    <p class="social-description">Like our page for news, game tips, and exclusive content.</p>
-                    <div class="social-button">Like Page</div>
-                </div>
-
-                <div class="social-card" data-social="instagram">
-                    <div class="social-icon">📸</div>
-                    <h3 class="social-title">Instagram</h3>
-                    <p class="social-description">Follow for behind-the-scenes content and visual updates.</p>
-                    <div class="social-button">Follow @8Bit</div>
-                </div>
-
-                <div class="social-card" data-social="telegram">
-                    <div class="social-icon">✈️</div>
-                    <h3 class="social-title">Telegram Community</h3>
-                    <p class="social-description">Join our official Telegram community for exclusive announcements.</p>
-                    <div class="social-button">Join Community</div>
-                </div>
+            
+            <div class="social-card">
+                <span class="social-icon">💬</span>
+                <h3>Discord</h3>
+                <p>Join our gaming community and connect with players worldwide.</p>
+                <a href="#" class="social-button">Join Discord</a>
             </div>
-        </section>
-
-        <!-- Profile Section -->
-        <section class="content-section" id="profileSection">
-            <h2 class="section-title">👤 Your Profile</h2>
-            <div class="profile-card">
-                <div class="profile-stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="totalPoints">0</div>
-                        <div class="stat-label">Total Points</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="gamesPlayed">0</div>
-                        <div class="stat-label">Games Played</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="referrals">0</div>
-                        <div class="stat-label">Referrals</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="bonusPoints">0</div>
-                        <div class="stat-label">Bonus Points</div>
-                    </div>
-                </div>
-                
-                <div class="referral-section">
-                    <h3 style="color: var(--text-secondary); margin-bottom: var(--spacing-md); text-align: center;">🤝 Invite Friends & Earn</h3>
-                    <p style="color: var(--text-muted); text-align: center; margin-bottom: var(--spacing-lg);">
-                        Earn 500 bonus points for each friend you invite!
-                    </p>
-                    <div class="referral-code">
-                        <div class="referral-code-text" id="referralCode">8BIT-XXXX</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <button class="copy-button" id="copyButton">📋 Copy Code</button>
-                        <button class="share-button" id="shareButton">🔗 Share Link</button>
-                    </div>
-                </div>
+            
+            <div class="social-card">
+                <span class="social-icon">📘</span>
+                <h3>Facebook</h3>
+                <p>Like our page for news, game tips, and exclusive content.</p>
+                <a href="#" class="social-button">Like Page</a>
             </div>
-        </section>
+            
+            <div class="social-card">
+                <span class="social-icon">📸</span>
+                <h3>Instagram</h3>
+                <p>Follow for behind-the-scenes content and visual updates.</p>
+                <a href="#" class="social-button">Follow @8Bit</a>
+            </div>
+            
+            <div class="social-card">
+                <span class="social-icon">✈️</span>
+                <h3>Telegram Community</h3>
+                <p>Join our official Telegram community for exclusive announcements.</p>
+                <a href="#" class="social-button">Join Community</a>
+            </div>
+        </div>
+    </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-text">© 2025 <span class="footer-brand">8Bit</span>. All rights reserved.</div>
-        </footer>
-    </div>
+    <footer class="footer">
+        <p>&copy; 2024 8-Bit Arcade. All rights reserved.</p>
+    </footer>
 
     <script>
-        // Game configuration with your actual games
-        const games = [
-            {
-                id: 'generative_dungeon',
-                title: 'Generative Dungeon',
-                icon: '🏰',
-                points: 100,
-                url: './games/Generative_Dungeon/index.html',
-                categories: ['RPG', 'ADVENTURE'],
-                image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/Generative_Dungeon.png'
-            },
-            {
-                id: 'pacman_canva',
-                title: 'PacMan Canva',
-                icon: '👻',
-                points: 75,
-                url: './games/PacMan_Canva/index.html',
-                categories: ['ARCADE', 'CLASSIC'],
-                image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/PacMan_Canva.png'
-            },
-            {
-                id: 'pigeon_ascent',
-                title: 'Pigeon Ascent',
-                icon: '🐦',
-                points: 80,
-                url: './games/PidgeonAsent/index.html',
-                categories: ['ARCADE', 'ENDLESS'],
-                image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/Pidgeoon_Ascent.png'
+        // AUDIO SYSTEM
+        class AudioManager {
+            constructor() {
+                this.neonSound = null;
+                this.arcadeMusic = null;
+                this.isEnabled = true;
+                this.init();
             }
-        ];
 
-        // User Data
+            init() {
+                // Create audio elements
+                this.neonSound = new Audio();
+                this.neonSound.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJXfH8N2QQAoUXrTp66hVFApGn+DyvmMdBi+M0/LNfC8GJXfH8N+QQgoPVKnj7q9ZGQ==';
+                this.neonSound.volume = 0.3;
+                this.neonSound.loop = false;
+
+                this.arcadeMusic = new Audio();
+                this.arcadeMusic.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJXfH8N2QQAoUXrTp66hVFApGn+DyvmMdBi+M0/LNfC8GJXfH8N+QQgoPVKnj7q9ZGQ==';
+                this.arcadeMusic.volume = 0.1;
+                this.arcadeMusic.loop = true;
+
+                // Add audio controls to page
+                this.addAudioControls();
+                
+                // Start ambient music after user interaction
+                this.setupUserInteraction();
+            }
+
+            addAudioControls() {
+                const audioControls = document.createElement('div');
+                audioControls.className = 'audio-controls';
+                audioControls.innerHTML = `
+                    <button class="audio-toggle" id="audioToggle" title="Toggle Audio">
+                        🔊
+                    </button>
+                `;
+                document.body.appendChild(audioControls);
+
+                document.getElementById('audioToggle').addEventListener('click', () => {
+                    this.toggleAudio();
+                });
+            }
+
+            setupUserInteraction() {
+                // Start music on first user interaction
+                const startAudio = () => {
+                    if (this.isEnabled) {
+                        this.arcadeMusic.play().catch(e => console.log('Audio play failed:', e));
+                    }
+                    document.removeEventListener('click', startAudio);
+                    document.removeEventListener('touchstart', startAudio);
+                };
+
+                document.addEventListener('click', startAudio);
+                document.addEventListener('touchstart', startAudio);
+            }
+
+            playNeonSound() {
+                if (this.isEnabled && this.neonSound) {
+                    this.neonSound.currentTime = 0;
+                    this.neonSound.play().catch(e => console.log('Neon sound failed:', e));
+                }
+            }
+
+            toggleAudio() {
+                this.isEnabled = !this.isEnabled;
+                const button = document.getElementById('audioToggle');
+                
+                if (this.isEnabled) {
+                    button.textContent = '🔊';
+                    button.classList.remove('muted');
+                    this.arcadeMusic.play().catch(e => console.log('Music play failed:', e));
+                } else {
+                    button.textContent = '🔇';
+                    button.classList.add('muted');
+                    this.arcadeMusic.pause();
+                }
+            }
+
+            updateVolume(scrollY) {
+                if (!this.isEnabled) return;
+                
+                // Fade neon sound based on scroll
+                const neonFade = Math.max(0, 1 - (scrollY / 300));
+                if (this.neonSound) this.neonSound.volume = 0.3 * neonFade;
+                
+                // Increase arcade music as user scrolls
+                const musicIncrease = Math.min(0.4, 0.1 + (scrollY / 1000));
+                if (this.arcadeMusic) this.arcadeMusic.volume = musicIncrease;
+            }
+        }
+
+        // Initialize audio manager
+        const audioManager = new AudioManager();
+
+        // Add scroll-based audio effects
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            audioManager.updateVolume(scrollY);
+            
+            // Clear previous timeout
+            clearTimeout(scrollTimeout);
+            
+            // Play neon sound on scroll stop
+            scrollTimeout = setTimeout(() => {
+                if (scrollY < 100) {
+                    audioManager.playNeonSound();
+                }
+            }, 150);
+        });
+
+        // Trigger neon sound with neon flicker animation
+        setInterval(() => {
+            if (window.scrollY < 100) {
+                audioManager.playNeonSound();
+            }
+        }, 4000); // Every 4 seconds when at top
+
+        // Telegram WebApp integration
+        const tg = window.Telegram.WebApp;
+        let user = null;
+
+        if (tg) {
+            tg.ready();
+            user = tg.initDataUnsafe?.user;
+            
+            if (user) {
+                document.getElementById('userName').textContent = user.first_name || 'Player';
+                document.getElementById('userAvatar').textContent = user.first_name?.charAt(0) || '🎮';
+            }
+        }
+
+        // User data management
         let userData = {
             points: 0,
             totalPoints: 0,
+            level: 1,
             gamesPlayed: 0,
-            referrals: 0,
-            bonusPoints: 0,
-            referralCode: ''
+            achievements: []
         };
-
-        // Telegram Web App Integration
-        let tg = window.Telegram?.WebApp;
-        let user = null;
-
-        // Initialize the hub
-        function initHub() {
-            console.log('Initializing 8Bit Game Hub...');
-            
-            try {
-                if (tg) {
-                    tg.ready();
-                    tg.expand();
-                    
-                    // Get user info
-                    user = tg.initDataUnsafe?.user;
-                    
-                    // Configure main button
-                    tg.MainButton.text = "Back to Chat";
-                    tg.MainButton.color = "#00A4FF";
-                    tg.MainButton.textColor = "#FFFFFF";
-                    tg.MainButton.show();
-                    tg.MainButton.onClick(() => {
-                        tg.close();
-                    });
-                }
-
-                // Load user data
-                loadUserData();
-                
-                // Generate referral code if needed
-                if (!userData.referralCode) {
-                    userData.referralCode = generateReferralCode();
-                    saveUserData();
-                }
-                
-                // Render games
-                renderGames();
-                
-                // Update displays
-                updateUserDisplay();
-                
-                // Set up event listeners
-                setupEventListeners();
-                
-                console.log('Hub initialized successfully');
-                
-            } catch (error) {
-                console.error('Error initializing hub:', error);
-            }
-            
-            // Hide loading screen
-            setTimeout(() => {
-                const loading = document.getElementById('loading');
-                if (loading) {
-                    loading.classList.add('hidden');
-                }
-            }, 1500);
-        }
-
-        function setupEventListeners() {
-            try {
-                // Tab switching
-                document.querySelectorAll('.tab-button').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const tabName = this.getAttribute('data-tab');
-                        switchToTab(tabName);
-                    });
-                });
-
-                // Social media links
-                document.querySelectorAll('.social-card').forEach(card => {
-                    card.addEventListener('click', function() {
-                        const platform = this.getAttribute('data-social');
-                        openSocialLink(platform);
-                    });
-                });
-
-                // App store buttons
-                document.querySelectorAll('.app-store-button').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const store = this.getAttribute('data-store');
-                        downloadApp(store);
-                    });
-                });
-
-                // Copy and share buttons
-                const copyButton = document.getElementById('copyButton');
-                const shareButton = document.getElementById('shareButton');
-                
-                if (copyButton) {
-                    copyButton.addEventListener('click', copyReferralCode);
-                }
-                
-                if (shareButton) {
-                    shareButton.addEventListener('click', shareReferralLink);
-                }
-
-                console.log('Event listeners set up successfully');
-            } catch (error) {
-                console.error('Error setting up event listeners:', error);
-            }
-        }
 
         function loadUserData() {
             try {
-                const saved = sessionStorage.getItem('8bit_user_data');
+                const saved = localStorage.getItem('8bitArcadeUserData');
                 if (saved) {
                     userData = { ...userData, ...JSON.parse(saved) };
                 }
-            } catch (e) {
-                console.log('Error loading user data:', e);
+            } catch (error) {
+                console.error('Error loading user data:', error);
             }
         }
 
         function saveUserData() {
             try {
-                sessionStorage.setItem('8bit_user_data', JSON.stringify(userData));
-            } catch (e) {
-                console.log('Error saving user data:', e);
+                localStorage.setItem('8bitArcadeUserData', JSON.stringify(userData));
+            } catch (error) {
+                console.error('Error saving user data:', error);
             }
-        }
-
-        function generateReferralCode() {
-            const userId = user?.id || Math.floor(Math.random() * 10000);
-            return `8BIT-${userId.toString().slice(-4).padStart(4, '0')}`;
         }
 
         function updateUserDisplay() {
-            try {
-                const elements = {
-                    totalPoints: document.getElementById('totalPoints'),
-                    gamesPlayed: document.getElementById('gamesPlayed'),
-                    referrals: document.getElementById('referrals'),
-                    bonusPoints: document.getElementById('bonusPoints'),
-                    referralCode: document.getElementById('referralCode')
-                };
+            document.getElementById('userPoints').textContent = userData.points;
+            document.getElementById('userLevel').textContent = userData.level;
+            document.getElementById('gamesPlayed').textContent = userData.gamesPlayed;
+        }
 
-                if (elements.totalPoints) elements.totalPoints.textContent = userData.totalPoints.toLocaleString();
-                if (elements.gamesPlayed) elements.gamesPlayed.textContent = userData.gamesPlayed;
-                if (elements.referrals) elements.referrals.textContent = userData.referrals;
-                if (elements.bonusPoints) elements.bonusPoints.textContent = userData.bonusPoints.toLocaleString();
-                if (elements.referralCode) elements.referralCode.textContent = userData.referralCode;
+        // Game data
+        const games = [
+            {
+                id: 1,
+                title: "Neon Racer",
+                categories: ["Racing", "Arcade"],
+                points: 50,
+                icon: "🏎️",
+                image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=400&h=300&fit=crop",
+                url: "https://example.com/neon-racer"
+            },
+            {
+                id: 2,
+                title: "Space Defender",
+                categories: ["Shooting", "Sci-Fi"],
+                points: 75,
+                icon: "🚀",
+                image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=400&h=300&fit=crop",
+                url: "https://example.com/space-defender"
+            },
+            {
+                id: 3,
+                title: "Pixel Adventure",
+                categories: ["Platform", "Adventure"],
+                points: 60,
+                icon: "🏃",
+                image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop",
+                url: "https://example.com/pixel-adventure"
+            },
+            {
+                id: 4,
+                title: "Crystal Quest",
+                categories: ["RPG", "Fantasy"],
+                points: 100,
+                icon: "💎",
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+                url: "https://example.com/crystal-quest"
+            },
+            {
+                id: 5,
+                title: "Cyber Puzzle",
+                categories: ["Puzzle", "Strategy"],
+                points: 40,
+                icon: "🧩",
+                image: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=400&h=300&fit=crop",
+                url: "https://example.com/cyber-puzzle"
+            },
+            {
+                id: 6,
+                title: "Retro Fighter",
+                categories: ["Fighting", "Arcade"],
+                points: 80,
+                icon: "👊",
+                image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=300&fit=crop",
+                url: "https://example.com/retro-fighter"
+            }
+        ];
+
+        // EXTENDED LOADING TIME
+        function playGame(gameId, gameUrl, gameTitle, points) {
+            try {
+                // Award points for playing
+                userData.points += points;
+                userData.totalPoints += points;
+                userData.gamesPlayed++;
+                
+                // Level up logic
+                const newLevel = Math.floor(userData.totalPoints / 500) + 1;
+                if (newLevel > userData.level) {
+                    userData.level = newLevel;
+                    // Show level up notification
+                    console.log(`Level up! You are now level ${userData.level}`);
+                }
+                
+                saveUserData();
+                updateUserDisplay();
+                
+                // Send analytics to Telegram
+                if (tg) {
+                    tg.sendData(JSON.stringify({
+                        action: 'game_started',
+                        gameId: gameId,
+                        gameTitle: gameTitle,
+                        pointsEarned: points,
+                        user: user?.id || 'anonymous',
+                        timestamp: Date.now()
+                    }));
+                }
+
+                // Navigate to game after 2 seconds
+                setTimeout(() => {
+                    if (tg) {
+                        tg.openLink(gameUrl);
+                    } else {
+                        window.open(gameUrl, '_blank');
+                    }
+                }, 100);
+
+                console.log(`Started game: ${gameTitle}`);
             } catch (error) {
-                console.error('Error updating user display:', error);
+                console.error('Error playing game:', error);
             }
         }
 
+        // Update the button click handler for 2-second loading
         function renderGames() {
             try {
                 const gamesGrid = document.getElementById('gamesGrid');
@@ -1249,7 +929,7 @@
                         </div>
                     `;
                     
-                    // Add click event to play button
+                    // Add click event to play button with 2-second loading
                     const playButton = gameCard.querySelector('.play-button');
                     if (playButton) {
                         playButton.addEventListener('click', function(e) {
@@ -1264,16 +944,16 @@
                             const gameTitle = this.getAttribute('data-game-title');
                             const gamePoints = parseInt(this.getAttribute('data-game-points'));
                             
-                            // Delay for visual feedback
+                            // 2 SECOND LOADING DELAY
                             setTimeout(() => {
                                 playGame(gameId, gameUrl, gameTitle, gamePoints);
                                 
-                                // Reset button after delay
+                                // Reset button after another 1 second
                                 setTimeout(() => {
                                     this.classList.remove('loading');
                                     this.textContent = 'START';
                                 }, 1000);
-                            }, 300);
+                            }, 2000); // CHANGED from 300ms to 2000ms
                         });
                     }
                     
@@ -1286,229 +966,112 @@
             }
         }
 
-        function playGame(gameId, gameUrl, gameTitle, points) {
+        // Initialize the app
+        function initApp() {
             try {
-                // Award points for playing
-                userData.points += points;
-                userData.totalPoints += points;
-                userData.gamesPlayed++;
-                
-                saveUserData();
+                loadUserData();
                 updateUserDisplay();
+                renderGames();
                 
-                // Send analytics to Telegram
+                // Expand Telegram WebApp
                 if (tg) {
-                    tg.sendData(JSON.stringify({
-                        action: 'game_started',
-                        gameId: gameId,
-                        gameTitle: gameTitle,
-                        pointsEarned: points,
-                        user: user?.id || 'anonymous',
-                        timestamp: Date.now()
-                    }));
-                }
-
-                // Navigate to game
-                setTimeout(() => {
-                    if (tg) {
-                        tg.openLink(gameUrl);
-                    } else {
-                        window.open(gameUrl, '_blank');
-                    }
-                }, 100);
-
-                console.log(`Started game: ${gameTitle}`);
-            } catch (error) {
-                console.error('Error playing game:', error);
-            }
-        }
-
-        function switchToTab(tabName) {
-            try {
-                // Remove active class from all tab buttons
-                document.querySelectorAll('.tab-button').forEach(button => {
-                    button.classList.remove('active');
-                });
-                
-                // Hide all content sections
-                document.querySelectorAll('.content-section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                
-                // Find and activate the clicked button
-                const activeButton = document.querySelector(`[data-tab="${tabName}"]`);
-                if (activeButton) {
-                    activeButton.classList.add('active');
-                }
-                
-                // Show the corresponding section
-                const sections = {
-                    'games': 'gamesSection',
-                    'social': 'socialSection',
-                    'profile': 'profileSection'
-                };
-                
-                const sectionId = sections[tabName];
-                if (sectionId) {
-                    const section = document.getElementById(sectionId);
-                    if (section) {
-                        section.classList.add('active');
+                    tg.expand();
+                    
+                    // Set theme
+                    if (tg.colorScheme === 'dark') {
+                        document.body.classList.add('dark-theme');
                     }
                 }
                 
-                // Send tab switch event
-                if (tg) {
-                    tg.sendData(JSON.stringify({
-                        action: 'tab_switch',
-                        tab: tabName,
-                        user: user?.id || 'anonymous',
-                        timestamp: Date.now()
-                    }));
-                }
-
-                console.log(`Switched to tab: ${tabName}`);
+                console.log('8-Bit Arcade Gaming Hub initialized successfully');
             } catch (error) {
-                console.error('Error switching tabs:', error);
+                console.error('Error initializing app:', error);
             }
         }
 
-        function openSocialLink(platform) {
-            try {
-                const socialLinks = {
-                    twitter: 'https://twitter.com/8Bit_arcade1',
-                    discord: 'https://discord.gg/8bit',
-                    facebook: 'https://facebook.com/8bit',
-                    instagram: 'https://instagram.com/8bit',
-                    telegram: 'https://t.me/The8bitcryptocommunity'
-                };
-                
-                const url = socialLinks[platform];
-                if (url) {
-                    if (tg) {
-                        tg.openLink(url);
-                    } else {
-                        window.open(url, '_blank');
-                    }
-                }
-            } catch (error) {
-                console.error('Error opening social link:', error);
-            }
-        }
-
-        function downloadApp(store) {
-            try {
-                const storeLinks = {
-                    playstore: 'https://play.google.com/store/apps/details?id=com.8bit.app',
-                    appstore: 'https://apps.apple.com/app/8bit/id123456789'
-                };
-                
-                const url = storeLinks[store];
-                if (url) {
-                    if (tg) {
-                        tg.openLink(url);
-                    } else {
-                        window.open(url, '_blank');
-                    }
-                }
-                
-                // Send download event
-                if (tg) {
-                    tg.sendData(JSON.stringify({
-                        action: 'app_download_clicked',
-                        store: store,
-                        user: user?.id || 'anonymous',
-                        timestamp: Date.now()
-                    }));
-                }
-            } catch (error) {
-                console.error('Error downloading app:', error);
-            }
-        }
-
-        function copyReferralCode() {
-            try {
-                const referralCode = userData.referralCode;
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(referralCode).then(() => {
-                        alert('Referral code copied to clipboard!');
-                    }).catch(() => {
-                        fallbackCopyTextToClipboard(referralCode);
-                    });
-                } else {
-                    fallbackCopyTextToClipboard(referralCode);
-                }
-            } catch (error) {
-                console.error('Error copying referral code:', error);
-            }
-        }
-
-        function fallbackCopyTextToClipboard(text) {
-            try {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    alert('Referral code copied to clipboard!');
-                } catch (err) {
-                    alert('Failed to copy referral code. Please copy manually: ' + text);
-                }
-                document.body.removeChild(textArea);
-            } catch (error) {
-                console.error('Error in fallback copy:', error);
-            }
-        }
-
-        function shareReferralLink() {
-            try {
-                const referralText = `Join me on 8Bit Game Hub! Use my referral code: ${userData.referralCode}`;
-                const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(referralText)}`;
-                
-                if (tg) {
-                    tg.openTelegramLink(shareUrl);
-                } else {
-                    window.open(shareUrl, '_blank');
-                }
-            } catch (error) {
-                console.error('Error sharing referral link:', error);
-            }
-        }
-
-        // Error handling for debugging
-        window.addEventListener('error', function(e) {
-            console.error('JavaScript Error:', e.error);
-        });
-
-        // Initialize when DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing hub...');
-            initHub();
-        });
-        
-        // Also initialize if document is already loaded
+        // Start the app when DOM is loaded
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initHub);
+            document.addEventListener('DOMContentLoaded', initApp);
         } else {
-            initHub();
+            initApp();
         }
 
-        // Handle visibility change to pause/resume
+        // Handle visibility changes for better performance
         document.addEventListener('visibilitychange', () => {
-            try {
-                if (document.hidden) {
-                    saveUserData();
-                } else {
-                    loadUserData();
-                    updateUserDisplay();
+            if (document.hidden) {
+                // Pause audio when tab is hidden
+                if (audioManager.arcadeMusic && !audioManager.arcadeMusic.paused) {
+                    audioManager.arcadeMusic.pause();
                 }
-            } catch (error) {
-                console.error('Error handling visibility change:', error);
+            } else {
+                // Resume audio when tab is visible
+                if (audioManager.isEnabled && audioManager.arcadeMusic && audioManager.arcadeMusic.paused) {
+                    audioManager.arcadeMusic.play().catch(e => console.log('Resume audio failed:', e));
+                }
             }
         });
 
-        console.log('8Bit Game Hub script loaded successfully');
+        // Error handling for audio
+        window.addEventListener('error', (e) => {
+            console.error('Global error:', e.error);
+        });
+
+        // Handle keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const focusedElement = document.activeElement;
+                if (focusedElement.classList.contains('play-button')) {
+                    e.preventDefault();
+                    focusedElement.click();
+                }
+            }
+        });
+
+        // Performance optimization: Lazy load images
+        const observerOptions = {
+            root: null,
+            rootMargin: '50px',
+            threshold: 0.1
+        };
+
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.style.backgroundImage = `url(${img.dataset.src})`;
+                        img.removeAttribute('data-src');
+                        imageObserver.unobserve(img);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Analytics tracking
+        function trackEvent(eventName, eventData) {
+            try {
+                if (tg) {
+                    tg.sendData(JSON.stringify({
+                        event: eventName,
+                        data: eventData,
+                        timestamp: Date.now(),
+                        user: user?.id || 'anonymous'
+                    }));
+                }
+                console.log('Event tracked:', eventName, eventData);
+            } catch (error) {
+                console.error('Error tracking event:', error);
+            }
+        }
+
+        // Track page load
+        trackEvent('page_loaded', {
+            userAgent: navigator.userAgent,
+            viewport: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+        });
     </script>
 </body>
 </html>
