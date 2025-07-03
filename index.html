@@ -344,7 +344,7 @@
             cursor: pointer;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            height: 300px; /* INCREASED height for desktop to accommodate round button */
+            height: 320px; /* FURTHER INCREASED height for desktop to accommodate round button with more space */
             width: 100%;
             max-width: none;
         }
@@ -467,8 +467,8 @@
         }
 
         .game-content {
-            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xl); /* INCREASED bottom padding for desktop round button */
-            height: 160px; /* INCREASED height to accommodate round button on desktop */
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xxl); /* MUCH MORE bottom padding for desktop round button */
+            height: 180px; /* FURTHER INCREASED height for desktop round button */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -1168,7 +1168,7 @@
             neonTitles = document.querySelectorAll('.section-title');
             
             if (neonAudio) {
-                neonAudio.volume = 0.4; // Base neon sound volume
+                neonAudio.volume = 0.4;
                 neonAudio.preload = 'auto';
             }
             
@@ -1177,70 +1177,150 @@
                 backgroundMusic.preload = 'auto';
                 backgroundMusic.loop = true;
                 
-                // Aggressive mobile audio initialization
                 let musicStarted = false;
+                let attempts = 0;
+                const maxAttempts = 10;
                 
                 const startBackgroundMusic = () => {
-                    if (!musicStarted && backgroundMusic.paused) {
+                    if (musicStarted || attempts >= maxAttempts) return;
+                    
+                    attempts++;
+                    console.log(`Background music start attempt ${attempts}/${maxAttempts}`);
+                    
+                    if (backgroundMusic.paused) {
                         backgroundMusic.play().then(() => {
-                            console.log('Background music started successfully');
+                            console.log('✅ Background music started successfully');
                             musicStarted = true;
                             backgroundMusic.volume = 0.05; // Faint background level
                             updateScrollFade(); // Apply current scroll position volume
                         }).catch(e => {
-                            console.log('Background music play attempt failed:', e);
+                            console.log(`❌ Background music attempt ${attempts} failed:`, e);
+                            // Keep trying on Android
+                            if (attempts < maxAttempts) {
+                                setTimeout(startBackgroundMusic, 500); // Retry after 500ms
+                            }
                         });
                     }
                 };
                 
+                // Detect Android devices specifically
+                const isAndroid = /Android/i.test(navigator.userAgent);
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                const isMobile = isAndroid || isIOS;
+                
+                console.log(`Device detection: Android=${isAndroid}, iOS=${isIOS}, Mobile=${isMobile}`);
+                
                 // Try immediate play (desktop)
-                startBackgroundMusic();
+                if (!isMobile) {
+                    startBackgroundMusic();
+                }
                 
-                // Comprehensive mobile interaction handlers
-                const mobileInteractionEvents = [
-                    'touchstart', 'touchend', 'touchmove',
-                    'click', 'mousedown', 'mouseup',
-                    'keydown', 'scroll', 'focus'
-                ];
-                
-                const enableMobileMusic = (event) => {
-                    console.log(`Attempting to start music via ${event.type} event`);
+                // ENHANCED Android-specific handling
+                if (isAndroid) {
+                    console.log('🤖 Android device detected - implementing aggressive audio unlock');
                     
-                    if (!musicStarted) {
-                        startBackgroundMusic();
+                    // Create a comprehensive interaction handler for Android
+                    const androidAudioUnlock = (event) => {
+                        console.log(`🤖 Android audio unlock triggered by: ${event.type}`);
                         
-                        // Remove all listeners after first successful start
-                        if (musicStarted) {
-                            mobileInteractionEvents.forEach(eventType => {
-                                document.removeEventListener(eventType, enableMobileMusic);
-                            });
-                        }
-                    }
-                };
-                
-                // Add multiple event listeners for maximum mobile compatibility
-                mobileInteractionEvents.forEach(eventType => {
-                    document.addEventListener(eventType, enableMobileMusic, { 
-                        once: false, // Don't auto-remove in case first attempt fails
-                        passive: true 
-                    });
-                });
-                
-                // Special handling for iOS devices
-                if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                    console.log('iOS device detected - setting up enhanced audio handling');
+                        // Multiple unlock attempts
+                        const unlockAttempts = [
+                            () => {
+                                // Attempt 1: Direct play
+                                startBackgroundMusic();
+                            },
+                            () => {
+                                // Attempt 2: Create new audio context
+                                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                                if (AudioContext) {
+                                    const audioContext = new AudioContext();
+                                    if (audioContext.state === 'suspended') {
+                                        audioContext.resume().then(() => {
+                                            console.log('🤖 Android AudioContext resumed');
+                                            startBackgroundMusic();
+                                        });
+                                    }
+                                }
+                            },
+                            () => {
+                                // Attempt 3: Force audio element reload
+                                backgroundMusic.load();
+                                setTimeout(startBackgroundMusic, 100);
+                            }
+                        ];
+                        
+                        // Execute all unlock attempts
+                        unlockAttempts.forEach((attempt, index) => {
+                            setTimeout(attempt, index * 200);
+                        });
+                    };
                     
-                    // iOS-specific unlock
+                    // Android-specific events
+                    const androidEvents = [
+                        'touchstart', 'touchend', 'touchmove', 'touchcancel',
+                        'click', 'mousedown', 'mouseup',
+                        'pointerdown', 'pointerup',
+                        'keydown', 'scroll', 'focus', 'load'
+                    ];
+                    
+                    androidEvents.forEach(eventType => {
+                        document.addEventListener(eventType, androidAudioUnlock, { 
+                            once: false,
+                            passive: true,
+                            capture: false
+                        });
+                        
+                        // Also add to window for broader coverage
+                        window.addEventListener(eventType, androidAudioUnlock, {
+                            once: false,
+                            passive: true,
+                            capture: false
+                        });
+                    });
+                    
+                    // Android fallback: try every 2 seconds for the first 20 seconds
+                    let fallbackAttempts = 0;
+                    const androidFallback = setInterval(() => {
+                        if (musicStarted || fallbackAttempts >= 10) {
+                            clearInterval(androidFallback);
+                            return;
+                        }
+                        
+                        fallbackAttempts++;
+                        console.log(`🤖 Android fallback attempt ${fallbackAttempts}/10`);
+                        startBackgroundMusic();
+                    }, 2000);
+                }
+                
+                // iOS-specific handling
+                if (isIOS) {
+                    console.log('🍎 iOS device detected - setting up iOS audio handling');
+                    
                     const unlockAudioForIOS = () => {
+                        // Create and play silent audio to unlock iOS audio context
                         const silentAudio = new Audio();
                         silentAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAAABQEBAAEAAAEAAwA=';
                         silentAudio.play().then(() => {
-                            console.log('iOS audio context unlocked');
+                            console.log('🍎 iOS audio context unlocked');
                             startBackgroundMusic();
-                        }).catch(e => console.log('iOS unlock failed:', e));
+                        }).catch(e => console.log('🍎 iOS unlock failed:', e));
                     };
                     
                     document.addEventListener('touchstart', unlockAudioForIOS, { once: true });
+                    document.addEventListener('click', unlockAudioForIOS, { once: true });
+                }
+                
+                // General mobile fallback
+                if (isMobile) {
+                    const generalMobileEvents = ['touchstart', 'click', 'scroll'];
+                    generalMobileEvents.forEach(eventType => {
+                        document.addEventListener(eventType, () => {
+                            if (!musicStarted) {
+                                console.log(`📱 Mobile audio attempt via ${eventType}`);
+                                startBackgroundMusic();
+                            }
+                        }, { passive: true });
+                    });
                 }
             }
             
