@@ -445,7 +445,7 @@
             color: white;
             position: relative; /* ENSURE relative positioning for overlay */
             overflow: hidden;
-            background-size: cover;
+            background-size: contain; /* CHANGED from 'cover' to 'contain' to show 70% of image */
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -591,7 +591,7 @@
 
         /* REMOVED LOADING STATE - NO LONGER NEEDED */
 
-        /* Social Media Section */
+        /* Social Media Section with REAL LOGOS */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -630,6 +630,30 @@
             font-size: 1.8rem;
             color: white;
             box-shadow: 0 8px 25px rgba(0, 164, 255, 0.4);
+            background-size: 30px 30px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* REAL SOCIAL MEDIA LOGOS */
+        .social-icon.x-logo {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSIxMjI3IiB2aWV3Qm94PSIwIDAgMTIwMCAxMjI3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNNzE0LjE2MyA1MTkuMjg0TDExNjAuODkgMEgxMDU0LjI4TDY2Ny4xMzcgNDUwLjg4N0wyNzUuNzggMEgwTDQ2OC40OTIgNjgxLjgyMUwwIDEyMjYuMzdIMTA2LjYxTDUxNS40NzQgNzUwLjIxOEw5MzIuMjIgMTIyNi4zN0gxMjA4TDcxNC4xMzcgNTE5LjI4NEg3MTQuMTYzWk0xNjkuMTQgNzUuOTY3Mkg3MTUuNzE4TDEwMzEuNzcgMTE1MC45SDQyMC4wNTNMMTY5LjE0IDc1Ljk2NzJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K');
+        }
+
+        .social-icon.discord-logo {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzEiIGhlaWdodD0iNTUiIHZpZXdCb3g9IjAgMCA3MSA1NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzI1XzEwNikiPgo8cGF0aCBkPSJNNjAuMTA0NSA0LjkwNzlDNTUuNzQ0OSAyLjk4NDggNTEuMDk5MSAxLjU2NDQxIDQ2LjE5MjEgMC43MTQzMjVDNDUuNjEwNSAxLjkwNDU5IDQ0Ljk1NDcgMy41Mjc0MyA0NC41MjIzIDQuNzIzNzNDMzkuMzAxNCAzLjk1OTggMzQuMTM3MyAzLjk1OTggMjguOTczIDQuNzIzNzNDMjguNTQwNiAzLjUyNzQzIDI3Ljg2ODQgMS45MDQ1OSAyNy4yODEyIDAuNzE0MzI1QzIyLjM3NDIgMS41NjQ0MSAxNy43MjI5IDIuOTg0OCAxMy4zNjMzIDQuOTA3OUM5LjQzNzc3IDEzLjEzMzEgOC40Mzc5MiAyMS4xNzUxIDkuNDY3MTggMjkuMDcyNkMxNS44MzA2IDMzLjU3OTggMjIuMDA3NCAzNi4yNjY2IDI4LjAwNDUgMzcuODcyNUMzMS42MDkgMzMuNjE0OSAzNC44NjIxIDI5LjA3MjYgMzcuNTczOSAyNC4zMjQ5QzMzLjQ5NDEgMjIuNzk1NCAyOS42MTgzIDIwLjkxOTEgMjYuMDI1NCAxOC43NDY5QzI2LjU4MTQgMTguNDA5MiAyNy4xMzcxIDE4LjA1MTEgMjcuNjc5NCAxNy42NzU1QzMxLjczNDMgMTkuNTc2OCAzNi4yNjMgMjAuNTgwOCA0MS4wNDI4IDIwLjU4MDhDNDUuODIyNiAyMC41ODA4IDUwLjM1MTMgMTkuNTc2OCA1NC40MDYyIDE3LjY3NTVDNTQuOTQ4NSAxOC4wNTExIDU1LjUwNDIgMTguNDA5MiA1Ni4wNjAyIDE4Ljc0NjlDNTIuNDY3MyAyMC45MTkxIDQ4LjU5MTUgMjIuNzk1NCA0NC41MTE2IDI0LjMyNDlDNDcuMjIzNCAyOS4wNzI2IDUwLjQ3NjUgMzMuNjE0OSA1NC4wODEgMzcuODcyNUM2MC4wNzgxIDM2LjI2NjYgNjYuMjU0OSAzMy41Nzk4IDcyLjYxODQgMjkuMDcyNkM3My44Nzg1IDE5LjQ1NjMgNzAuODEwOCAxMS41MjkzIDYwLjEwNDUgNC45MDc5WiIgZmlsbD0id2hpdGUiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF8yNV8xMDYiPgo8cmVjdCB3aWR0aD0iNzEiIGhlaWdodD0iNTUiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==');
+        }
+
+        .social-icon.facebook-logo {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI0IDEyQzI0IDUuMzcyNTggMTguNjI3NCAwIDEyIDBTMCA1LjM3MjU4IDAgMTJDMCAxNy45ODk1IDQuMzg4MTEgMjIuOTU0MSA5Ljc1IDIzLjgyOTNWMTUuNDY4OEg2LjgxODM2VjEySDkuNzVWOS4zNTY0NEM5Ljc1IDYuMzQ4OTQgMTEuNDY0MSA0LjY4NzUgMTQuMjE3NyA0LjY4NzVDMTUuNTQxMiA0LjY4NzUgMTYuOTMzNiA0LjkyMTg4IDE2LjkzMzYgNC45MjE4OFY3Ljg3NUgxNS40MTEzQzEzLjkxNSA3Ljg3NSAxMy41IDguODAwNzggMTMuNSA5Ljc0OTIyVjEySDEuNkwxNi44MDI3IDE1LjQ2ODhIMTMuNVYyMy44MjkzQzE4Ljg2MTkgMjIuOTU0MSAyNCAxNy45ODk1IDI0IDEyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==');
+        }
+
+        .social-icon.instagram-logo {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDIuMTYzQzE1LjIwNCAyLjE2MyAxNS41ODQgMi4xNzUgMTYuODUgMi4yMzNDMTguMTAyIDIuMjkgMTguNzk3IDIuNDczIDE5LjMxIDIuNzExQzE5LjY4NSAyLjg4MiAyMC4wOTYgMy4xOTkgMjAuNDgyIDMuNTE4QzIwLjgwMSAzLjkwNCAyMS4xMTggNC4zMTUgMjEuMjg5IDQuNjlDMjEuNTI3IDUuMjAzIDIxLjcxIDUuODk4IDIxLjc2NyA3LjE1QzIxLjgyNSA4LjQxNiAyMS44MzcgOC43OTYgMjEuODM3IDEyUzIxLjgyNSAxNS41ODQgMjEuNzY3IDE2Ljg1QzIxLjcxIDE4LjEwMiAyMS41MjcgMTguNzk3IDIxLjI4OSAxOS4zMUMyMS4xMTggMTkuNjg1IDIwLjgwMSAyMC4wOTYgMjAuNDgyIDIwLjQ4MkMyMC4wOTYgMjAuODAxIDE5LjY4NSAyMS4xMTggMTkuMzEgMjEuMjg5QzE4Ljc5NyAyMS41MjcgMTguMTAyIDIxLjcxIDE2Ljg1IDIxLjc2N0MxNS41ODQgMjEuODI1IDE1LjIwNCAyMS44MzcgMTIgMjEuODM3UzguNDE2IDIxLjgyNSA3LjE1IDIxLjc2N0M1Ljg5OCAyMS43MSA1LjIwMyAyMS41MjcgNC42OSAyMS4yODlDNC4zMTUgMjEuMTE4IDMuOTA0IDIwLjgwMSAzLjUxOCAyMC40ODJDMy4xOTkgMjAuMDk2IDIuODgyIDE5LjY4NSAyLjcxMSAxOS4zMUMyLjQ3MyAxOC43OTcgMi4yOSAxOC4xMDIgMi4yMzMgMTYuODVDMi4xNzUgMTUuNTg0IDIuMTYzIDE1LjIwNCAyLjE2MyAxMlMyLjE3NSA4LjQxNiAyLjIzMyA3LjE1QzIuMjkgNS44OTggMi40NzMgNS4yMDMgMi43MTEgNC42OUMyLjg4MiA0LjMxNSAzLjE5OSAzLjkwNCAzLjUxOCAzLjUxOEMzLjkwNCAzLjE5OSA0LjMxNSAyLjg4MiA0LjY5IDIuNzExQzUuMjAzIDIuNDczIDUuODk4IDIuMjkgNy4xNSAyLjIzM0M4LjQxNiAyLjE3NSA4Ljc5NiAyLjE2MyAxMiAyLjE2M1pNMTIgMEM4LjY3NCAwIDguMzMzIDAuMDE0IDcuMDUzIDAuMDcyQzUuNzc1IDAuMTMgNC45MDUgMC4zMzMgNC4xNCAwLjYzQzMuMzUxIDAuOTM2IDIuNjgxIDEuMzQ3IDIuMDE0IDIuMDE0QzEuMzQ3IDIuNjgxIDAuOTM2IDMuMzUxIDAuNjMgNC4xNEMwLjMzMyA0LjkwNSAwLjEzIDUuNzc1IDAuMDcyIDcuMDUzQzAuMDE0IDguMzMzIDAgOC42NzQgMCAxMlMwLjAxNCAxNS42NjcgMC4wNzIgMTYuOTQ3QzAuMTMgMTguMjI1IDAuMzMzIDE5LjA5NSAwLjYzIDE5Ljg2QzAuOTM2IDIwLjY0OSAxLjM0NyAyMS4zMTkgMi4wMTQgMjEuOTg2QzIuNjgxIDIyLjY1MyAzLjM1MSAyMy4wNjQgNC4xNCAyMy4zN0M0LjkwNSAyMy42NjcgNS43NzUgMjMuODcgNy4wNTMgMjMuOTI4QzguMzMzIDIzLjk4NiA4LjY3NCAyNCA1MiAyNFMxNS42NjcgMjMuOTg2IDE2Ljk0NyAyMy45MjhDMTguMjI1IDIzLjg3IDE5LjA5NSAyMy42NjcgMTkuODYgMjMuMzdDMjAuNjQ5IDIzLjA2NCAyMS4zMTkgMjIuNjUzIDIxLjk4NiAyMS45ODZDMjIuNjUzIDIxLjMxOSAyMy4wNjQgMjAuNjQ5IDIzLjM3IDE5Ljg2QzIzLjY2NyAxOS4wOTUgMjMuODcgMTguMjI1IDIzLjkyOCAxNi45NDdDMjMuOTg2IDE1LjY2NyAyNCAxNS4zMjYgMjQgMTJTMjMuOTg2IDguMzMzIDIzLjkyOCA3LjA1M0MyMy44NyA1Ljc3NSAyMy42NjcgNC45MDUgMjMuMzcgNC4xNEMyMy4wNjQgMy4zNTEgMjIuNjUzIDIuNjgxIDIxLjk4NiAyLjAxNEMyMS4zMTkgMS4zNDcgMjAuNjQ5IDAuOTM2IDE5Ljg2IDAuNjNDMTkuMDk1IDAuMzMzIDE4LjIyNSAwLjEzIDE2Ljk0NyAwLjA3MkMxNS42NjcgMC4wMTQgMTUuMzI2IDAgMTIgMFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMiA1Ljg0MEE2LjE2IDYuMTYgMCAwIDAgNS44NCA1MiA2LjE2IDYuMTYgMCAwIDAgNTIgMTguMTZBNi4xNiA2LjE2IDAgMCAwIDE4LjE2IDEyIDYuMTYgNi4xNiAwIDAgMCAxMiA1Ljg0Wk0xMiAxNi4wMDFBNC4wMDEgNC4wMDEgMCAxIDEgMTYuMDAxIDEyIDQgNCAwIDAgMSAxMiAxNi4wMDFaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTkuODQgNS41OTRBMS44NDQgMS44NDQgMCAxIDAgMTguMDAyIDMuNzQ5QTEuODQ2IDEuODQ2IDAgMCAwIDE5Ljg0IDUuNTk0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==');
+        }
+
+        .social-icon.telegram-logo {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIzLjU2MDggMi4yOEMyMy4yNDA4IDEuOTYgMjIuODQwOCAxLjc2IDIyLjQwMDggMS43NkMyMi4wODA4IDEuNzYgMjEuNzIwOCAxLjg0IDIxLjQ0MDggMi4wNEwyLjA0MDggMTAuNTJDMS41MjA4IDEwLjggMS4yNDA4IDExLjMyIDEuMjAwOCAxMS44OEMxLjE2MDggMTIuNDQgMS40MDA4IDEyLjk2IDEuODgwOCAxMy4yOEw3LjA0MDggMTYuNDhMOC45NjA4IDIxLjJDOS4xNjA4IDIxLjY4IDkuNTIwOCAyMi4wNCA5Ljk2MDggMjIuMjRDMTAuMjAwOCAyMi4zNiAxMC40NDA4IDIyLjQgMTAuNzIwOCAyMi40QzExLjA0MDggMjIuNCAxMS4zNjA4IDIyLjMyIDExLjY0MDggMjIuMTZDMTIuMDQwOCAyMS45NiAxMi4zNjA4IDIxLjY0IDEyLjU2MDggMjEuMjhMMTQuMjgwOCAxOC4wOEwyMC44ODA4IDE1LjJDMjEuMzYwOCAxNC45NiAyMS43MjA4IDE0LjUyIDIxLjg0MDggMTMuOTZDMjEuOTYwOCAxMy40IDIxLjgwMDggMTIuODQgMjEuNDQwOCAxMi40TDIwLjYwMDggMTEuNTJMMjMuNjAwOCA0LjY0QzIzLjg4MDggMy45NiAyMy43NjA4IDMuMjQgMjMuMzIwOCAyLjY4QzIzLjEyMDggMi40NCAyMi44ODA4IDIuMzYgMjIuNjAwOCABMkMwIDUuMzcyNTggNS4zNzI1OCAwIDEyIDBTMjQgNS4zNzI1OCAyNCAxMlMxOC42Mjc0IDI0IDEyIDI0UzAgMTguNjI3NCAwIDEyWk0xOC44NDA4IDEzLjNDMTguNzYwOCAxMy40NCAxOC42NDA4IDEzLjU2IDE4LjQ4MDggMTMuNkwxMS43NjA4IDE2LjU2QzExLjY0MDggMTYuNjQgMTEuNTIwOCAxNi42NCAxMS40MDA4IDE2LjYwMDhDMTEuMjgwOCAxNi41NjA4IDExLjE2MDggMTYuNDgwOCAxMS4wODA4IDE2LjM2MDhMMTAuMjAwOCAxNS4wODA4TDkuODgwOCAxOS42ODA4TDguMjQwOCAxNS41NkwzLjI0MDggMTIuNzZMMjAuNjQwOCA0LjcySDIwLjU2MDhMMTguODQwOCAxMy4zWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==');
         }
 
         .social-title {
@@ -1074,17 +1098,40 @@
             <!-- Social Media Links -->
             <div class="social-grid">
                 <div class="social-card" data-social="twitter">
-                    <div class="social-icon">🐦</div>
-                    <h3 class="social-title">Twitter</h3>
+                    <div class="social-icon x-logo"></div>
+                    <h3 class="social-title">X (Twitter)</h3>
                     <p class="social-description">Follow us for the latest updates, game releases, and community events.</p>
                     <div class="social-button">Follow @8Bit_arcade1</div>
                 </div>
 
                 <div class="social-card" data-social="discord">
-                    <div class="social-icon">💬</div>
+                    <div class="social-icon discord-logo"></div>
                     <h3 class="social-title">Discord</h3>
                     <p class="social-description">Join our gaming community and connect with players worldwide.</p>
                     <div class="social-button">Join Discord</div>
+                </div>
+
+                <div class="social-card" data-social="facebook">
+                    <div class="social-icon facebook-logo"></div>
+                    <h3 class="social-title">Facebook</h3>
+                    <p class="social-description">Like our page for news, game tips, and exclusive content.</p>
+                    <div class="social-button">Like Page</div>
+                </div>
+
+                <div class="social-card" data-social="instagram">
+                    <div class="social-icon instagram-logo"></div>
+                    <h3 class="social-title">Instagram</h3>
+                    <p class="social-description">Follow for behind-the-scenes content and visual updates.</p>
+                    <div class="social-button">Follow @8Bit</div>
+                </div>
+
+                <div class="social-card" data-social="telegram">
+                    <div class="social-icon telegram-logo"></div>
+                    <h3 class="social-title">Telegram Community</h3>
+                    <p class="social-description">Join our official Telegram community for exclusive announcements.</p>
+                    <div class="social-button">Join Community</div>
+                </div>
+            </div></div>
                 </div>
 
                 <div class="social-card" data-social="facebook">
@@ -1277,7 +1324,7 @@
             neonTitles = document.querySelectorAll('.section-title');
             
             if (neonAudio) {
-                neonAudio.volume = 0.4;
+                neonAudio.volume = 0.3; // REDUCED from 0.4 to 0.3 (25% reduction)
                 neonAudio.preload = 'auto';
             }
             
@@ -1304,23 +1351,32 @@
                             updateScrollFade(); // Apply current scroll position volume
                         }).catch(e => {
                             console.log(`❌ Background music attempt ${attempts} failed:`, e);
-                            // Keep trying on Android
-                            if (attempts < maxAttempts) {
+                            // Keep trying on mobile devices
+                            if (attempts < maxAttempts && isMobile) {
                                 setTimeout(startBackgroundMusic, 500); // Retry after 500ms
                             }
                         });
                     }
                 };
                 
-                // Detect Android devices specifically
+                // Detect mobile devices specifically
                 const isAndroid = /Android/i.test(navigator.userAgent);
                 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
                 const isMobile = isAndroid || isIOS;
                 
                 console.log(`Device detection: Android=${isAndroid}, iOS=${isIOS}, Mobile=${isMobile}`);
                 
-                // Try immediate play (desktop)
-                if (!isMobile) {
+                // MOBILE-SPECIFIC: Add 2-3 second delay for mobile devices
+                if (isMobile) {
+                    console.log('📱 Mobile device detected - implementing 3-second delay for audio unlock');
+                    
+                    // Delay initial attempt by 3 seconds on mobile
+                    setTimeout(() => {
+                        console.log('📱 Mobile 3-second delay complete - attempting audio start');
+                        startBackgroundMusic();
+                    }, 3000);
+                } else {
+                    // Desktop: Try immediately
                     startBackgroundMusic();
                 }
                 
@@ -1475,9 +1531,9 @@
             if (!isAudioEnabled || !neonAudio || isMuted) return;
             
             try {
-                // Play audio
+                // Play audio with REDUCED VOLUME (25% reduction: 0.4 * 0.75 = 0.3)
                 neonAudio.currentTime = 0;
-                neonAudio.volume = 0.4 * currentScrollFade; // Apply scroll fade
+                neonAudio.volume = 0.3 * currentScrollFade; // REDUCED from 0.4 to 0.3
                 neonAudio.play().catch(e => console.log('Neon audio play failed:', e));
                 
                 // Trigger visual flicker in sync with audio
@@ -1544,9 +1600,9 @@
             const musicVolume = baseVolume + (scrollProgress * (maxVolume - baseVolume));
             
             if (!isMuted) {
-                // Update neon audio volume
+                // Update neon audio volume (REDUCED by 25%)
                 if (neonAudio && isAudioEnabled) {
-                    neonAudio.volume = 0.4 * currentScrollFade;
+                    neonAudio.volume = 0.3 * currentScrollFade; // REDUCED from 0.4 to 0.3
                 }
                 
                 // Update background music volume with faint base level
