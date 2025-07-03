@@ -175,6 +175,16 @@
             color: var(--text-secondary);
             margin-bottom: var(--spacing-lg);
             text-align: center;
+            /* ADD THESE STYLES FOR BLUR BACKGROUND */
+            background: rgba(15, 23, 42, 0.8); /* Semi-transparent dark background */
+            backdrop-filter: blur(20px); /* Blur effect */
+            border: 1px solid rgba(0, 164, 255, 0.2); /* Subtle border */
+            border-radius: var(--border-radius); /* Rounded corners */
+            padding: var(--spacing-md) var(--spacing-lg); /* Padding around text */
+            display: inline-block; /* Make background fit text width */
+            position: relative; /* For any future positioning */
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Text shadow for extra readability */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow around the blur box */
         }
 
         /* Games Grid */
