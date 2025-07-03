@@ -593,76 +593,122 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .games-grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-md);
-                padding: 0 var(--spacing-md);
-             }
+        /* Responsive Design - IMPROVED */
+@media (max-width: 768px) {
+    .games-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+        padding: 0 var(--spacing-sm);
+    }
     
-            .game-card {
-                height: 220px;
-                min-width: 0;
-                max-width: 180px
-            }
+    .game-card {
+        height: 260px; /* Taller to fit content */
+        min-width: 0;
+    }
     
-            .game-image {
-                height: 100px;
-            }
-            
-            .header {
-                padding: var(--spacing-md);
-            }
-            
-            .profile-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+    .game-image {
+        height: 120px; /* Bigger image area */
+    }
+    
+    .game-content {
+        padding: var(--spacing-sm);
+        height: 140px; /* More space for content */
+    }
+    
+    .header {
+        padding: var(--spacing-md);
+    }
+    
+    .profile-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-        @media (max-width: 480px) {
-             .games-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-xs);
-                padding: 0 var(--spacing-sm);
-                max-width: 100%;
-            }
-            
-            .game-card {
-                height: 180px;
-                min-width: 0;
-                max-width: 150px;
-            }
-            
-            .game-image {
-                height: 80px;
-            }
+@media (max-width: 480px) {
+    .games-grid {
+        grid-template-columns: 1fr; /* SINGLE COLUMN on phones */
+        gap: var(--spacing-md);
+        padding: 0 var(--spacing-md);
+        max-width: 100%;
+    }
     
-            .content-section {
-                padding: var(--spacing-md);
-            }
-        }
-        
-        @media (max-width: 360px) {
-            .games-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 6px;
-                padding: 0 8px;
-            }
-            
-            .game-card {
-                height: 160px;
-                max-width: 130px;
-            }
-            
-            .game-image {
-                height: 70px;
-            }
-            
-            .game-title {
-                font-size: 0.8rem;
-            }
-        }
+    .game-card {
+        height: 280px; /* Full height restored */
+        max-width: none; /* Remove width restriction */
+        margin: 0 auto; /* Center the cards */
+    }
+    
+    .game-image {
+        height: 160px; /* Full image height */
+    }
+    
+    .game-content {
+        padding: var(--spacing-md); /* Full padding */
+        height: 120px; /* Full content height */
+    }
+    
+    .game-title {
+        font-size: 1.1rem; /* Full size title */
+        line-height: 1.2;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .game-categories {
+        margin-bottom: var(--spacing-sm);
+        flex-wrap: wrap;
+    }
+    
+    .game-category-tag {
+        font-size: 0.65rem; /* Readable size */
+        padding: 2px 8px;
+        margin-right: 4px;
+        margin-bottom: 2px;
+    }
+    
+    .game-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .play-button {
+        padding: 6px 12px; /* Full button size */
+        font-size: 0.8rem;
+    }
+    
+    .game-points {
+        font-size: 0.75rem; /* Readable points */
+        padding: 4px 8px;
+    }
+    
+    .content-section {
+        padding: var(--spacing-md);
+    }
+}
+
+/* Extra small phones - Keep single column but optimize */
+@media (max-width: 360px) {
+    .games-grid {
+        grid-template-columns: 1fr; /* Still single column */
+        gap: var(--spacing-md);
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .game-card {
+        height: 280px; /* Keep full height */
+        max-width: none;
+    }
+    
+    .game-image {
+        height: 140px; /* Slightly smaller image */
+    }
+    
+    .game-content {
+        height: 140px; /* More content space */
+    }
+}
+    
     </style>
 </head>
 <body>
