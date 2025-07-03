@@ -951,6 +951,9 @@
     </style>
 </head>
 <body>
+    <!-- Neon flicker audio -->
+    <audio id="neon-audio" src="assets/flickering-neon-316717.mp3" preload="auto"></audio>
+
     <div class="loading" id="loading">
         <div class="loading-spinner"></div>
         <div class="loading-text">Loading 8Bit Hub...</div>
@@ -1082,6 +1085,28 @@
     </div>
 
     <script>
+        // NEON FLICKER AUDIO INTEGRATION
+        function playNeonFlicker() {
+            const audio = document.getElementById('neon-audio');
+            if (audio) {
+                audio.currentTime = 0;
+                audio.volume = 0.3; // Set volume to 30%
+                audio.play().catch(e => console.log('Neon audio play failed:', e));
+            }
+        }
+
+        // Fade audio as user scrolls
+        window.addEventListener('scroll', function() {
+            const audio = document.getElementById('neon-audio');
+            if (audio) {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                // Fade starts at 0, ends at 2x window height
+                let volume = 1 - Math.min(scrollTop / (windowHeight * 2), 1);
+                audio.volume = Math.max(0, Math.min(0.3, volume * 0.3)); // Max volume 30%
+            }
+        });
+
         // Game configuration with your actual games
         const games = [
             {
@@ -1127,6 +1152,9 @@
         let tg = window.Telegram?.WebApp;
         let user = null;
 
+        // Neon flicker interval - syncs with CSS animation
+        let neonFlickerInterval;
+
         // Initialize the hub
         function initHub() {
             console.log('Initializing 8Bit Game Hub...');
@@ -1167,6 +1195,9 @@
                 // Set up event listeners
                 setupEventListeners();
                 
+                // Start neon flicker audio sync
+                startNeonFlickerAudio();
+                
                 console.log('Hub initialized successfully');
                 
             } catch (error) {
@@ -1180,6 +1211,28 @@
                     loading.classList.add('hidden');
                 }
             }, 1500);
+        }
+
+        // Start neon flicker audio that syncs with CSS animation
+        function startNeonFlickerAudio() {
+            // Play initial sound after user interaction
+            const playInitialSound = () => {
+                playNeonFlicker();
+                document.removeEventListener('click', playInitialSound);
+                document.removeEventListener('touchstart', playInitialSound);
+                
+                // Set up interval to sync with neon animation (every 2 seconds to match CSS)
+                neonFlickerInterval = setInterval(() => {
+                    // Only play if user is near the top of the page
+                    if (window.scrollY < window.innerHeight) {
+                        playNeonFlicker();
+                    }
+                }, 2000); // Matches the CSS animation duration
+            };
+
+            // Wait for user interaction before playing audio
+            document.addEventListener('click', playInitialSound);
+            document.addEventListener('touchstart', playInitialSound);
         }
 
         function setupEventListeners() {
@@ -1574,9 +1627,17 @@
             try {
                 if (document.hidden) {
                     saveUserData();
+                    // Pause neon flicker when tab is hidden
+                    if (neonFlickerInterval) {
+                        clearInterval(neonFlickerInterval);
+                    }
                 } else {
                     loadUserData();
                     updateUserDisplay();
+                    // Resume neon flicker when tab is visible
+                    if (!neonFlickerInterval) {
+                        startNeonFlickerAudio();
+                    }
                 }
             } catch (error) {
                 console.error('Error handling visibility change:', error);
