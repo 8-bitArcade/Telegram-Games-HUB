@@ -598,6 +598,16 @@
             .games-grid {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-md);
+                padding: 0 var(--spacing-md);
+             }
+    
+            .game-card {
+                height: 220px;
+                min-width: 0;
+            }
+    
+            .game-image {
+                height: 100px;
             }
             
             .header {
@@ -610,8 +620,46 @@
         }
 
         @media (max-width: 480px) {
+             .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-xs);
+                padding: 0 var(--spacing-sm);
+                max-width: 100%;
+            }
+            
+            .game-card {
+                height: 180px;
+                min-width: 0;
+                max-width: 140px;
+            }
+            
+            .game-image {
+                height: 80px;
+            }
+    
             .content-section {
                 padding: var(--spacing-md);
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+                padding: 0 8px;
+            }
+            
+            .game-card {
+                height: 160px;
+                max-width: 120px;
+            }
+            
+            .game-image {
+                height: 70px;
+            }
+            
+            .game-title {
+                font-size: 0.8rem;
             }
         }
     </style>
