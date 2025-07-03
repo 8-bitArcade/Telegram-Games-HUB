@@ -1074,7 +1074,64 @@
             }
             
             // Render games
-            renderGames();
+            renderGames() {
+                    function renderGames() {
+        const gamesGrid = document.getElementById('gamesGrid');
+        if (!gamesGrid) {
+            console.error('Games grid element not found');
+            return;
+        }
+    
+        gamesGrid.innerHTML = '';
+    
+        games.forEach(game => {
+            const gameCard = document.createElement('div');
+            gameCard.className = 'game-card';
+            
+            const categoriesHTML = game.categories.map(cat => 
+                `<span class="game-category-tag">${cat}</span>`
+            ).join('');
+            
+            gameCard.innerHTML = `
+                <div class="game-image" style="background-image: url('${game.image}');">
+                    <div class="game-image-icon">${game.icon}</div>
+                </div>
+                <div class="game-content">
+                    <div class="game-header">
+                        <h3 class="game-title">${game.title}</h3>
+                        <div class="game-categories">${categoriesHTML}</div>
+                    </div>
+                    <div class="game-footer">
+                        <div class="game-points">+${game.points} pts</div>
+                        <button class="play-button" data-game-id="${game.id}" data-game-url="${game.url}" data-game-title="${game.title}" data-game-points="${game.points}">
+                            START
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Add click event to play button with enhanced feedback
+            const playButton = gameCard.querySelector('.play-button');
+            playButton.addEventListener('click', function() {
+                // Add loading state
+                this.classList.add('loading');
+                this.textContent = 'LOADING...';
+                
+                const gameId = this.getAttribute('data-game-id');
+                const gameUrl = this.getAttribute('data-game-url');
+                const gameTitle = this.getAttribute('data-game-title');
+                const gamePoints = parseInt(this.getAttribute('data-game-points'));
+                
+                // Delay for visual feedback
+                setTimeout(() => {
+                    playGame(gameId, gameUrl, gameTitle, gamePoints);
+                }, 300);
+            });
+            
+            gamesGrid.appendChild(gameCard);
+        });
+    }
+            }
             
             // Update displays
             updateUserDisplay();
