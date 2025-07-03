@@ -445,7 +445,7 @@
             color: white;
             position: relative; /* ENSURE relative positioning for overlay */
             overflow: hidden;
-            background-size: contain; /* CHANGED from 'cover' to 'contain' to show 70% of image */
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -591,7 +591,7 @@
 
         /* REMOVED LOADING STATE - NO LONGER NEEDED */
 
-        /* Social Media Section with REAL LOGOS */
+        /* Social Media Section */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -630,40 +630,6 @@
             font-size: 1.8rem;
             color: white;
             box-shadow: 0 8px 25px rgba(0, 164, 255, 0.4);
-            background-size: 30px 30px;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /* REAL SOCIAL MEDIA LOGOS - COLORED AND PROPERLY SHAPED */
-        .social-icon.x-logo {
-            background: #000000;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMTc4LjU3IDEyNy43NjNMMjkwLjUgNDBIMjYzLjY4MUwxNjYuNzg5IDExMi40TDY4Ljk1IDQwSDBMMTE3IDEzNS4zNDVMMCAxNTlIMjYuNjkxTDEyOC44MzYgMTg3LjU3N0wyMzMuMDUgMjU5SDMwMkwxNzguNTQzIDEyNy43NjNIMTc4LjU3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
-        }
-
-        .social-icon.discord-logo {
-            background: #5865F2;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5LjI3IDUuMzNDMTcuOTQgNC43MSAxNi41IDQuMjYgMTUgNC4wM0MxNC44NyA0LjI4IDE0LjcgNC42NyAxNC41OCA0Ljk2QzEzLjAwMSA0Ljc0IDExLjUxIDQuNzQgOS45OTcgNC45NkM5Ljg3NyA0LjY3IDkuNzE3IDQuMjggOS41ODcgNC4wM0M4LjA4NyA0LjI2IDYuNjQ3IDQuNzEgNS4zMTcgNS4zM0MzLjAwNyA5LjA0IDIuMzcgMTIuNjcgMi43IDIxQzQuMjggMjEuOTggNS45MyAyMi41NyA3LjY4IDIyLjM1QzguMTEgMjEuOCA4LjQ4IDIxLjIgOC43OCAyMC41N0M4LjI4IDIwLjM2IDcuODEgMjAuMDkgNy4zOCAxOS43N0M3LjQ5IDE5LjY5IDcuNiAxOS42IDcuNzAgMTkuNTNDMTEuNCAyMS4yNSAxNS42IDIxLjI1IDE5LjMgMTkuNTNDMTkuNCAxOS42IDE5LjUxIDE5LjY5IDE5LjYyIDE5Ljc3QzE5LjE5IDIwLjA5IDE4LjcyIDIwLjM2IDE4LjIyIDIwLjU3QzE4LjUyIDIxLjIgMTguODkgMjEuOCAxOS4zMiAyMi4zNUMyMS4wNyAyMi41NyAyMi43MiAyMS45OCAyNC4zIDIxQzI0LjcgMTcuNCAyMy41IDE0Ljg4IDE5LjI3IDUuMzNaTTguMzYgMTcuNEM3LjcxIDE3LjQgNy4yNCAxNi43NiA3LjI0IDE1Ljk5QzcuMjQgMTUuMjIgNy43IDE0LjU4IDguMzYgMTQuNThDOS4wMiAxNC41OCA5LjQ5IDE1LjIyIDkuNDggMTUuOTlDOS40OCAxNi43NiA5LjAyIDE3LjQgOC4zNiAxNy40WlsxNS42MyAxNy40QzE0Ljk4IDE3LjQgMTQuNTEgMTYuNzYgMTQuNTEgMTUuOTlDMTQuNTEgMTUuMjIgMTQuOTcgMTQuNTggMTUuNjMgMTQuNThDMTYuMjkgMTQuNTggMTYuNzYgMTUuMjIgMTYuNzUgMTUuOTlDMTYuNzUgMTYuNzYgMTYuMjkgMTcuNCAxNS42MyAxNy40WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
-        }
-
-        .social-icon.facebook-logo {
-            background: #1877F2;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI0IDEyQzI0IDUuMzcyNTggMTguNjI3NCAwIDEyIDBTMCA1LjM3MjU4IDAgMTJDMCAxNy45ODk1IDQuMzg4MTEgMjIuOTU0MSAxMCAyMy44MjkzVjE1LjQ2ODhINy4wMTU2M1YxMkgxMFY5LjM1NjI1QzEwIDYuMzQ4NzUgMTEuOTE1NiA0LjY4NzUgMTQuNjU2MyA0LjY4NzVDMTUuOTcwMyA0LjY4NzUgMTcuMzQzOCA0LjkyMTg4IDE3LjM0MzggNC45MjE4OFY3Ljg3NUM0LjU5MDYgNy44NzUgMTQuMTQwNiA4LjgwMDc4IDE0LjE0MDYgOS43NDkyMlYxMkgxNy4yMDMxTDE2LjY3MDEgMTUuNDY4OEgxNC4xNDA2VjIzLjgyOTNDMTkuNjExOSAyMi45NTQxIDI0IDE3Ljk4OTUgMjQgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K');
-        }
-
-        .social-icon.instagram-logo {
-            background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDIuMTYzQzE1LjIwNCAyLjE2MyAxNS41ODQgMi4xNzUgMTYuODUgMi4yMzNDMTguMTAyIDIuMjkgMTguNzk3IDIuNDczIDE5LjMxIDIuNzExQzE5LjY4NSAyLjg4MiAyMC4wOTYgMy4xOTkgMjAuNDgyIDMuNTE4QzIwLjgwMSAzLjkwNCAyMS4xMTggNC4zMTUgMjEuMjg5IDQuNjlDMjEuNTI3IDUuMjAzIDIxLjcxIDUuODk4IDIxLjc2NyA3LjE1QzIxLjgyNSA4LjQxNiAyMS44MzcgOC43OTYgMjEuODM3IDEyUzIxLjgyNSAxNS41ODQgMjEuNzY3IDE2Ljg1QzIxLjcxIDE4LjEwMiAyMS41MjcgMTguNzk3IDIxLjI4OSAxOS4zMUMyMS4xMTggMTkuNjg1IDIwLjgwMSAyMC4wOTYgMjAuNDgyIDIwLjQ4MkMyMC4wOTYgMjAuODAxIDE5LjY4NSAyMS4xMTggMTkuMzEgMjEuMjg5QzE4Ljc5NyAyMS41MjcgMTguMTAyIDIxLjcxIDE2Ljg1IDIxLjc2N0MxNS41ODQgMjEuODI1IDE1LjIwNCAyMS44MzcgMTIgMjEuODM3UzguNDE2IDIxLjgyNSA3LjE1IDIxLjc2N0M1Ljg5OCAyMS43MSA1LjIwMyAyMS41MjcgNC42OSAyMS4yODlDNC4zMTUgMjEuMTE4IDMuOTA0IDIwLjgwMSAzLjUxOCAyMC40ODJDMy4xOTkgMjAuMDk2IDIuODgyIDE5LjY4NSAyLjcxMSAxOS4zMUMyLjQ3MyAxOC43OTcgMi4yOSAxOC4xMDIgMi4yMzMgMTYuODVDMi4xNzUgMTUuNTg0IDIuMTYzIDE1LjIwNCAyLjE2MyAxMlMyLjE3NSA4LjQxNiAyLjIzMyA3LjE1QzIuMjkgNS44OTggMi40NzMgNS4yMDMgMi43MTEgNC42OUMyLjg4MiA0LjMxNSAzLjE5OSAzLjkwNCAzLjUxOCAzLjUxOEMzLjkwNCAzLjE5OSA0LjMxNSAyLjg4MiA0LjY5IDIuNzExQzUuMjAzIDIuNDczIDUuODk4IDIuMjkgNy4xNSAyLjIzM0M4LjQxNiAyLjE3NSA4Ljc5NiAyLjE2MyAxMiAyLjE2M1pNMTIgMEM4LjY3NCAwIDguMzMzIDAuMDE0IDcuMDUzIDAuMDcyQzUuNzc1IDAuMTMgNC45MDUgMC4zMzMgNC4xNCAwLjYzQzMuMzUxIDAuOTM2IDIuNjgxIDEuMzQ3IDIuMDE0IDIuMDE0QzEuMzQ3IDIuNjgxIDAuOTM2IDMuMzUxIDAuNjMgNC4xNEMwLjMzMyA0LjkwNSAwLjEzIDUuNzc1IDAuMDcyIDcuMDUzQzAuMDE0IDguMzMzIDAgOC42NzQgMCAxMlMwLjAxNCAxNS42NjcgMC4wNzIgMTYuOTQ3QzAuMTMgMTguMjI1IDAuMzMzIDE5LjA5NSAwLjYzIDE5Ljg2QzAuOTM2IDIwLjY0OSAxLjM0NyAyMS4zMTkgMi4wMTQgMjEuOTg2QzIuNjgxIDIyLjY1MyAzLjM1MSAyMy4wNjQgNC4xNCAyMy4zN0M0LjkwNSAyMy42NjcgNS43NzUgMjMuODcgNy4wNTMgMjMuOTI4QzguMzMzIDIzLjk4NiA4LjY3NCAyNCA1MiAyNFMxNS42NjcgMjMuOTg2IDE2Ljk0NyAyMy45MjhDMTguMjI1IDIzLjg3IDE5LjA5NSAyMy42NjcgMTkuODYgMjMuMzdDMjAuNjQ5IDIzLjA2NCAyMS4zMTkgMjIuNjUzIDIxLjk4NiAyMS45ODZDMjIuNjUzIDIxLjMxOSAyMy4wNjQgMjAuNjQ5IDIzLjM3IDE5Ljg2QzIzLjY2NyAxOS4wOTUgMjMuODcgMTguMjI1IDIzLjkyOCAxNi45NDdDMjMuOTg2IDE1LjY2NyAyNCAxNS4zMjYgMjQgMTJTMjMuOTg2IDguMzMzIDIzLjkyOCA3LjA1M0MyMy44NyA1Ljc3NSAyMy42NjcgNC45MDUgMjMuMzcgNC4xNEMyMy4wNjQgMy4zNTEgMjIuNjUzIDIuNjgxIDIxLjk4NiAyLjAxNEMyMS4zMTkgMS4zNDcgMjAuNjQ5IDAuOTM2IDE5Ljg2IDAuNjNDMTkuMDk1IDAuMzMzIDE4LjIyNSAwLjEzIDE2Ljk0NyAwLjA3MkMxNS42NjcgMC4wMTQgMTUuMzI2IDAgMTIgMFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMiA1Ljg0QTYuMTYgNi4xNiAwIDAgMCA1Ljg0IDVUMiA2LjE2IDYuMTYgMCAwIDAgNTIgMTguMTZBNi4xNiA2LjE2IDAgMCAwIDE4LjE2IDEyIDYuMTYgNi4xNiAwIDAgMCAxMiA1Ljg0Wk0xMiAxNi4wMDFBNC4wMDEgNC4wMDEgMCAxIDEgMTYuMDAxIDEyIDQgNCAwIDAgMSAxMiAxNi4wMDFaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTkuODQgNS41OTRBMS44NDQgMS44NDQgMCAxIDAgMTguMDAyIDMuNzQ5QTEuODQ2IDEuODQ2IDAgMCAwIDE5Ljg0IDUuNTk0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
-        }
-
-        .social-icon.telegram-logo {
-            background: #0088CC;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIzLjU2MDggMi4yOEMyMy4yNDA4IDEuOTYgMjIuODQwOCAxLjc2IDIyLjQwMDggMS43NkMyMi4wODA4IDEuNzYgMjEuNzIwOCAxLjg0IDIxLjQ0MDggMi4wNEwyLjA0MDggMTAuNTJDMS41MjA4IDEwLjggMS4yNDA4IDExLjMyIDEuMjAwOCAxMS44OEMxLjE2MDggMTIuNDQgMS40MDA4IDEyLjk2IDEuODgwOCAxMy4yOEw3LjA0MDggMTYuNDhMOC45NjA4IDIxLjJDOS4xNjA4IDIxLjY4IDkuNTIwOCAyMi4wNCA5Ljk2MDggMjIuMjRDMTAuMjAwOCAyMi4zNiAxMC40NDA4IDIyLjQgMTAuNzIwOCAyMi40QzExLjA0MDggMjIuNCAxMS4zNjA4IDIyLjMyIDExLjY0MDggMjIuMTZDMTIuMDQwOCAyMS45NiAxMi4zNjA4IDIxLjY0IDEyLjU2MDggMjEuMjhMMTQuMjgwOCAxOC4wOEwyMC44ODA4IDE1LjJDMjEuMzYwOCAxNC45NiAyMS43MjA4IDE0LjUyIDIxLjg0MDggMTMuOTZDMjEuOTYwOCAxMy40IDIxLjgwMDggMTIuODQgMjEuNDQwOCAxMi40TDIwLjYwMDggMTEuNTJMMjMuNjAwOCA0LjY0QzIzLjg4MDggMy45NiAyMy43NjA4IDMuMjQgMjMuMzIwOCAyLjY4QzIzLjEyMDggMi40NCAyMi44ODA4IDIuMzYgMjIuNjAwOCAOMkM0LjY0IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K');
-        }MxIDIuNzExQzE5LjY4NSAyLjg4MiAyMC4wOTYgMy4xOTkgMjAuNDgyIDMuNTE4QzIwLjgwMSAzLjkwNCAyMS4xMTggNC4zMTUgMjEuMjg5IDQuNjlDMjEuNTI3IDUuMjAzIDIxLjcxIDUuODk4IDIxLjc2NyA3LjE1QzIxLjgyNSA4LjQxNiAyMS44MzcgOC43OTYgMjEuODM3IDEyUzIxLjgyNSAxNS41ODQgMjEuNzY3IDE2Ljg1QzIxLjcxIDE4LjEwMiAyMS41MjcgMTguNzk3IDIxLjI4OSAxOS4zMUMyMS4xMTggMTkuNjg1IDIwLjgwMSAyMC4wOTYgMjAuNDgyIDIwLjQ4MkMyMC4wOTYgMjAuODAxIDE5LjY4NSAyMS4xMTggMTkuMzEgMjEuMjg5QzE4Ljc5NyAyMS41MjcgMTguMTAyIDIxLjcxIDE2Ljg1IDIxLjc2N0MxNS41ODQgMjEuODI1IDE1LjIwNCAyMS44MzcgMTIgMjEuODM3UzguNDE2IDIxLjgyNSA3LjE1IDIxLjc2N0M1Ljg5OCAyMS43MSA1LjIwMyAyMS41MjcgNC42OSAyMS4yODlDNC4zMTUgMjEuMTE4IDMuOTA0IDIwLjgwMSAzLjUxOCAyMC40ODJDMy4xOTkgMjAuMDk2IDIuODgyIDE5LjY4NSAyLjcxMSAxOS4zMUMyLjQ3MyAxOC43OTcgMi4yOSAxOC4xMDIgMi4yMzMgMTYuODVDMi4xNzUgMTUuNTg0IDIuMTYzIDE1LjIwNCAyLjE2MyAxMlMyLjE3NSA4LjQxNiAyLjIzMyA3LjE1QzIuMjkgNS44OTggMi40NzMgNS4yMDMgMi43MTEgNC42OUMyLjg4MiA0LjMxNSAzLjE5OSAzLjkwNCAzLjUxOCAzLjUxOEMzLjkwNCAzLjE5OSA0LjMxNSAyLjg4MiA0LjY5IDIuNzExQzUuMjAzIDIuNDczIDUuODk4IDIuMjkgNy4xNSAyLjIzM0M4LjQxNiAyLjE3NSA4Ljc5NiAyLjE2MyAxMiAyLjE2M1pNMTIgMEM4LjY3NCAwIDguMzMzIDAuMDE0IDcuMDUzIDAuMDcyQzUuNzc1IDAuMTMgNC45MDUgMC4zMzMgNC4xNCAwLjYzQzMuMzUxIDAuOTM2IDIuNjgxIDEuMzQ3IDIuMDE0IDIuMDE0QzEuMzQ3IDIuNjgxIDAuOTM2IDMuMzUxIDAuNjMgNC4xNEMwLjMzMyA0LjkwNSAwLjEzIDUuNzc1IDAuMDcyIDcuMDUzQzAuMDE0IDguMzMzIDAgOC42NzQgMCAxMlMwLjAxNCAxNS42NjcgMC4wNzIgMTYuOTQ3QzAuMTMgMTguMjI1IDAuMzMzIDE5LjA5NSAwLjYzIDE5Ljg2QzAuOTM2IDIwLjY0OSAxLjM0NyAyMS4zMTkgMi4wMTQgMjEuOTg2QzIuNjgxIDIyLjY1MyAzLjM1MSAyMy4wNjQgNC4xNCAyMy4zN0M0LjkwNSAyMy42NjcgNS43NzUgMjMuODcgNy4wNTMgMjMuOTI4QzguMzMzIDIzLjk4NiA4LjY3NCAyNCA1MiAyNFMxNS42NjcgMjMuOTg2IDE2Ljk0NyAyMy45MjhDMTguMjI1IDIzLjg3IDE5LjA5NSAyMy42NjcgMTkuODYgMjMuMzdDMjAuNjQ5IDIzLjA2NCAyMS4zMTkgMjIuNjUzIDIxLjk4NiAyMS45ODZDMjIuNjUzIDIxLjMxOSAyMy4wNjQgMjAuNjQ5IDIzLjM3IDE5Ljg2QzIzLjY2NyAxOS4wOTUgMjMuODcgMTguMjI1IDIzLjkyOCAxNi45NDdDMjMuOTg2IDE1LjY2NyAyNCAxNS4zMjYgMjQgMTJTMjMuOTg2IDguMzMzIDIzLjkyOCA3LjA1M0MyMy44NyA1Ljc3NSAyMy42NjcgNC45MDUgMjMuMzcgNC4xNEMyMy4wNjQgMy4zNTEgMjIuNjUzIDIuNjgxIDIxLjk4NiAyLjAxNEMyMS4zMTkgMS4zNDcgMjAuNjQ5IDAuOTM2IDE5Ljg2IDAuNjNDMTkuMDk1IDAuMzMzIDE4LjIyNSAwLjEzIDE2Ljk0NyAwLjA3MkMxNS42NjcgMC4wMTQgMTUuMzI2IDAgMTIgMFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMiA1Ljg0MEE2LjE2IDYuMTYgMCAwIDAgNS44NCA1MiA2LjE2IDYuMTYgMCAwIDAgNTIgMTguMTZBNi4xNiA2LjE2IDAgMCAwIDE4LjE2IDEyIDYuMTYgNi4xNiAwIDAgMCAxMiA1Ljg0Wk0xMiAxNi4wMDFBNC4wMDEgNC4wMDEgMCAxIDEgMTYuMDAxIDEyIDQgNCAwIDAgMSAxMiAxNi4wMDFaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTkuODQgNS41OTRBMS44NDQgMS44NDQgMCAxIDAgMTguMDAyIDMuNzQ5QTEuODQ2IDEuODQ2IDAgMCAwIDE5Ljg0IDUuNTk0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==');
-        }
-
-        .social-icon.telegram-logo {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIzLjU2MDggMi4yOEMyMy4yNDA4IDEuOTYgMjIuODQwOCAxLjc2IDIyLjQwMDggMS43NkMyMi4wODA4IDEuNzYgMjEuNzIwOCAxLjg0IDIxLjQ0MDggMi4wNEwyLjA0MDggMTAuNTJDMS41MjA4IDEwLjggMS4yNDA4IDExLjMyIDEuMjAwOCAxMS44OEMxLjE2MDggMTIuNDQgMS40MDA4IDEyLjk2IDEuODgwOCAxMy4yOEw3LjA0MDggMTYuNDhMOC45NjA4IDIxLjJDOS4xNjA4IDIxLjY4IDkuNTIwOCAyMi4wNCA5Ljk2MDggMjIuMjRDMTAuMjAwOCAyMi4zNiAxMC40NDA4IDIyLjQgMTAuNzIwOCAyMi40QzExLjA0MDggMjIuNCAxMS4zNjA4IDIyLjMyIDExLjY0MDggMjIuMTZDMTIuMDQwOCAyMS45NiAxMi4zNjA4IDIxLjY0IDEyLjU2MDggMjEuMjhMMTQuMjgwOCAxOC4wOEwyMC44ODA4IDE1LjJDMjEuMzYwOCAxNC45NiAyMS43MjA4IDE0LjUyIDIxLjg0MDggMTMuOTZDMjEuOTYwOCAxMy40IDIxLjgwMDggMTIuODQgMjEuNDQwOCAxMi40TDIwLjYwMDggMTEuNTJMMjMuNjAwOCA0LjY0QzIzLjg4MDggMy45NiAyMy43NjA4IDMuMjQgMjMuMzIwOCAyLjY4QzIzLjEyMDggMi40NCAyMi44ODA4IDIuMzYgMjIuNjAwOCABMkMwIDUuMzcyNTggNS4zNzI1OCAwIDEyIDBTMjQgNS4zNzI1OCAyNCAxMlMxOC42Mjc0IDI0IDEyIDI0UzAgMTguNjI3NCAwIDEyWk0xOC44NDA4IDEzLjNDMTguNzYwOCAxMy40NCAxOC42NDA4IDEzLjU2IDE4LjQ4MDggMTMuNkwxMS43NjA4IDE2LjU2QzExLjY0MDggMTYuNjQgMTEuNTIwOCAxNi42NCAxMS40MDA4IDE2LjYwMDhDMTEuMjgwOCAxNi41NjA4IDExLjE2MDggMTYuNDgwOCAxMS4wODA4IDE2LjM2MDhMMTAuMjAwOCAxNS4wODA4TDkuODgwOCAxOS42ODA4TDguMjQwOCAxNS41NkwzLjI0MDggMTIuNzZMMjAuNjQwOCA0LjcySDIwLjU2MDhMMTguODQwOCAxMy4zWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==');
         }
 
         .social-title {
@@ -849,7 +815,7 @@
             font-weight: 700;
         }
 
-        /* ROBUST LOADING SCREEN - FIXED */
+        /* Loading Screen */
         .loading {
             position: fixed;
             top: 0;
@@ -861,17 +827,15 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            z-index: 1000;
             opacity: 1;
             visibility: visible;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            pointer-events: auto;
+            transition: all 0.3s ease;
         }
 
         .loading.hidden {
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
         }
 
         .loading-spinner {
@@ -1108,40 +1072,17 @@
             <!-- Social Media Links -->
             <div class="social-grid">
                 <div class="social-card" data-social="twitter">
-                    <div class="social-icon x-logo"></div>
-                    <h3 class="social-title">X (Twitter)</h3>
+                    <div class="social-icon">🐦</div>
+                    <h3 class="social-title">Twitter</h3>
                     <p class="social-description">Follow us for the latest updates, game releases, and community events.</p>
                     <div class="social-button">Follow @8Bit_arcade1</div>
                 </div>
 
                 <div class="social-card" data-social="discord">
-                    <div class="social-icon discord-logo"></div>
+                    <div class="social-icon">💬</div>
                     <h3 class="social-title">Discord</h3>
                     <p class="social-description">Join our gaming community and connect with players worldwide.</p>
                     <div class="social-button">Join Discord</div>
-                </div>
-
-                <div class="social-card" data-social="facebook">
-                    <div class="social-icon facebook-logo"></div>
-                    <h3 class="social-title">Facebook</h3>
-                    <p class="social-description">Like our page for news, game tips, and exclusive content.</p>
-                    <div class="social-button">Like Page</div>
-                </div>
-
-                <div class="social-card" data-social="instagram">
-                    <div class="social-icon instagram-logo"></div>
-                    <h3 class="social-title">Instagram</h3>
-                    <p class="social-description">Follow for behind-the-scenes content and visual updates.</p>
-                    <div class="social-button">Follow @8Bit</div>
-                </div>
-
-                <div class="social-card" data-social="telegram">
-                    <div class="social-icon telegram-logo"></div>
-                    <h3 class="social-title">Telegram Community</h3>
-                    <p class="social-description">Join our official Telegram community for exclusive announcements.</p>
-                    <div class="social-button">Join Community</div>
-                </div>
-            </div></div>
                 </div>
 
                 <div class="social-card" data-social="facebook">
@@ -1213,113 +1154,6 @@
     </div>
 
     <script>
-        // ROBUST LOADING SCREEN MANAGEMENT
-        function hideLoadingScreen() {
-            const loading = document.getElementById('loading');
-            if (!loading) {
-                console.log('❌ Loading screen element not found');
-                return;
-            }
-
-            let hiddenSuccessfully = false;
-
-            // METHOD 1: CSS Transition Hide
-            const method1 = () => {
-                console.log('🔧 Method 1: Adding .hidden class with CSS transition');
-                loading.classList.add('hidden');
-                
-                // Check if method 1 worked after transition time
-                setTimeout(() => {
-                    if (loading.style.display !== 'none' && !hiddenSuccessfully) {
-                        console.log('⚠️ Method 1 may not have worked, checking opacity...');
-                        const computedStyle = window.getComputedStyle(loading);
-                        if (parseFloat(computedStyle.opacity) > 0.1) {
-                            console.log('❌ Method 1 failed - opacity still high');
-                            method2();
-                        } else {
-                            console.log('✅ Method 1 successful - opacity is low');
-                            hiddenSuccessfully = true;
-                        }
-                    }
-                }, 600); // Check after transition completes
-            };
-
-            // METHOD 2: Direct Style Override (Backup)
-            const method2 = () => {
-                if (hiddenSuccessfully) return;
-                console.log('🔧 Method 2: Direct style override');
-                
-                loading.style.opacity = '0';
-                loading.style.visibility = 'hidden';
-                loading.style.pointerEvents = 'none';
-                loading.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
-                
-                // Verify method 2 worked
-                setTimeout(() => {
-                    const computedStyle = window.getComputedStyle(loading);
-                    if (parseFloat(computedStyle.opacity) > 0.1) {
-                        console.log('❌ Method 2 failed - trying method 3');
-                        method3();
-                    } else {
-                        console.log('✅ Method 2 successful');
-                        hiddenSuccessfully = true;
-                    }
-                }, 350);
-            };
-
-            // METHOD 3: DOM Removal (Final Backup)
-            const method3 = () => {
-                if (hiddenSuccessfully) return;
-                console.log('🔧 Method 3: Removing from DOM entirely');
-                
-                if (loading && loading.parentNode) {
-                    loading.parentNode.removeChild(loading);
-                    console.log('✅ Method 3 successful - loading screen removed from DOM');
-                    hiddenSuccessfully = true;
-                } else {
-                    console.log('❌ Method 3 failed - element or parent not found');
-                }
-            };
-
-            // Execute Method 1 immediately
-            method1();
-
-            // METHOD 2 as backup after 100ms if method 1 seems to fail
-            setTimeout(() => {
-                if (!hiddenSuccessfully) {
-                    method2();
-                }
-            }, 100);
-
-            // METHOD 3 as final backup after 1 second
-            setTimeout(() => {
-                if (!hiddenSuccessfully) {
-                    method3();
-                }
-            }, 1000);
-
-            // EMERGENCY FALLBACK: Force hide after 2 seconds no matter what
-            setTimeout(() => {
-                const stillVisible = document.getElementById('loading');
-                if (stillVisible) {
-                    console.log('🚨 EMERGENCY: Force hiding loading screen after 2 seconds');
-                    stillVisible.style.display = 'none !important';
-                    stillVisible.remove();
-                }
-            }, 2000);
-        }
-
-        // IMMEDIATE LOADING SCREEN HIDE ON DOM READY
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                console.log('📄 DOMContentLoaded - hiding loading screen immediately');
-                hideLoadingScreen();
-            });
-        } else {
-            console.log('📄 Document already loaded - hiding loading screen immediately');
-            hideLoadingScreen();
-        }
-
         // ENHANCED AUDIO SYSTEM WITH BACKGROUND MUSIC
         let neonAudio = null;
         let backgroundMusic = null;
@@ -1334,7 +1168,7 @@
             neonTitles = document.querySelectorAll('.section-title');
             
             if (neonAudio) {
-                neonAudio.volume = 0.255; // FURTHER REDUCED from 0.3 to 0.255 (additional 15% reduction)
+                neonAudio.volume = 0.4;
                 neonAudio.preload = 'auto';
             }
             
@@ -1361,61 +1195,39 @@
                             updateScrollFade(); // Apply current scroll position volume
                         }).catch(e => {
                             console.log(`❌ Background music attempt ${attempts} failed:`, e);
-                            // Keep trying on mobile devices
-                            if (attempts < maxAttempts && isMobile) {
+                            // Keep trying on Android
+                            if (attempts < maxAttempts) {
                                 setTimeout(startBackgroundMusic, 500); // Retry after 500ms
                             }
                         });
                     }
                 };
                 
-                // Detect mobile devices specifically
+                // Detect Android devices specifically
                 const isAndroid = /Android/i.test(navigator.userAgent);
                 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
                 const isMobile = isAndroid || isIOS;
                 
                 console.log(`Device detection: Android=${isAndroid}, iOS=${isIOS}, Mobile=${isMobile}`);
                 
-                // MOBILE-SPECIFIC: Add 2-3 second delay for mobile devices + MORE AGGRESSIVE AUDIO UNLOCK
-                if (isMobile) {
-                    console.log('📱 Mobile device detected - implementing AGGRESSIVE 5-second delay + comprehensive audio unlock');
-                    
-                    // EXTENDED delay initial attempt by 5 seconds on mobile
-                    setTimeout(() => {
-                        console.log('📱 Mobile 5-second delay complete - attempting AGGRESSIVE audio start');
-                        startBackgroundMusic();
-                        
-                        // Additional mobile-specific attempts every 2 seconds for 10 seconds
-                        let mobileRetries = 0;
-                        const mobileRetryInterval = setInterval(() => {
-                            if (musicStarted || mobileRetries >= 5) {
-                                clearInterval(mobileRetryInterval);
-                                return;
-                            }
-                            mobileRetries++;
-                            console.log(`📱 Mobile retry ${mobileRetries}/5 - forcing audio unlock`);
-                            startBackgroundMusic();
-                        }, 2000);
-                    }, 5000); // INCREASED from 3000 to 5000ms
-                } else {
-                    // Desktop: Try immediately
+                // Try immediate play (desktop)
+                if (!isMobile) {
                     startBackgroundMusic();
                 }
                 
-                // ENHANCED Android-specific handling with MORE AGGRESSIVE UNLOCK
+                // ENHANCED Android-specific handling
                 if (isAndroid) {
-                    console.log('🤖 Android device detected - implementing ULTRA-AGGRESSIVE audio unlock');
+                    console.log('🤖 Android device detected - implementing aggressive audio unlock');
                     
                     // Create a comprehensive interaction handler for Android
                     const androidAudioUnlock = (event) => {
-                        console.log(`🤖 Android ULTRA-AGGRESSIVE audio unlock triggered by: ${event.type}`);
+                        console.log(`🤖 Android audio unlock triggered by: ${event.type}`);
                         
-                        // MORE AGGRESSIVE unlock attempts
+                        // Multiple unlock attempts
                         const unlockAttempts = [
                             () => {
-                                // Attempt 1: Direct play with forced reload
-                                backgroundMusic.load();
-                                setTimeout(() => startBackgroundMusic(), 50);
+                                // Attempt 1: Direct play
+                                startBackgroundMusic();
                             },
                             () => {
                                 // Attempt 2: Create new audio context
@@ -1431,92 +1243,53 @@
                                 }
                             },
                             () => {
-                                // Attempt 3: Force play with user gesture simulation
-                                backgroundMusic.muted = false;
-                                backgroundMusic.volume = 0.05;
-                                backgroundMusic.currentTime = 0;
-                                startBackgroundMusic();
-                            },
-                            () => {
-                                // Attempt 4: Create new audio element and try
-                                const newAudio = new Audio(backgroundMusic.src);
-                                newAudio.volume = 0.05;
-                                newAudio.loop = true;
-                                newAudio.play().then(() => {
-                                    console.log('🤖 New audio element successful');
-                                    backgroundMusic = newAudio;
-                                    musicStarted = true;
-                                }).catch(e => console.log('🤖 New audio failed:', e));
-                            },
-                            () => {
-                                // Attempt 5: Force with setTimeout
-                                setTimeout(() => {
-                                    backgroundMusic.play().then(() => {
-                                        musicStarted = true;
-                                        console.log('🤖 Delayed Android unlock successful');
-                                    }).catch(e => console.log('🤖 Delayed Android unlock failed:', e));
-                                }, 100);
+                                // Attempt 3: Force audio element reload
+                                backgroundMusic.load();
+                                setTimeout(startBackgroundMusic, 100);
                             }
                         ];
                         
-                        // Execute ALL unlock attempts with delays
+                        // Execute all unlock attempts
                         unlockAttempts.forEach((attempt, index) => {
-                            setTimeout(attempt, index * 100);
+                            setTimeout(attempt, index * 200);
                         });
                     };
                     
-                    // Android-specific events - MORE COMPREHENSIVE
+                    // Android-specific events
                     const androidEvents = [
                         'touchstart', 'touchend', 'touchmove', 'touchcancel',
-                        'click', 'mousedown', 'mouseup', 'contextmenu',
-                        'pointerdown', 'pointerup', 'pointercancel',
-                        'keydown', 'keyup', 'scroll', 'focus', 'load',
-                        'gesturestart', 'gesturechange', 'gestureend',
-                        'orientationchange', 'devicemotion', 'deviceorientation'
+                        'click', 'mousedown', 'mouseup',
+                        'pointerdown', 'pointerup',
+                        'keydown', 'scroll', 'focus', 'load'
                     ];
                     
                     androidEvents.forEach(eventType => {
                         document.addEventListener(eventType, androidAudioUnlock, { 
                             once: false,
                             passive: true,
-                            capture: true
+                            capture: false
                         });
                         
-                        // Also add to window and body for maximum coverage
+                        // Also add to window for broader coverage
                         window.addEventListener(eventType, androidAudioUnlock, {
                             once: false,
                             passive: true,
-                            capture: true
-                        });
-                        
-                        document.body?.addEventListener(eventType, androidAudioUnlock, {
-                            once: false,
-                            passive: true,
-                            capture: true
+                            capture: false
                         });
                     });
                     
-                    // Android ULTRA-AGGRESSIVE fallback: try every 1 second for the first 30 seconds
+                    // Android fallback: try every 2 seconds for the first 20 seconds
                     let fallbackAttempts = 0;
                     const androidFallback = setInterval(() => {
-                        if (musicStarted || fallbackAttempts >= 30) {
+                        if (musicStarted || fallbackAttempts >= 10) {
                             clearInterval(androidFallback);
                             return;
                         }
                         
                         fallbackAttempts++;
-                        console.log(`🤖 Android ULTRA-AGGRESSIVE fallback attempt ${fallbackAttempts}/30`);
+                        console.log(`🤖 Android fallback attempt ${fallbackAttempts}/10`);
                         startBackgroundMusic();
-                        
-                        // Try different approaches every few attempts
-                        if (fallbackAttempts % 3 === 0) {
-                            backgroundMusic.load();
-                        }
-                        if (fallbackAttempts % 5 === 0) {
-                            backgroundMusic.volume = 0.01;
-                            backgroundMusic.play().catch(e => {});
-                        }
-                    }, 1000); // Every 1 second instead of 2
+                    }, 2000);
                 }
                 
                 // iOS-specific handling
@@ -1593,9 +1366,9 @@
             if (!isAudioEnabled || !neonAudio || isMuted) return;
             
             try {
-                // Play audio with FURTHER REDUCED VOLUME (additional 15% reduction: 0.3 * 0.85 = 0.255)
+                // Play audio
                 neonAudio.currentTime = 0;
-                neonAudio.volume = 0.255 * currentScrollFade; // REDUCED from 0.3 to 0.255
+                neonAudio.volume = 0.4 * currentScrollFade; // Apply scroll fade
                 neonAudio.play().catch(e => console.log('Neon audio play failed:', e));
                 
                 // Trigger visual flicker in sync with audio
@@ -1662,9 +1435,9 @@
             const musicVolume = baseVolume + (scrollProgress * (maxVolume - baseVolume));
             
             if (!isMuted) {
-                // Update neon audio volume (FURTHER REDUCED by additional 15%)
+                // Update neon audio volume
                 if (neonAudio && isAudioEnabled) {
-                    neonAudio.volume = 0.255 * currentScrollFade; // REDUCED from 0.3 to 0.255
+                    neonAudio.volume = 0.4 * currentScrollFade;
                 }
                 
                 // Update background music volume with faint base level
@@ -1785,18 +1558,17 @@
                 
                 console.log('Hub initialized successfully');
                 
-                // Hide loading screen after initialization
-                setTimeout(() => {
-                    hideLoadingScreen();
-                }, 100);
-                
             } catch (error) {
                 console.error('Error initializing hub:', error);
-                // Even if there's an error, hide the loading screen
-                setTimeout(() => {
-                    hideLoadingScreen();
-                }, 500);
             }
+            
+            // Hide loading screen
+            setTimeout(() => {
+                const loading = document.getElementById('loading');
+                if (loading) {
+                    loading.classList.add('hidden');
+                }
+            }, 1500);
         }
 
         // Start neon flicker audio immediately on page load
@@ -2201,45 +1973,18 @@
             console.error('JavaScript Error:', e.error);
         });
 
-        // MULTIPLE INITIALIZATION TRIGGERS FOR MAXIMUM RELIABILITY
-        
-        // Trigger 1: DOMContentLoaded
+        // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎯 Trigger 1: DOMContentLoaded fired - initializing hub');
+            console.log('DOM loaded, initializing hub...');
             initHub();
         });
         
-        // Trigger 2: Window load (as backup)
-        window.addEventListener('load', function() {
-            console.log('🎯 Trigger 2: Window load fired - ensuring hub is initialized');
-            // Only initialize if not already done
-            if (!document.querySelector('.games-grid').innerHTML) {
-                console.log('🎯 Hub not yet initialized, running initialization');
-                initHub();
-            } else {
-                console.log('🎯 Hub already initialized, just hiding loading screen');
-                hideLoadingScreen();
-            }
-        });
-        
-        // Trigger 3: Immediate check if DOM already ready
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            console.log('🎯 Trigger 3: Document already ready - initializing immediately');
-            setTimeout(() => {
-                initHub();
-            }, 50);
+        // Also initialize if document is already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initHub);
+        } else {
+            initHub();
         }
-        
-        // Trigger 4: Fallback timer (emergency initialization after 2 seconds)
-        setTimeout(() => {
-            const gamesGrid = document.getElementById('gamesGrid');
-            if (!gamesGrid || !gamesGrid.innerHTML.trim()) {
-                console.log('🚨 Trigger 4: Emergency initialization after 2 seconds');
-                initHub();
-            }
-            // Always try to hide loading screen as emergency fallback
-            hideLoadingScreen();
-        }, 2000);
 
         // Handle visibility change to pause/resume
         document.addEventListener('visibilitychange', () => {
