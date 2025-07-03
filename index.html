@@ -859,7 +859,45 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Responsive Design - UPDATED FOR ROUND BUTTONS */
+        /* AUDIO MUTE BUTTON */
+        .audio-mute-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 164, 255, 0.2);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 200;
+            box-shadow: 0 4px 15px rgba(0, 164, 255, 0.3);
+        }
+
+        .audio-mute-button:hover {
+            background: rgba(0, 164, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 164, 255, 0.4);
+        }
+
+        .audio-mute-button.muted {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .audio-mute-button.muted:hover {
+            background: rgba(255, 107, 53, 0.3);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
         @media (max-width: 768px) {
             .games-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -977,6 +1015,13 @@
 <body>
     <!-- Neon flicker audio -->
     <audio id="neon-audio" src="assets/flickering-neon-316717.mp3" preload="auto"></audio>
+    <!-- Background music soundtrack -->
+    <audio id="background-music" src="assets/2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3" preload="auto" loop></audio>
+
+    <!-- Audio Mute Button -->
+    <button class="audio-mute-button" id="audioMuteButton" title="Toggle Audio">
+        🔊
+    </button>
 
     <div class="loading" id="loading">
         <div class="loading-spinner"></div>
@@ -1109,24 +1154,66 @@
     </div>
 
     <script>
-        // ENHANCED NEON FLICKER AUDIO INTEGRATION
+        // ENHANCED AUDIO SYSTEM WITH BACKGROUND MUSIC
         let neonAudio = null;
+        let backgroundMusic = null;
         let neonTitles = [];
-        let isAudioEnabled = false;
+        let isAudioEnabled = true;
+        let isMuted = false;
         let currentScrollFade = 1;
 
         function initNeonAudio() {
             neonAudio = document.getElementById('neon-audio');
+            backgroundMusic = document.getElementById('background-music');
             neonTitles = document.querySelectorAll('.section-title');
             
             if (neonAudio) {
-                neonAudio.volume = 0.4; // Slightly higher base volume
+                neonAudio.volume = 0.4; // Base neon sound volume
                 neonAudio.preload = 'auto';
+            }
+            
+            if (backgroundMusic) {
+                backgroundMusic.volume = 0; // Start silent
+                backgroundMusic.preload = 'auto';
+                backgroundMusic.loop = true;
+                
+                // Start playing background music (muted initially)
+                backgroundMusic.play().catch(e => console.log('Background music autoplay blocked:', e));
+            }
+            
+            // Initialize mute button
+            initMuteButton();
+        }
+
+        function initMuteButton() {
+            const muteButton = document.getElementById('audioMuteButton');
+            if (muteButton) {
+                muteButton.addEventListener('click', toggleMute);
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            const muteButton = document.getElementById('audioMuteButton');
+            
+            if (isMuted) {
+                // Mute all audio
+                if (neonAudio) neonAudio.volume = 0;
+                if (backgroundMusic) backgroundMusic.volume = 0;
+                muteButton.textContent = '🔇';
+                muteButton.classList.add('muted');
+                muteButton.title = 'Unmute Audio';
+            } else {
+                // Restore audio levels based on scroll position
+                updateScrollFade();
+                muteButton.textContent = '🔊';
+                muteButton.classList.remove('muted');
+                muteButton.title = 'Mute Audio';
             }
         }
 
         function playNeonFlicker() {
-            if (!isAudioEnabled || !neonAudio) return;
+            if (!isAudioEnabled || !neonAudio || isMuted) return;
             
             try {
                 // Play audio
@@ -1181,17 +1268,27 @@
             });
         }
 
-        // ENHANCED scroll-based fade effect
+        // ENHANCED scroll-based fade effect with background music
         function updateScrollFade() {
             const scrollTop = window.scrollY;
             const windowHeight = window.innerHeight;
             
-            // More dramatic fade - starts fading at 100px, completely faded by 300px
+            // Neon sound fades out as user scrolls (fades completely by 300px)
             currentScrollFade = Math.max(0, 1 - (scrollTop / 300));
             
-            // Update audio volume
-            if (neonAudio && isAudioEnabled) {
-                neonAudio.volume = 0.4 * currentScrollFade;
+            // Background music volume increases as user scrolls (reaches full volume by 500px)
+            const musicVolume = Math.min(0.3, (scrollTop / 500) * 0.3); // Max volume 30%
+            
+            if (!isMuted) {
+                // Update neon audio volume
+                if (neonAudio && isAudioEnabled) {
+                    neonAudio.volume = 0.4 * currentScrollFade;
+                }
+                
+                // Update background music volume
+                if (backgroundMusic && isAudioEnabled) {
+                    backgroundMusic.volume = musicVolume;
+                }
             }
             
             // Apply visual fade effect to neon titles
@@ -1321,11 +1418,16 @@
 
         // Start neon flicker audio immediately on page load
         function startNeonFlickerAudio() {
-            // Enable audio immediately (browsers may still require user interaction for audio)
+            // Enable audio immediately
             isAudioEnabled = true;
-            console.log('Audio system enabled - starting immediate neon flicker');
+            console.log('Audio system enabled - starting immediate neon flicker and background music');
             
-            // Try to play immediately (may be blocked by browser policy)
+            // Start background music
+            if (backgroundMusic) {
+                backgroundMusic.play().catch(e => console.log('Background music autoplay blocked:', e));
+            }
+            
+            // Try to play neon flicker immediately
             const attemptInitialPlay = () => {
                 playNeonFlicker();
             };
@@ -1345,12 +1447,13 @@
                 }
             }, 3500);
             
-            // Also set up fallback for user interaction in case initial audio is blocked
+            // Set up fallback for user interaction in case initial audio is blocked
             const enableAudioOnInteraction = () => {
-                if (!isAudioEnabled) {
-                    isAudioEnabled = true;
-                    console.log('Audio enabled via user interaction');
+                if (backgroundMusic && backgroundMusic.paused) {
+                    backgroundMusic.play().catch(e => console.log('Background music play failed:', e));
                 }
+                isAudioEnabled = true;
+                console.log('Audio fully enabled via user interaction');
                 document.removeEventListener('click', enableAudioOnInteraction);
                 document.removeEventListener('touchstart', enableAudioOnInteraction);
             };
@@ -1358,7 +1461,7 @@
             document.addEventListener('click', enableAudioOnInteraction);
             document.addEventListener('touchstart', enableAudioOnInteraction);
             
-            console.log('Neon flicker system started immediately');
+            console.log('Neon flicker and background music system started immediately');
         }
 
         function setupEventListeners() {
@@ -1757,13 +1860,22 @@
                         clearInterval(neonFlickerInterval);
                         neonFlickerInterval = null;
                     }
+                    // Pause background music
+                    if (backgroundMusic && !backgroundMusic.paused) {
+                        backgroundMusic.pause();
+                    }
                     isAudioEnabled = false;
                 } else {
                     loadUserData();
                     updateUserDisplay();
-                    // Resume neon flicker when tab is visible (but wait for user interaction)
-                    if (!neonFlickerInterval && isAudioEnabled) {
+                    // Resume audio systems when tab is visible
+                    isAudioEnabled = true;
+                    if (!neonFlickerInterval) {
                         startNeonFlickerAudio();
+                    }
+                    // Resume background music if not muted
+                    if (backgroundMusic && backgroundMusic.paused && !isMuted) {
+                        backgroundMusic.play().catch(e => console.log('Background music resume failed:', e));
                     }
                 }
             } catch (error) {
