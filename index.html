@@ -180,7 +180,7 @@
         /* Games Grid */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-xxl);
         }
@@ -197,6 +197,8 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             height: 240px;
+            width: 100%; /* ADD THIS - ensures all cards same width */
+            max-width: none; /* ADD THIS - removes any width restrictions */
         }
 
         .game-card::before {
