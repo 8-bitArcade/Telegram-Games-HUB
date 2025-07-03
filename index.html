@@ -169,23 +169,107 @@
             display: block;
         }
 
-        .section-title {
+       .section-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-secondary);
             margin-bottom: var(--spacing-lg);
             text-align: center;
-            /* ADD THESE STYLES FOR BLUR BACKGROUND */
-            background: rgba(15, 23, 42, 0.8); /* Semi-transparent dark background */
-            backdrop-filter: blur(20px); /* Blur effect */
-            border: 1px solid rgba(0, 164, 255, 0.2); /* Subtle border */
-            border-radius: var(--border-radius); /* Rounded corners */
-            padding: var(--spacing-md) var(--spacing-lg); /* Padding around text */
-            display: inline-block; /* Make background fit text width */
-            position: relative; /* For any future positioning */
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Text shadow for extra readability */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow around the blur box */
+    
+    /* CENTER THE TITLE PROPERLY */
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            display: block; /* CHANGED from inline-block to block for full centering */
+    
+    /* NEON FLICKERING EFFECT */
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md) var(--spacing-lg);
+            position: relative;
+            overflow: hidden;
+    
+    /* NEON TEXT STYLING */
+            color: #00ffff; /* Bright cyan for neon effect */
+            text-shadow: 
+                0 0 5px #00ffff,
+                0 0 10px #00ffff,
+                0 0 15px #00ffff,
+                0 0 20px #00ff41,
+                0 0 35px #00ff41,
+                0 0 40px #00ff41;
+    
+    /* NEON BORDER GLOW */
+            box-shadow: 
+                0 0 10px var(--primary-color),
+                0 0 20px var(--primary-color),
+                0 0 30px var(--primary-color),
+                inset 0 0 10px rgba(0, 255, 255, 0.1);
+    
+    /* FLICKERING ANIMATION */
+            animation: neonFlicker 2s infinite alternate;
+            
+    /* FONT STYLING */
+            font-family: 'Orbitron', 'Open Sans', monospace;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
+
+/* NEON FLICKERING KEYFRAMES */
+    @keyframes neonFlicker {
+        0%, 18%, 22%, 25%, 53%, 57%, 100% {
+            text-shadow: 
+                0 0 5px #00ffff,
+                0 0 10px #00ffff,
+                0 0 15px #00ffff,
+                0 0 20px #00ff41,
+                0 0 35px #00ff41,
+                0 0 40px #00ff41;
+            box-shadow: 
+                0 0 10px var(--primary-color),
+                0 0 20px var(--primary-color),
+                0 0 30px var(--primary-color),
+                inset 0 0 10px rgba(0, 255, 255, 0.1);
+            border-color: var(--primary-color);
+        }
+    
+        20%, 24%, 55% {
+            text-shadow: 
+                0 0 2px #00ffff,
+                0 0 5px #00ffff,
+                0 0 8px #00ffff,
+                0 0 12px #00ff41;
+            box-shadow: 
+                0 0 5px var(--primary-color),
+                0 0 10px var(--primary-color),
+                inset 0 0 5px rgba(0, 255, 255, 0.05);
+            border-color: rgba(0, 164, 255, 0.7);
+        }
+}
+
+/* GLITCH EFFECT OVERLAY */
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(0, 255, 255, 0.03) 50%,
+                transparent 100%
+            );
+            animation: scanline 3s linear infinite;
+            pointer-events: none;
+        }
+
+    @keyframes scanline {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
 
         /* Games Grid */
         .games-grid {
