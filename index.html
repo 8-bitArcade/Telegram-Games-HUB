@@ -1173,45 +1173,75 @@
             }
             
             if (backgroundMusic) {
-                backgroundMusic.volume = 0; // Start silent
+                backgroundMusic.volume = 0.05; // START WITH FAINT BACKGROUND MUSIC (5%)
                 backgroundMusic.preload = 'auto';
                 backgroundMusic.loop = true;
                 
-                // Enhanced mobile audio initialization
-                const initBackgroundMusic = () => {
-                    if (backgroundMusic.paused) {
-                        // For mobile devices, we need user interaction to start audio
+                // Aggressive mobile audio initialization
+                let musicStarted = false;
+                
+                const startBackgroundMusic = () => {
+                    if (!musicStarted && backgroundMusic.paused) {
                         backgroundMusic.play().then(() => {
                             console.log('Background music started successfully');
-                            backgroundMusic.volume = 0; // Reset to silent for scroll effect
+                            musicStarted = true;
+                            backgroundMusic.volume = 0.05; // Faint background level
+                            updateScrollFade(); // Apply current scroll position volume
                         }).catch(e => {
-                            console.log('Background music autoplay blocked, will start on user interaction:', e);
+                            console.log('Background music play attempt failed:', e);
                         });
                     }
                 };
                 
-                // Try immediate play (works on desktop)
-                initBackgroundMusic();
+                // Try immediate play (desktop)
+                startBackgroundMusic();
                 
-                // Set up user interaction handlers for mobile
-                const enableBackgroundMusicOnInteraction = () => {
-                    if (backgroundMusic.paused) {
-                        backgroundMusic.play().then(() => {
-                            console.log('Background music started via user interaction');
-                            updateScrollFade(); // Apply current scroll position volume
-                        }).catch(e => console.log('Background music play failed:', e));
-                    }
+                // Comprehensive mobile interaction handlers
+                const mobileInteractionEvents = [
+                    'touchstart', 'touchend', 'touchmove',
+                    'click', 'mousedown', 'mouseup',
+                    'keydown', 'scroll', 'focus'
+                ];
+                
+                const enableMobileMusic = (event) => {
+                    console.log(`Attempting to start music via ${event.type} event`);
                     
-                    // Remove listeners after first successful interaction
-                    document.removeEventListener('touchstart', enableBackgroundMusicOnInteraction);
-                    document.removeEventListener('click', enableBackgroundMusicOnInteraction);
-                    document.removeEventListener('scroll', enableBackgroundMusicOnInteraction);
+                    if (!musicStarted) {
+                        startBackgroundMusic();
+                        
+                        // Remove all listeners after first successful start
+                        if (musicStarted) {
+                            mobileInteractionEvents.forEach(eventType => {
+                                document.removeEventListener(eventType, enableMobileMusic);
+                            });
+                        }
+                    }
                 };
                 
-                // Multiple interaction points for mobile compatibility
-                document.addEventListener('touchstart', enableBackgroundMusicOnInteraction, { once: true });
-                document.addEventListener('click', enableBackgroundMusicOnInteraction, { once: true });
-                document.addEventListener('scroll', enableBackgroundMusicOnInteraction, { once: true });
+                // Add multiple event listeners for maximum mobile compatibility
+                mobileInteractionEvents.forEach(eventType => {
+                    document.addEventListener(eventType, enableMobileMusic, { 
+                        once: false, // Don't auto-remove in case first attempt fails
+                        passive: true 
+                    });
+                });
+                
+                // Special handling for iOS devices
+                if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    console.log('iOS device detected - setting up enhanced audio handling');
+                    
+                    // iOS-specific unlock
+                    const unlockAudioForIOS = () => {
+                        const silentAudio = new Audio();
+                        silentAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAAABQEBAAEAAAEAAwA=';
+                        silentAudio.play().then(() => {
+                            console.log('iOS audio context unlocked');
+                            startBackgroundMusic();
+                        }).catch(e => console.log('iOS unlock failed:', e));
+                    };
+                    
+                    document.addEventListener('touchstart', unlockAudioForIOS, { once: true });
+                }
             }
             
             // Initialize mute button
@@ -1236,12 +1266,19 @@
                 muteButton.textContent = '🔇';
                 muteButton.classList.add('muted');
                 muteButton.title = 'Unmute Audio';
+                console.log('Audio muted');
             } else {
                 // Restore audio levels based on scroll position
                 updateScrollFade();
                 muteButton.textContent = '🔊';
                 muteButton.classList.remove('muted');
                 muteButton.title = 'Mute Audio';
+                console.log('Audio unmuted');
+                
+                // Ensure background music is playing if not already
+                if (backgroundMusic && backgroundMusic.paused) {
+                    backgroundMusic.play().catch(e => console.log('Failed to resume background music:', e));
+                }
             }
         }
 
@@ -1301,7 +1338,7 @@
             });
         }
 
-        // ENHANCED scroll-based fade effect with background music
+        // ENHANCED scroll-based fade effect with faint background music
         function updateScrollFade() {
             const scrollTop = window.scrollY;
             const windowHeight = window.innerHeight;
@@ -1309,8 +1346,13 @@
             // Neon sound fades out as user scrolls (fades completely by 300px)
             currentScrollFade = Math.max(0, 1 - (scrollTop / 300));
             
-            // Background music volume increases as user scrolls (reaches full volume by 500px)
-            const musicVolume = Math.min(0.3, (scrollTop / 500) * 0.3); // Max volume 30%
+            // Background music starts faint (5%) and increases to full volume (30%) by 500px
+            const baseVolume = 0.05; // Faint background level (5%)
+            const maxVolume = 0.3; // Maximum volume (30%)
+            const scrollProgress = Math.min(1, scrollTop / 500); // Progress from 0 to 1 over 500px
+            
+            // Calculate music volume: starts at 5%, reaches 30% at 500px scroll
+            const musicVolume = baseVolume + (scrollProgress * (maxVolume - baseVolume));
             
             if (!isMuted) {
                 // Update neon audio volume
@@ -1318,8 +1360,8 @@
                     neonAudio.volume = 0.4 * currentScrollFade;
                 }
                 
-                // Update background music volume
-                if (backgroundMusic && isAudioEnabled) {
+                // Update background music volume with faint base level
+                if (backgroundMusic && isAudioEnabled && !backgroundMusic.paused) {
                     backgroundMusic.volume = musicVolume;
                 }
             }
@@ -1453,12 +1495,7 @@
         function startNeonFlickerAudio() {
             // Enable audio immediately
             isAudioEnabled = true;
-            console.log('Audio system enabled - starting immediate neon flicker and background music');
-            
-            // Start background music
-            if (backgroundMusic) {
-                backgroundMusic.play().catch(e => console.log('Background music autoplay blocked:', e));
-            }
+            console.log('Audio system enabled - starting immediate neon flicker and faint background music');
             
             // Try to play neon flicker immediately
             const attemptInitialPlay = () => {
@@ -1480,21 +1517,7 @@
                 }
             }, 3500);
             
-            // Set up fallback for user interaction in case initial audio is blocked
-            const enableAudioOnInteraction = () => {
-                if (backgroundMusic && backgroundMusic.paused) {
-                    backgroundMusic.play().catch(e => console.log('Background music play failed:', e));
-                }
-                isAudioEnabled = true;
-                console.log('Audio fully enabled via user interaction');
-                document.removeEventListener('click', enableAudioOnInteraction);
-                document.removeEventListener('touchstart', enableAudioOnInteraction);
-            };
-
-            document.addEventListener('click', enableAudioOnInteraction);
-            document.addEventListener('touchstart', enableAudioOnInteraction);
-            
-            console.log('Neon flicker and background music system started immediately');
+            console.log('Neon flicker system started - background music should be faintly playing');
         }
 
         function setupEventListeners() {
