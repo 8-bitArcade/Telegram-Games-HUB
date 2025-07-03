@@ -380,7 +380,7 @@
         }
 
         .game-content {
-            padding: var(--spacing-md);
+            padding: var(--spacing-md) var(--spacing-lg); /* INCREASED horizontal padding for better button spacing */
             height: 120px;
             display: flex;
             flex-direction: column;
@@ -421,6 +421,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 var(--spacing-sm); /* ADD padding to footer for more button space */
         }
 
         .game-points {
@@ -432,29 +433,34 @@
             font-weight: 600;
         }
 
-        /* ENHANCED START BUTTON */
+        /* ROUND START BUTTON - MAIN CHANGES HERE */
         .play-button {
-            /* BIGGER SIZE */
+            /* ROUND SHAPE */
+            width: 70px;
+            height: 70px;
+            border-radius: 50%; /* Perfect circle */
             background: var(--gradient-primary);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.1s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            min-width: 80px;
+            letter-spacing: 0.5px;
+            
+            /* CENTER THE TEXT */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             
             /* EMBOSSED EFFECT */
             position: relative;
             box-shadow: 
                 0 6px 0 #0080cc,
                 0 8px 15px rgba(0, 164, 255, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+                inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.2);
             
             /* 3D APPEARANCE */
             background: linear-gradient(
@@ -470,12 +476,12 @@
 
         /* HOVER STATE */
         .play-button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             box-shadow: 
-                0 8px 0 #0080cc,
+                0 9px 0 #0080cc,
                 0 12px 20px rgba(0, 164, 255, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+                inset 0 2px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.2);
         }
 
         /* ACTIVE/PRESSED STATE */
@@ -508,7 +514,7 @@
         }
 
         @keyframes buttonPulse {
-            0% { opacity: 0.7; }
+            0% { opacity: 0.8; }
             100% { opacity: 1; }
         }
 
@@ -780,7 +786,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Responsive Design - FIXED */
+        /* Responsive Design - UPDATED FOR ROUND BUTTONS */
         @media (max-width: 768px) {
             .games-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -799,7 +805,7 @@
             }
             
             .game-content {
-                padding: var(--spacing-sm);
+                padding: var(--spacing-sm) var(--spacing-md); /* Adjust for mobile */
                 height: 140px;
             }
             
@@ -815,9 +821,9 @@
             }
             
             .play-button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-                min-width: 70px;
+                width: 60px;
+                height: 60px;
+                font-size: 0.7rem;
             }
             
             .header {
@@ -866,10 +872,9 @@
             }
             
             .play-button {
-                padding: 12px 20px;
-                font-size: 0.9rem;
-                min-width: 75px;
-                border-radius: 10px;
+                width: 60px;
+                height: 60px;
+                font-size: 0.7rem;
             }
             
             .content-section {
@@ -885,10 +890,9 @@
             }
             
             .play-button {
-                padding: 10px 16px;
-                font-size: 0.8rem;
-                min-width: 65px;
-                border-radius: 8px;
+                width: 55px;
+                height: 55px;
+                font-size: 0.65rem;
             }
         }
     </style>
