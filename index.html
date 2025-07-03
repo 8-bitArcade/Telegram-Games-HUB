@@ -1218,8 +1218,7 @@
             {
                 id: 'generative_dungeon',
                 title: 'Generative Dungeon',
-                icon: '🏰',
-                points: 100,
+                points: 10,
                 url: './games/Generative_Dungeon/index.html',
                 categories: ['RPG', 'ADVENTURE'],
                 image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/Generative_Dungeon.png'
@@ -1227,8 +1226,7 @@
             {
                 id: 'pacman_canva',
                 title: 'PacMan Canva',
-                icon: '👻',
-                points: 75,
+                points: 10,
                 url: './games/PacMan_Canva/index.html',
                 categories: ['ARCADE', 'CLASSIC'],
                 image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/PacMan_Canva.png'
@@ -1236,8 +1234,7 @@
             {
                 id: 'pigeon_ascent',
                 title: 'Pigeon Ascent',
-                icon: '🐦',
-                points: 80,
+                points: 10,
                 url: './games/PidgeonAsent/index.html',
                 categories: ['ARCADE', 'ENDLESS'],
                 image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/Pidgeoon_Ascent.png'
@@ -1322,38 +1319,46 @@
             }, 1500);
         }
 
-        // Start neon flicker audio that syncs with visual effects
+        // Start neon flicker audio immediately on page load
         function startNeonFlickerAudio() {
-            // Wait for user interaction before enabling audio
-            const enableAudio = () => {
-                isAudioEnabled = true;
-                console.log('Audio enabled - starting neon flicker system');
-                
-                // Play initial flicker immediately
+            // Enable audio immediately (browsers may still require user interaction for audio)
+            isAudioEnabled = true;
+            console.log('Audio system enabled - starting immediate neon flicker');
+            
+            // Try to play immediately (may be blocked by browser policy)
+            const attemptInitialPlay = () => {
                 playNeonFlicker();
-                
-                // Set up regular interval (every 3-4 seconds for more realistic neon effect)
-                if (neonFlickerInterval) {
-                    clearInterval(neonFlickerInterval);
+            };
+            
+            // Set up regular interval immediately
+            if (neonFlickerInterval) {
+                clearInterval(neonFlickerInterval);
+            }
+            
+            // Start flickering immediately and then every 3.5 seconds
+            attemptInitialPlay();
+            
+            neonFlickerInterval = setInterval(() => {
+                // Only flicker if user is near the top and audio is enabled
+                if (window.scrollY < window.innerHeight && isAudioEnabled) {
+                    playNeonFlicker();
                 }
-                
-                neonFlickerInterval = setInterval(() => {
-                    // Only flicker if user is near the top and audio is enabled
-                    if (window.scrollY < window.innerHeight && isAudioEnabled) {
-                        playNeonFlicker();
-                    }
-                }, 3500); // Fixed interval of 3.5 seconds for more predictable behavior
-                
-                // Remove event listeners
-                document.removeEventListener('click', enableAudio);
-                document.removeEventListener('touchstart', enableAudio);
+            }, 3500);
+            
+            // Also set up fallback for user interaction in case initial audio is blocked
+            const enableAudioOnInteraction = () => {
+                if (!isAudioEnabled) {
+                    isAudioEnabled = true;
+                    console.log('Audio enabled via user interaction');
+                }
+                document.removeEventListener('click', enableAudioOnInteraction);
+                document.removeEventListener('touchstart', enableAudioOnInteraction);
             };
 
-            // Wait for user interaction
-            document.addEventListener('click', enableAudio);
-            document.addEventListener('touchstart', enableAudio);
+            document.addEventListener('click', enableAudioOnInteraction);
+            document.addEventListener('touchstart', enableAudioOnInteraction);
             
-            console.log('Neon flicker audio system initialized - waiting for user interaction');
+            console.log('Neon flicker system started immediately');
         }
 
         function setupEventListeners() {
@@ -1464,7 +1469,6 @@
                     
                     gameCard.innerHTML = `
                         <div class="game-image" style="background-image: url('${game.image}');">
-                            <div class="game-image-icon">${game.icon}</div>
                             <div class="game-loading-overlay">
                                 <div class="game-loading-spinner"></div>
                                 <div class="game-loading-text">Loading Game...</div>
