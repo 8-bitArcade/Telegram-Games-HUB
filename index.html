@@ -346,6 +346,69 @@
             border-color: var(--primary-color);
         }
 
+        /* GAME LOADING OVERLAY - NEW */
+        .game-loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 8, 20, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 10;
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-loading-overlay.active {
+            display: flex;
+        }
+
+        .game-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 164, 255, 0.3);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: gameLoadingSpin 1s linear infinite;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .game-loading-text {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 164, 255, 0.5);
+            animation: gameLoadingPulse 1.5s ease-in-out infinite alternate;
+            
+            /* PIXELATED FONT */
+            font-family: 'Courier New', 'Monaco', 'Menlo', 'Consolas', monospace;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            
+            /* ADDITIONAL PIXELATED STYLING */
+            font-feature-settings: "liga" 0;
+            text-rendering: geometricPrecision;
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: unset;
+        }
+
+        @keyframes gameLoadingSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes gameLoadingPulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
         .game-image {
             width: 100%;
             height: 160px;
@@ -356,7 +419,7 @@
             justify-content: center;
             font-size: 3rem;
             color: white;
-            position: relative;
+            position: relative; /* ENSURE relative positioning for overlay */
             overflow: hidden;
             background-size: cover;
             background-position: center;
@@ -502,22 +565,7 @@
             );
         }
 
-        /* LOADING STATE */
-        .play-button.loading {
-            pointer-events: none;
-            background: linear-gradient(
-                135deg,
-                #666 0%,
-                #555 50%,
-                #444 100%
-            );
-            animation: buttonPulse 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes buttonPulse {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; }
-        }
+        /* REMOVED LOADING STATE - NO LONGER NEEDED */
 
         /* Social Media Section */
         .social-grid {
@@ -1039,8 +1087,8 @@
             {
                 id: 'generative_dungeon',
                 title: 'Generative Dungeon',
-                icon: '',
-                points: 75,
+                icon: '🏰',
+                points: 100,
                 url: './games/Generative_Dungeon/index.html',
                 categories: ['RPG', 'ADVENTURE'],
                 image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/Generative_Dungeon.png'
@@ -1048,7 +1096,7 @@
             {
                 id: 'pacman_canva',
                 title: 'PacMan Canva',
-                icon: '',
+                icon: '👻',
                 points: 75,
                 url: './games/PacMan_Canva/index.html',
                 categories: ['ARCADE', 'CLASSIC'],
@@ -1057,8 +1105,8 @@
             {
                 id: 'pigeon_ascent',
                 title: 'Pigeon Ascent',
-                icon: '',
-                points: 75,
+                icon: '🐦',
+                points: 80,
                 url: './games/PidgeonAsent/index.html',
                 categories: ['ARCADE', 'ENDLESS'],
                 image: 'https://raw.githubusercontent.com/8-bitArcade/Telegram-Games-HUB/main/assets/games/Pidgeoon_Ascent.png'
@@ -1243,6 +1291,10 @@
                     gameCard.innerHTML = `
                         <div class="game-image" style="background-image: url('${game.image}');">
                             <div class="game-image-icon">${game.icon}</div>
+                            <div class="game-loading-overlay">
+                                <div class="game-loading-spinner"></div>
+                                <div class="game-loading-text">Loading Game...</div>
+                            </div>
                         </div>
                         <div class="game-content">
                             <div class="game-header">
@@ -1264,25 +1316,39 @@
                         playButton.addEventListener('click', function(e) {
                             e.preventDefault();
                             
-                            // Add loading state
-                            this.classList.add('loading');
-                            this.textContent = 'LOADING...';
+                            // Get the loading overlay for this specific game card
+                            const loadingOverlay = gameCard.querySelector('.game-loading-overlay');
+                            
+                            // REMOVED: No more button loading state - just disable the button
+                            this.style.pointerEvents = 'none';
+                            this.style.opacity = '0.6';
+                            
+                            // Show the loading overlay
+                            if (loadingOverlay) {
+                                loadingOverlay.classList.add('active');
+                            }
                             
                             const gameId = this.getAttribute('data-game-id');
                             const gameUrl = this.getAttribute('data-game-url');
                             const gameTitle = this.getAttribute('data-game-title');
                             const gamePoints = parseInt(this.getAttribute('data-game-points'));
                             
-                            // Delay for visual feedback
+                            // EXTENDED loading delay - 2.5 seconds
                             setTimeout(() => {
                                 playGame(gameId, gameUrl, gameTitle, gamePoints);
                                 
-                                // Reset button after delay
+                                // Reset button and hide overlay after another 1 second
                                 setTimeout(() => {
-                                    this.classList.remove('loading');
-                                    this.textContent = 'START';
+                                    // REMOVED: No more loading class removal - just re-enable button
+                                    this.style.pointerEvents = 'auto';
+                                    this.style.opacity = '1';
+                                    
+                                    // Hide the loading overlay
+                                    if (loadingOverlay) {
+                                        loadingOverlay.classList.remove('active');
+                                    }
                                 }, 1000);
-                            }, 300);
+                            }, 2500); // INCREASED from 300ms to 2500ms for better loading experience
                         });
                     }
                     
