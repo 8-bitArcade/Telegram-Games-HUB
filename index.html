@@ -752,16 +752,17 @@
 
         .download-buttons {
             display: flex;
-            gap: var(--spacing-md);
+            gap: 1.5em;
             justify-content: center;
+            align-items: flex-start;  /* Ensures tops align */
             flex-wrap: wrap;
         }
-
+        
         .coming-soon-button {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             background: linear-gradient(135deg, #666, #888);
             color: white;
             border: none;
@@ -782,6 +783,24 @@
             height: auto;
             margin-bottom: 0.2em;
             display: block;
+        }
+        
+        @media (max-width: 600px) {
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1em;
+            }
+            .coming-soon-button {
+                font-size: 1rem;
+                padding: 0.8em 1em;
+                min-width: 140px;
+                min-height: 80px;
+                gap: 0.5em;
+            }
+            .store-logo {
+                width: 90px;
+            }
         }
         
         @media (max-width: 600px) {
@@ -1113,14 +1132,15 @@
                 <h3 class="download-title">📱 Download 8Bit Mobile App</h3>
                 <p class="download-subtitle">Redeem your points and unlock exclusive rewards in our mobile app!</p>
                 <div class="download-buttons">
-                    <div class="coming-soon-button google-play">
-                        <img src="assets/social/Google_Play_2022_logo.svg.png" alt="Google Play Logo" class="store-logo" />
-                        <span>Coming Soon - Google Play</span>
-                    </div>
-                    <div class="coming-soon-button apple-store">
-                        <img src="assets/social/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg" alt="Google Play Logo" class="store-logo" />
-                        <span>Coming Soon - Google Play</span>
-                    </div>
+                <div class="download-buttons">
+                  <div class="coming-soon-button google-play">
+                    <img src="assets/social/Google_Play_2022_logo.svg.png" alt="Google Play Logo" class="store-logo" />
+                    <span>Coming Soon - Google Play</span>
+                  </div>
+                  <div class="coming-soon-button apple-store">
+                    <img src="assets/social/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg" alt="Apple Store Logo" class="store-logo" />
+                    <span>Coming Soon - App Store</span>
+                  </div>
                 </div>
             </div>
 
