@@ -411,23 +411,6 @@
         }
 
         /* GLITCH EFFECT OVERLAY */
-        .section-title::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(0, 255, 255, 0.03) 50%,
-                transparent 100%
-            );
-            animation: scanline 3s linear infinite;
-            pointer-events: none;
-        }
-
         @keyframes scanline {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
@@ -570,16 +553,6 @@
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
-        }
-
-        .game-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.2);
         }
 
         .game-content {
@@ -1323,10 +1296,8 @@
                 
                 // Start background music immediately since user consented
                 backgroundMusic.play().then(() => {
-                    console.log('✅ Background music started successfully');
                     updateScrollFade();
                 }).catch(e => {
-                    console.log('❌ Background music failed:', e);
                 });
             }
             
@@ -1366,7 +1337,6 @@
                 muteButton.textContent = '🔇';
                 muteButton.classList.add('muted');
                 muteButton.title = 'Unmute Audio';
-                console.log('Audio muted');
             } else {
                 // Initialize audio if not already done
                 if (!isAudioEnabled) {
@@ -1378,12 +1348,7 @@
                     muteButton.textContent = '🔊';
                     muteButton.classList.remove('muted');
                     muteButton.title = 'Mute Audio';
-                    console.log('Audio unmuted');
                     
-                    // Ensure background music is playing if not already
-                    if (backgroundMusic && backgroundMusic.paused) {
-                        backgroundMusic.play().catch(e => console.log('Failed to resume background music:', e));
-                    }
                 }
             }
         }
@@ -1395,7 +1360,6 @@
                 // Play audio with reduced volume
                 neonAudio.currentTime = 0;
                 neonAudio.volume = 0.255 * currentScrollFade;
-                neonAudio.play().catch(e => console.log('Neon audio play failed:', e));
                 
                 // Trigger visual flicker in sync with audio
                 triggerNeonFlicker();
@@ -1591,7 +1555,6 @@
                 // Set up event listeners
                 setupEventListeners();
                 
-                console.log('Hub initialized successfully');
                 
             } catch (error) {
                 console.error('Error initializing hub:', error);
@@ -1636,7 +1599,6 @@
                     shareButton.addEventListener('click', shareReferralLink);
                 }
 
-                console.log('Event listeners set up successfully');
             } catch (error) {
                 console.error('Error setting up event listeners:', error);
             }
@@ -1650,7 +1612,6 @@
                     userData = { ...userData, ...JSON.parse(saved) };
                 }
             } catch (e) {
-                console.log('Error loading user data:', e);
             }
         }
 
@@ -1658,7 +1619,6 @@
             try {
                 localStorage.setItem('8bit_user_data', JSON.stringify(userData));
             } catch (e) {
-                console.log('Error saving user data:', e);
             }
         }
 
@@ -1769,7 +1729,6 @@
                     gamesGrid.appendChild(gameCard);
                 });
 
-                console.log('Games rendered successfully');
             } catch (error) {
                 console.error('Error rendering games:', error);
             }
@@ -1805,7 +1764,6 @@
                     }
                 }, 100);
 
-                console.log(`Started game: ${gameTitle}`);
             } catch (error) {
                 console.error('Error playing game:', error);
             }
@@ -1854,7 +1812,6 @@
                     }));
                 }
 
-                console.log(`Switched to tab: ${tabName}`);
             } catch (error) {
                 console.error('Error switching tabs:', error);
             }
@@ -2000,7 +1957,6 @@
             console.error('JavaScript Error:', e.error);
         });
 
-        console.log('8Bit Game Hub script loaded successfully');
     </script>
 </body>
 </html>
