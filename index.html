@@ -758,24 +758,29 @@
         }
 
         .coming-soon-button {
-            background: linear-gradient(135deg, #666, #888);
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: not-allowed;
-            text-decoration: none;
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
-            box-shadow: 0 5px 20px rgba(102, 102, 102, 0.3);
-            opacity: 0.8;
-            background-size: 24px 24px;
-            background-position: left 16px center;
+            background-size: 40px 40px, cover; /* Make logo larger */
+            background-position: left 20px center, center;
             background-repeat: no-repeat;
-            padding-left: 50px;
+            padding-left: 70px; /* More space for the bigger logo */
+            min-height: 56px;
+            font-size: 1.1rem;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(102, 102, 102, 0.3);
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 600px) {
+            .coming-soon-button {
+                background-size: 32px 32px, cover;
+                background-position: left 12px center, center;
+                padding-left: 48px;
+                min-height: 44px;
+                font-size: 1rem;
+            }
         }
 
         .coming-soon-button.google-play {
