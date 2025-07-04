@@ -660,7 +660,6 @@
             width: 60px;
             height: 60px;
             margin: 0 auto var(--spacing-md);
-            background: var(--gradient-primary);
             border-radius: var(--border-radius-full);
             display: flex;
             align-items: center;
@@ -668,34 +667,29 @@
             font-size: 1.8rem;
             color: white;
             box-shadow: 0 8px 25px rgba(0, 164, 255, 0.4);
-            background-size: 30px 30px;
+            background-size: 40px 40px;
             background-position: center;
             background-repeat: no-repeat;
         }
 
         .social-icon.x-logo {
-            background: #000000;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMTc4LjU3IDEyNy43NjNMMjkwLjUgNDBIMjYzLjY4MUwxNjYuNzg5IDExMi40TDY4Ljk1IDQwSDBMMTE3IDEzNS4zNDVMMCAxNTlIMjYuNjkxTDEyOC44MzYgMTg3LjU3N0wyMzMuMDUgMjU5SDMwMkwxNzguNTQzIDEyNy43NjNIMTc4LjU3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
+            background: #000000 url('assets/social/x-logo.svg') center/40px no-repeat;
         }
 
         .social-icon.discord-logo {
-            background: #5865F2;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5LjI3IDUuMzNDMTcuOTQgNC43MSAxNi41IDQuMjYgMTUgNC4wM0MxNC44NyA0LjI4IDE0LjcgNC42NyAxNC41OCA0Ljk2QzEzLjAwMSA0Ljc0IDExLjUxIDQuNzQgOS45OTcgNC45NkM5Ljg3NyA0LjY3IDkuNzE3IDQuMjggOS41ODcgNC4wM0M4LjA4NyA0LjI2IDYuNjQ3IDQuNzEgNS4zMTcgNS4zM0MzLjAwNyA5LjA0IDIuMzcgMTIuNjcgMi43IDIxQzQuMjggMjEuOTggNS45MyAyMi41NyA3LjY4IDIyLjM1QzguMTEgMjEuOCA4LjQ4IDIxLjIgOC43OCAyMC41N0M4LjI4IDIwLjM2IDcuODEgMjAuMDkgNy4zOCAxOS43N0M3LjQ5IDE5LjY5IDcuNiAxOS42IDcuNzAgMTkuNTNDMTEuNCAyMS4yNSAxNS42IDIxLjI1IDE5LjMgMTkuNTNDMTkuNCAxOS42IDE5LjUxIDE5LjY5IDE5LjYyIDE5Ljc3QzE5LjE5IDIwLjA5IDE4LjcyIDIwLjM2IDE4LjIyIDIwLjU3QzE4LjUyIDIxLjIgMTguODkgMjEuOCAxOS4zMiAyMi4zNUMyMS4wNyAyMi41NyAyMi43MiAyMS45OCAyNC4zIDIxQzI0LjcgMTcuNCAyMy41IDE0Ljg4IDE5LjI3IDUuMzNaTTguMzYgMTcuNEM3LjcxIDE3LjQgNy4yNCAxNi43NiA3LjI0IDE1Ljk5QzcuMjQgMTUuMjIgNy43IDE0LjU4IDguMzYgMTQuNThDOS4wMiAxNC41OCA5LjQ5IDE1LjIyIDkuNDggMTUuOTlDOS40OCAxNi43NiA5LjAyIDE3LjQgOC4zNiAxNy40WlsxNS42MyAxNy40QzE0Ljk4IDE3LjQgMTQuNTEgMTYuNzYgMTQuNTEgMTUuOTlDMTQuNTEgMTUuMjIgMTQuOTcgMTQuNTggMTUuNjMgMTQuNThDMTYuMjkgMTQuNTggMTYuNzYgMTUuMjIgMTYuNzUgMTUuOTlDMTYuNzUgMTYuNzYgMTYuMjkgMTcuNCAxNS42MyAxNy40WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
+            background: #5865F2 url('assets/social/discord-logo.svg') center/40px no-repeat;
         }
 
         .social-icon.facebook-logo {
-            background: #1877F2;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI0IDEyQzI0IDUuMzcyNTggMTguNjI3NCAwIDEyIDBTMCA1LjM3MjU4IDAgMTJDMCAxNy45ODk1IDQuMzg4MTEgMjIuOTU0MSAxMCAyMy44MjkzVjE1LjQ2ODhINy4wMTU2M1YxMkgxMFY5LjM1NjI1QzEwIDYuMzQ4NzUgMTEuOTE1NiA0LjY4NzUgMTQuNjU2MyA0LjY4NzVDMTUuOTcwMyA0LjY4NzUgMTcuMzQzOCA0LjkyMTg4IDE3LjM0MzggNC45MjE4OFY3Ljg3NUM0LjU5MDYgNy44NzUgMTQuMTQwNiA4LjgwMDc4IDE0LjE0MDYgOS43NDkyMlYxMkgxNy4yMDMxTDE2LjY3MDEgMTUuNDY4OEgxNC4xNDA2VjIzLjgyOTNDMTkuNjExOSAyMi45NTQxIDI0IDE3Ljk4OTUgMjQgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K');
+            background: #1877F2 url('assets/social/facebook-logo.svg') center/40px no-repeat;
         }
 
         .social-icon.instagram-logo {
-            background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDIuMTYzQzE1LjIwNCAyLjE2MyAxNS41ODQgMi4xNzUgMTYuODUgMi4yMzNDMTguMTAyIDIuMjkgMTguNzk3IDIuNDczIDE5LjMxIDIuNzExQzE5LjY4NSAyLjg4MiAyMC4wOTYgMy4xOTkgMjAuNDgyIDMuNTE4QzIwLjgwMSAzLjkwNCAyMS4xMTggNC4zMTUgMjEuMjg5IDQuNjlDMjEuNTI3IDUuMjAzIDIxLjcxIDUuODk4IDIxLjc2NyA3LjE1QzIxLjgyNSA4LjQxNiAyMS44MzcgOC43OTYgMjEuODM3IDEyUzIxLjgyNSAxNS41ODQgMjEuNzY3IDE2Ljg1QzIxLjcxIDE4LjEwMiAyMS41MjcgMTguNzk3IDIxLjI4OSAxOS4zMUMyMS4xMTggMTkuNjg1IDIwLjgwMSAyMC4wOTYgMjAuNDgyIDIwLjQ4MkMyMC4wOTYgMjAuODAxIDE5LjY4NSAyMS4xMTggMTkuMzEgMjEuMjg5QzE4Ljc5NyAyMS41MjcgMTguMTAyIDIxLjcxIDE2Ljg1IDIxLjc2N0MxNS41ODQgMjEuODI1IDE1LjIwNCAyMS44MzcgMTIgMjEuODM3UzguNDE2IDIxLjgyNSA3LjE1IDIxLjc2N0M1Ljg5OCAyMS43MSA1LjIwMyAyMS41MjcgNC42OSAyMS4yODlDNC4zMTUgMjEuMTE4IDMuOTA0IDIwLjgwMSAzLjUxOCAyMC40ODJDMy4xOTkgMjAuMDk2IDIuODgyIDE5LjY4NSAyLjcxMSAxOS4zMUMyLjQ3MyAxOC43OTcgMi4yOSAxOC4xMDIgMi4yMzMgMTYuODVDMi4xNzUgMTUuNTg0IDIuMTYzIDE1LjIwNCAyLjE2MyAxMlMyLjE3NSA4LjQxNiAyLjIzMyA3LjE1QzIuMjkgNS44OTggMi40NzMgNS4yMDMgMi43MTEgNC42OUMyLjg4MiA0LjMxNSAzLjE5OSAzLjkwNCAzLjUxOCAzLjUxOEMzLjkwNCAzLjE5OSA0LjMxNSAyLjg4MiA0LjY5IDIuNzExQzUuMjAzIDIuNDczIDUuODk4IDIuMjkgNy4xNSAyLjIzM0M4LjQxNiAyLjE3NSA4Ljc5NiAyLjE2MyAxMiAyLjE2M1pNMTIgMEM4LjY3NCAwIDguMzMzIDAuMDE0IDcuMDUzIDAuMDcyQzUuNzc1IDAuMTMgNC45MDUgMC4zMzMgNC4xNCAwLjYzQzMuMzUxIDAuOTM2IDIuNjgxIDEuMzQ3IDIuMDE0IDIuMDE0QzEuMzQ3IDIuNjgxIDAuOTM2IDMuMzUxIDAuNjMgNC4xNEMwLjMzMyA0LjkwNSAwLjEzIDUuNzc1IDAuMDcyIDcuMDUzQzAuMDE0IDguMzMzIDAgOC42NzQgMCAxMlMwLjAxNCAxNS42NjcgMC4wNzIgMTYuOTQ3QzAuMTMgMTguMjI1IDAuMzMzIDE5LjA5NSAwLjYzIDE5Ljg2QzAuOTM2IDIwLjY0OSAxLjM0NyAyMS4zMTkgMi4wMTQgMjEuOTg2QzIuNjgxIDIyLjY1MyAzLjM1MSAyMy4wNjQgNC4xNCAyMy4zN0M0LjkwNSAyMy42NjcgNS43NzUgMjMuODcgNy4wNTMgMjMuOTI4QzguMzMzIDIzLjk4NiA4LjY3NCAyNCA1MiAyNFMxNS42NjcgMjMuOTg2IDE2Ljk0NyAyMy45MjhDMTguMjI1IDIzLjg3IDE5LjA5NSAyMy42NjcgMTkuODYgMjMuMzdDMjAuNjQ5IDIzLjA2NCAyMS4zMTkgMjIuNjUzIDIxLjk4NiAyMS45ODZDMjIuNjUzIDIxLjMxOSAyMy4wNjQgMjAuNjQ5IDIzLjM3IDE5Ljg2QzIzLjY2NyAxOS4wOTUgMjMuODcgMTguMjI1IDIzLjkyOCAxNi45NDdDMjMuOTg2IDE1LjY2NyAyNCAxNS4zMjYgMjQgMTJTMjMuOT86IDguMzMzIDIzLjkyOCA3LjA1M0MyMy44NyA1Ljc3NSAyMy42NjcgNC45MDUgMjMuMzcgNC4xNEMyMy4wNjQgMy4zNTEgMjIuNjUzIDIuNjgxIDIxLjk4NiAyLjAxNEMyMS4zMTkgMS4zNDcgMjAuNjQ5IDAuOTM2IDE5Ljg2IDAuNjNDMTkuMDk1IDAuMzMzIDE4LjIyNSAwLjEzIDE2Ljk0NyAwLjA3MkMxNS42NjcgMC4wMTQgMTUuMzI2IDAgMTIgMFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMiA1Ljg0QTYuMTYgNi4xNiAwIDAgMCA1Ljg0IDEyIDYuMTYgNi4xNiAwIDAgMCAxMiAxOC4xNkE2LjE2IDYuMTYgMCAwIDAgMTguMTYgMTIgNi4xNiA2LjE2IDAgMCAwIDEyIDUuODRaTTEyIDE2LjAwMUE0LjAwMSA0LjAwMSAwIDEgMSAxNi4wMDEgMTIgNCAwIDAgMSAxMiAxNi4wMDFaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTkuODQgNS41OTRBMS44NDQgMS44NDQgMCAxIDAgMTguMDAyIDMuNzQ5QTEuODQ2IDEuODQ2IDAgMCAwIDE5Ljg0IDUuNTk0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
+            background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4) url('assets/social/instagram-logo.svg') center/40px no-repeat;
         }
 
         .social-icon.telegram-logo {
-            background: #0088CC;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIzLjU2MDggMi4yOEMyMy4yNDA4IDEuOTYgMjIuODQwOCAxLjc2IDIyLjQwMDggMS43NkMyMi4wODA4IDEuNzYgMjEuNzIwOCAxLjg0IDIxLjQ0MDggMi4wNEwyLjA0MDggMTAuNTJDMS41MjA4IDEwLjggMS4yNDA4IDExLjMyIDEuMjAwOCAxMS44OEMxLjE2MDggMTIuNDQgMS40MDA4IDEyLjk2IDEuODgwOCAxMy4yOEw3LjA0MDggMTYuNDhMOC45NjA4IDIxLjJDOS4xNjA4IDIxLjY4IDkuNTIwOCAyMi4wNCA5Ljk2MDggMjIuMjRDMTAuMjAwOCAyMi4zNiAxMC40NDA4IDIyLjQgMTAuNzIwOCAyMi40QzExLjA0MDggMjIuNCAxMS4zNjA4IDIyLjMyIDExLjY0MDggMjIuMTZDMTIuMDQwOCAyMS45NiAxMi4zNjA4IDIxLjY0IDEyLjU2MDggMjEuMjhMMTQuMjgwOCAxOC4wOEwyMC44ODA4IDE1LjJDMjEuMzYwOCAxNC45NiAyMS43MjA4IDE0LjUyIDIxLjg0MDggMTMuOTZDMjEuOTYwOCAxMy40IDIxLjgwMDggMTIuODQgMjEuNDQwOCAxMi40TDIwLjYwMDggMTEuNTJMMjMuNjAwOCA0LjY0QzIzLjg4MDggMy45NiAyMy43NjA4IDMuMjQgMjMuMzIwOCAyLjY4QzIzLjEyMDggMi40NCAyMi44ODA4IDIuMzYgMjIuNjAwOCAyLjI4WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+');
+            background: #0088CC url('assets/social/telegram-logo.svg') center/40px no-repeat;
         }
 
         .social-title {
@@ -763,26 +757,33 @@
             flex-wrap: wrap;
         }
 
-        .app-store-button {
-            background: var(--gradient-primary);
+        .coming-soon-button {
+            background: linear-gradient(135deg, #666, #888);
             color: white;
             border: none;
             padding: var(--spacing-md) var(--spacing-xl);
             border-radius: var(--border-radius);
             font-size: 1rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            cursor: not-allowed;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
-            box-shadow: 0 5px 20px rgba(0, 164, 255, 0.3);
+            box-shadow: 0 5px 20px rgba(102, 102, 102, 0.3);
+            opacity: 0.8;
+            background-size: 24px 24px;
+            background-position: left 16px center;
+            background-repeat: no-repeat;
+            padding-left: 50px;
         }
 
-        .app-store-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 164, 255, 0.5);
+        .coming-soon-button.google-play {
+            background-image: url('assets/companies/google-play.svg'), linear-gradient(135deg, #666, #888);
+        }
+
+        .coming-soon-button.apple-store {
+            background-image: url('assets/companies/apple-store.svg'), linear-gradient(135deg, #666, #888);
         }
 
         .profile-card {
@@ -867,6 +868,17 @@
             color: var(--text-muted);
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .footer-logo {
+            height: 1.2em;
+            width: auto;
+            image-rendering: pixelated;
+            filter: brightness(1.2) saturate(1.1);
         }
 
         .footer-text {
@@ -1080,14 +1092,12 @@
                 <h3 class="download-title">📱 Download 8Bit Mobile App</h3>
                 <p class="download-subtitle">Redeem your points and unlock exclusive rewards in our mobile app!</p>
                 <div class="download-buttons">
-                    <button class="app-store-button" data-store="playstore">
-                        <span>📱</span>
-                        Google Play Store
-                    </button>
-                    <button class="app-store-button" data-store="appstore">
-                        <span>🍎</span>
-                        Apple App Store
-                    </button>
+                    <div class="coming-soon-button google-play">
+                        Coming Soon - Google Play
+                    </div>
+                    <div class="coming-soon-button apple-store">
+                        Coming Soon - App Store
+                    </div>
                 </div>
             </div>
 
@@ -1179,6 +1189,7 @@
         </section>
 
         <footer class="footer">
+            <img src="assets/companies/8bit-logo.png" alt="8Bit Logo" class="footer-logo">
             <div class="footer-text">© 2025 <span class="footer-brand">8Bit</span>. All rights reserved.</div>
         </footer>
     </div>
@@ -1191,6 +1202,7 @@
         let isMuted = false;
         let currentScrollFade = 1;
         let neonFlickerInterval = null;
+        let gameIsLoading = false;
 
         document.getElementById('enableAudioBtn').addEventListener('click', function() {
             isAudioEnabled = true;
@@ -1224,7 +1236,7 @@
             }
             
             if (backgroundMusic) {
-                backgroundMusic.volume = 0.05;
+                backgroundMusic.volume = 0.04;
                 backgroundMusic.preload = 'auto';
                 backgroundMusic.loop = true;
                 backgroundMusic.play().then(() => {
@@ -1279,47 +1291,40 @@
         }
 
         function playNeonFlicker() {
-            if (!isAudioEnabled || !neonAudio || isMuted) return;
+            if (!isAudioEnabled || !neonAudio || isMuted || gameIsLoading) return;
             
             neonAudio.currentTime = 0;
             neonAudio.volume = 0.255 * currentScrollFade;
-            neonAudio.play().catch(e => {});
-            triggerNeonFlicker();
+            neonAudio.play().then(() => {
+                triggerNeonFlickerInSync();
+            }).catch(e => {});
         }
 
-        function triggerNeonFlicker() {
+        function triggerNeonFlickerInSync() {
             neonTitles.forEach(title => {
                 title.classList.remove('neon-bright', 'neon-dim', 'neon-off');
-                title.classList.add('neon-bright');
                 
-                setTimeout(() => {
-                    title.classList.remove('neon-bright');
-                    title.classList.add('neon-dim');
-                }, 50);
-                
-                setTimeout(() => {
-                    title.classList.remove('neon-dim');
-                    title.classList.add('neon-off');
-                }, 100);
-                
-                setTimeout(() => {
-                    title.classList.remove('neon-off');
-                    title.classList.add('neon-bright');
-                }, 150);
-                
-                setTimeout(() => {
-                    title.classList.remove('neon-bright');
-                    title.classList.add('neon-dim');
-                }, 200);
-                
-                setTimeout(() => {
-                    title.classList.remove('neon-dim');
-                    title.classList.add('neon-bright');
-                }, 250);
-                
-                setTimeout(() => {
-                    title.classList.remove('neon-bright', 'neon-dim', 'neon-off');
-                }, 300);
+                const flickerSequence = [
+                    { class: 'neon-bright', delay: 0 },
+                    { class: 'neon-dim', delay: 80 },
+                    { class: 'neon-off', delay: 160 },
+                    { class: 'neon-bright', delay: 240 },
+                    { class: 'neon-dim', delay: 320 },
+                    { class: 'neon-off', delay: 400 },
+                    { class: 'neon-bright', delay: 480 },
+                    { class: 'neon-dim', delay: 560 },
+                    { class: 'neon-bright', delay: 640 },
+                    { class: '', delay: 1200 }
+                ];
+
+                flickerSequence.forEach(step => {
+                    setTimeout(() => {
+                        title.classList.remove('neon-bright', 'neon-dim', 'neon-off');
+                        if (step.class) {
+                            title.classList.add(step.class);
+                        }
+                    }, step.delay);
+                });
             });
         }
 
@@ -1327,8 +1332,8 @@
             const scrollTop = window.scrollY;
             currentScrollFade = Math.max(0, 1 - (scrollTop / 300));
             
-            const baseVolume = 0.05;
-            const maxVolume = 0.3;
+            const baseVolume = 0.04;
+            const maxVolume = 0.24;
             const scrollProgress = Math.min(1, scrollTop / 500);
             const musicVolume = baseVolume + (scrollProgress * (maxVolume - baseVolume));
             
@@ -1368,7 +1373,7 @@
             }
             
             neonFlickerInterval = setInterval(() => {
-                if (window.scrollY < window.innerHeight && isAudioEnabled) {
+                if (window.scrollY < window.innerHeight && isAudioEnabled && !gameIsLoading) {
                     playNeonFlicker();
                 }
             }, 3500);
@@ -1449,13 +1454,6 @@
                 card.addEventListener('click', function() {
                     const platform = this.getAttribute('data-social');
                     openSocialLink(platform);
-                });
-            });
-
-            document.querySelectorAll('.app-store-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const store = this.getAttribute('data-store');
-                    downloadApp(store);
                 });
             });
 
@@ -1541,6 +1539,13 @@
                     playButton.addEventListener('click', function(e) {
                         e.preventDefault();
                         
+                        gameIsLoading = true;
+                        
+                        if (neonFlickerInterval) {
+                            clearInterval(neonFlickerInterval);
+                            neonFlickerInterval = null;
+                        }
+                        
                         const loadingOverlay = gameCard.querySelector('.game-loading-overlay');
                         
                         this.style.pointerEvents = 'none';
@@ -1564,6 +1569,12 @@
                                 
                                 if (loadingOverlay) {
                                     loadingOverlay.classList.remove('active');
+                                }
+                                
+                                gameIsLoading = false;
+                                
+                                if (isAudioEnabled && !neonFlickerInterval) {
+                                    startNeonFlickerAudio();
                                 }
                             }, 1000);
                         }, 2500);
@@ -1643,7 +1654,7 @@
             const socialLinks = {
                 twitter: 'https://twitter.com/8Bit_arcade1',
                 discord: 'https://discord.gg/8bit',
-                facebook: 'https://facebook.com/8bit',
+                facebook: 'https://www.facebook.com/share/1Dtuzhmoj4/',
                 instagram: 'https://instagram.com/8bit',
                 telegram: 'https://t.me/The8bitcryptocommunity'
             };
@@ -1655,31 +1666,6 @@
                 } else {
                     window.open(url, '_blank');
                 }
-            }
-        }
-
-        function downloadApp(store) {
-            const storeLinks = {
-                playstore: 'https://play.google.com/store/apps/details?id=com.8bit.app',
-                appstore: 'https://apps.apple.com/app/8bit/id123456789'
-            };
-            
-            const url = storeLinks[store];
-            if (url) {
-                if (tg) {
-                    tg.openLink(url);
-                } else {
-                    window.open(url, '_blank');
-                }
-            }
-            
-            if (tg) {
-                tg.sendData(JSON.stringify({
-                    action: 'app_download_clicked',
-                    store: store,
-                    user: user?.id || 'anonymous',
-                    timestamp: Date.now()
-                }));
             }
         }
 
@@ -1735,7 +1721,7 @@
             } else {
                 loadUserData();
                 updateUserDisplay();
-                if (isAudioEnabled && !neonFlickerInterval) {
+                if (isAudioEnabled && !neonFlickerInterval && !gameIsLoading) {
                     startNeonFlickerAudio();
                 }
                 if (backgroundMusic && backgroundMusic.paused && !isMuted && isAudioEnabled) {
