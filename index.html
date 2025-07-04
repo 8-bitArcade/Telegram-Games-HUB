@@ -759,27 +759,41 @@
 
         .coming-soon-button {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: var(--spacing-sm);
-            background-size: 40px 40px, cover; /* Make logo larger */
-            background-position: left 20px center, center;
-            background-repeat: no-repeat;
-            padding-left: 70px; /* More space for the bigger logo */
-            min-height: 56px;
-            font-size: 1.1rem;
+            justify-content: center;
+            background: linear-gradient(135deg, #666, #888);
+            color: white;
+            border: none;
             border-radius: var(--border-radius);
+            font-size: 1.1rem;
             font-weight: 700;
             box-shadow: 0 5px 20px rgba(102, 102, 102, 0.3);
             opacity: 0.9;
+            padding: 1.2em 1.8em;
+            min-width: 200px;
+            min-height: 110px;
+            text-align: center;
+            gap: 0.8em;
+        }
+        
+        .store-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 0.2em;
+            display: block;
         }
         
         @media (max-width: 600px) {
             .coming-soon-button {
-                background-size: 32px 32px, cover;
-                background-position: left 12px center, center;
-                padding-left: 48px;
-                min-height: 44px;
                 font-size: 1rem;
+                padding: 0.8em 1em;
+                min-width: 140px;
+                min-height: 80px;
+                gap: 0.5em;
+            }
+            .store-logo {
+                width: 90px;
             }
         }
 
@@ -1098,10 +1112,12 @@
                 <p class="download-subtitle">Redeem your points and unlock exclusive rewards in our mobile app!</p>
                 <div class="download-buttons">
                     <div class="coming-soon-button google-play">
-                        Coming Soon - Google Play
+                        <img src="assets/social/Google_Play_2022_logo.svg.png" alt="Google Play Logo" class="store-logo" />
+                        <span>Coming Soon - Google Play</span>
                     </div>
                     <div class="coming-soon-button apple-store">
-                        Coming Soon - App Store
+                        <img src="assets/social/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg" alt="Google Play Logo" class="store-logo" />
+                        <span>Coming Soon - Google Play</span>
                     </div>
                 </div>
             </div>
