@@ -754,7 +754,7 @@
             display: flex;
             gap: 1.5em;
             justify-content: center;
-            align-items: flex-start;  /* Ensures tops align */
+            align-items: flex-start;
             flex-wrap: wrap;
         }
         
@@ -766,7 +766,7 @@
             background: linear-gradient(135deg, #666, #888);
             color: white;
             border: none;
-            border-radius: var(--border-radius);
+            border-radius: 16px;
             font-size: 1.1rem;
             font-weight: 700;
             box-shadow: 0 5px 20px rgba(102, 102, 102, 0.3);
@@ -780,11 +780,26 @@
         
         .store-logo {
             width: 120px;
-            height: auto;
+            height: 40px;
+            object-fit: contain;
             margin-bottom: 0.2em;
             display: block;
         }
         
+        .coming-soon-button.apple-store .store-logo {
+            /* Apple badge is wider and shorter, so restrict height and let width auto */
+            width: 120px;
+            height: 40px;
+            object-fit: contain;
+        }
+        
+        .coming-soon-button.google-play .store-logo {
+            width: 120px;
+            height: 40px;
+            object-fit: contain;
+        }
+        
+        /* Responsive adjustments */
         @media (max-width: 600px) {
             .download-buttons {
                 flex-direction: column;
@@ -800,19 +815,7 @@
             }
             .store-logo {
                 width: 90px;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .coming-soon-button {
-                font-size: 1rem;
-                padding: 0.8em 1em;
-                min-width: 140px;
-                min-height: 80px;
-                gap: 0.5em;
-            }
-            .store-logo {
-                width: 90px;
+                height: 30px;
             }
         }
 
