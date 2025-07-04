@@ -728,62 +728,115 @@
         }
 
         .download-section {
-            background: var(--gradient-card);
-            border: 2px solid var(--primary-color);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-xl);
-            text-align: center;
-            margin-bottom: 2.5em;
-            backdrop-filter: blur(10px);
+          background: var(--gradient-card, linear-gradient(135deg, #232526 0%, #414345 100%));
+          border: 2px solid var(--primary-color, #00A4FF);
+          border-radius: 24px;
+          padding: 2em 1em;
+          text-align: center;
+          margin-bottom: 2.5em; /* This creates the gap above the social grid */
+          backdrop-filter: blur(10px);
         }
-
+        
         .download-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-md);
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: var(--text-secondary, #C3E2FF);
+          margin-bottom: 0.5em;
         }
-
+        
         .download-subtitle {
-            color: var(--text-muted);
-            margin-bottom: var(--spacing-xl);
-            font-size: 1rem;
+          color: var(--text-muted, #B0B0B0);
+          margin-bottom: 1.5em;
+          font-size: 1rem;
         }
-
+        
         .download-buttons {
-            display: flex;
-            gap: 1.5em;
-            justify-content: center;
-            align-items: flex-start;
-            flex-wrap: wrap;
+          display: flex;
+          gap: 2em;
+          justify-content: center;
+          align-items: flex-start;
+          flex-wrap: wrap;
         }
         
         .coming-soon-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            background: linear-gradient(135deg, #666, #888);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            box-shadow: 0 5px 20px rgba(102, 102, 102, 0.3);
-            opacity: 0.9;
-            padding: 1.2em 1.8em;
-            min-width: 200px;
-            min-height: 110px;
-            text-align: center;
-            gap: 0.8em;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          background: linear-gradient(135deg, #666, #888);
+          color: white;
+          border: none;
+          border-radius: 16px;
+          font-size: 1.1rem;
+          font-weight: 700;
+          box-shadow: 0 5px 20px rgba(102, 102, 102, 0.3);
+          opacity: 0.95;
+          padding: 1.2em 1.8em 1em 1.8em;
+          min-width: 180px;
+          min-height: 120px;
+          text-align: center;
+          gap: 0.8em;
         }
         
         .store-logo {
-            width: 120px;
-            height: 40px;
-            object-fit: contain;
-            margin-bottom: 0.2em;
-            display: block;
+          width: 120px;
+          height: 40px;
+          object-fit: contain;
+          margin-bottom: 0.3em;
+          display: block;
+        }
+        
+        .coming-soon-button.apple-store .store-logo {
+          width: 120px; /* Ensures both logos are the same width */
+          height: 40px;
+          object-fit: contain;
+        }
+        
+        .coming-soon-button.google-play .store-logo {
+          width: 120px;
+          height: 40px;
+          object-fit: contain;
+        }
+        
+        .coming-soon-button span {
+          display: block;
+          margin-top: 0.4em;
+          font-size: 1.08em;
+          font-weight: 600;
+        }
+        
+        @media (max-width: 800px) {
+          .download-buttons {
+            gap: 1.2em;
+          }
+          .coming-soon-button {
+            min-width: 140px;
+            min-height: 90px;
+            font-size: 1em;
+            padding: 0.8em 0.6em 0.7em 0.6em;
+          }
+          .store-logo {
+            width: 90px;
+            height: 30px;
+          }
+        }
+        
+        @media (max-width: 500px) {
+          .download-buttons {
+            flex-direction: column;
+            align-items: center;
+            gap: 0.9em;
+          }
+          .coming-soon-button {
+            min-width: 110px;
+            min-height: 70px;
+            font-size: 0.97em;
+            padding: 0.6em 0.3em 0.5em 0.3em;
+          }
+          .store-logo {
+            width: 70px;
+            height: 24px;
+          }
         }
         
         .coming-soon-button.apple-store .store-logo {
@@ -1131,21 +1184,21 @@
         <section class="content-section" id="socialSection">
             <h2 class="section-title">📱 Follow Us & Download</h2>
             
-            <div class="download-section">
-                <h3 class="download-title">📱 Download 8Bit Mobile App</h3>
-                <p class="download-subtitle">Redeem your points and unlock exclusive rewards in our mobile app!</p>
-                <div class="download-buttons">
-                <div class="download-buttons">
-                  <div class="coming-soon-button google-play">
-                    <img src="assets/social/Google_Play_2022_logo.svg.png" alt="Google Play Logo" class="store-logo" />
-                    <span>Coming Soon - Google Play</span>
-                  </div>
-                  <div class="coming-soon-button apple-store">
-                    <img src="assets/social/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg" alt="Apple Store Logo" class="store-logo" />
-                    <span>Coming Soon - App Store</span>
-                  </div>
-                </div>
+        <div class="download-section">
+          <h3 class="download-title">📱 Download 8Bit Mobile App</h3>
+          <p class="download-subtitle">Redeem your points and unlock exclusive rewards in our mobile app!</p>
+          <div class="download-buttons">
+            <div class="coming-soon-button google-play">
+              <img src="assets/social/Google_Play_2022_logo.svg.png" alt="Google Play Logo" class="store-logo" />
+              <span>Coming Soon - Google Play</span>
             </div>
+            <div class="coming-soon-button apple-store">
+              <img src="assets/social/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg" alt="App Store Logo" class="store-logo" />
+              <span>Coming Soon - App Store</span>
+            </div>
+          </div>
+        </div>
+        <!-- SOCIAL GRID SECTION BELOW. Do not touch. -->
 
             <div class="social-grid">
                 <div class="social-card" data-social="twitter">
